@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @seller.name
+%p
+  %b Number:
+  = @seller.number
+%p
+  %b Initials:
+  = @seller.initials
+%p
+  %b Rate:
+  = @seller.rate
+
+= link_to 'Edit', edit_seller_path(@seller)
+\|
+= link_to 'Back', sellers_path
