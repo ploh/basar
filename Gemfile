@@ -50,6 +50,7 @@ group :development, :test do
 #   gem 'launchy'
   gem 'rspec-rails'
   gem 'simplecov'
+#   gem 'minitest', '>= 5.0.0'
 end
 
 group :test do
