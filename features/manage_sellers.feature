@@ -1,5 +1,5 @@
 Feature: Manage sellers
-  In order to [goal]
+  In order to a
   [stakeholder]
   wants [behaviour]
 

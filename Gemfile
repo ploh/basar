@@ -53,6 +53,10 @@ group :development, :test do
 #   gem 'minitest', '>= 5.0.0'
 end
 
+group :development do
+  gem "rails-erd"
+end
+
 group :test do
   gem 'cucumber-rails', require: false
   gem 'cucumber-rails-training-wheels'

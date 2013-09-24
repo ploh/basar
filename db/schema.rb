@@ -11,22 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130923103823) do
+ActiveRecord::Schema.define(version: 20130923191816) do
 
   create_table "items", force: true do |t|
     t.integer  "seller_id"
-    t.decimal  "price",      precision: 6, scale: 2
+    t.decimal  "price",          precision: 6, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "transaction_id"
   end
 
   add_index "items", ["seller_id"], name: "index_items_on_seller_id"
+  add_index "items", ["transaction_id"], name: "index_items_on_transaction_id"
 
   create_table "sellers", force: true do |t|
     t.string   "name"
     t.integer  "number"
     t.string   "initials"
     t.decimal  "rate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "transactions", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
