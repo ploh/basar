@@ -1,0 +1,11 @@
+okular(2750)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+okular(2750)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+okular(2750)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+okular(2750)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+okular(2750)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+okular(2750)/kdeui (kdelibs) KXMLGUIClient::~KXMLGUIClient: 0x1eacd70 deleted without having been removed from the factory first. This will leak standalone popupmenus and could lead to crashes. 
+okular(2768)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+okular(2768)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+okular(2768)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+okular(2768)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:
+okular(2768)/kdecore (KConfigSkeleton) KCoreConfigSkeleton::writeConfig:

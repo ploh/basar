@@ -7,13 +7,13 @@ describe "sellers/index" do
         :name => "Name",
         :number => 1,
         :initials => "Initials",
-        :rate => "9.99"
+        :rate => 0.2
       ),
       stub_model(Seller,
         :name => "Name",
         :number => 1,
         :initials => "Initials",
-        :rate => "9.99"
+        :rate => 0.2
       )
     ])
   end
@@ -24,6 +24,6 @@ describe "sellers/index" do
     assert_select "tr>td", :text => "Name".to_s, :count => 2
     assert_select "tr>td", :text => 1.to_s, :count => 2
     assert_select "tr>td", :text => "Initials".to_s, :count => 2
-    assert_select "tr>td", :text => "9.99".to_s, :count => 2
+    assert_select "tr>td", :text => "20 %".to_s, :count => 2
   end
 end

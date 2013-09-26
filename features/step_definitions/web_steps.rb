@@ -103,10 +103,11 @@ When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
 end
 
 Then /^(?:|I )should see "([^"]*)"$/ do |text|
+  content = text.include?("(...)") ? Regexp.new(text.split("(...)").map {|part| Regexp.escape(part)}.join(".*")) : text
   if page.respond_to? :should
-    page.should have_content(text)
+    page.should have_content(content)
   else
-    assert page.has_content?(text)
+    assert page.has_content?(content)
   end
 end
 

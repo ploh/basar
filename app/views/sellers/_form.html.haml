@@ -16,7 +16,8 @@
     = f.label :initials
     = f.text_field :initials
   .field
-    = f.label :rate
-    = f.text_field :rate
+    = f.label :rate, :for => :seller_rate_in_percent
+    = f.number_field :rate_in_percent
+    \%
   .actions
     = f.submit 'Save'

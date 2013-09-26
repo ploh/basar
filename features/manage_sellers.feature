@@ -1,30 +1,28 @@
 Feature: Manage sellers
-  In order to a
-  [stakeholder]
-  wants [behaviour]
+  In order to see and change who is participating in the basar
+  the basar organizer
+  wants to view, create, edit and delete sellers
 
 Scenario: Register new seller
   Given I am on the new seller page
-  When I fill in "Name" with "name 1"
-  And I fill in "Number" with "1"
-  And I fill in "Initials" with "initials 1"
-  And I fill in "Rate" with "rate 1"
-  And I press "Create"
-  Then I should see "name 1"
+  When I fill in "Name" with "Inge Schmidt"
+  And I fill in "Number" with "01"
+  And I fill in "Initials" with "SCM"
+  And I fill in "Rate" with "20"
+  And I press "Save"
+  Then I should see "Inge Schmidt"
   And I should see "1"
-  And I should see "initials 1"
-  And I should see "rate 1"
+  And I should see "SCM"
+  And I should see "20 %"
 
 Scenario: Delete seller
   Given the following sellers:
-    |name|number|initials|rate|
-    |name 1|1|initials 1|rate 1|
-    |name 2|2|initials 2|rate 2|
-    |name 3|3|initials 3|rate 3|
-    |name 4|4|initials 4|rate 4|
-  When I delete the 3rd seller
+    |name|number|initials|rate_in_percent|
+    |Inge Schmidt|1     |SCM     |20 |
+    |Anna Lohmann|2     |AL      |10 |
+    |Astrid Meyer|3     |AM      |15|
+  When I delete the 2nd seller
   Then I should see the following sellers:
     |Name|Number|Initials|Rate|
-    |name 1|1|initials 1|rate 1|
-    |name 2|2|initials 2|rate 2|
-    |name 4|4|initials 4|rate 4|
+    |Inge Schmidt|1|SCM|20 % |
+    |Astrid Meyer|3|AM |15 %|
