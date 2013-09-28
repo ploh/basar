@@ -1,5 +1,5 @@
 class Seller < ActiveRecord::Base
-  has_many :items
+  has_many :items, dependent: :restrict_with_exception
 
   def rate_in_percent
     self.rate && (self.rate * 100).round

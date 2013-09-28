@@ -119,7 +119,7 @@ describe TransactionsController do
       it "redirects to the transaction" do
         transaction = Transaction.create! valid_attributes
         put :update, {:id => transaction.to_param, :transaction => valid_attributes}, valid_session
-        response.should redirect_to(transaction)
+        response.should redirect_to(transactions_path)
       end
     end
 
