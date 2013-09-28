@@ -6,7 +6,7 @@ describe "sellers/new" do
       :name => "MyString",
       :number => 1,
       :initials => "MyString",
-      :rate => "9.99"
+      :rate => 0.2
     ).as_new_record)
   end
 
@@ -18,7 +18,7 @@ describe "sellers/new" do
       assert_select "input#seller_name[name=?]", "seller[name]"
       assert_select "input#seller_number[name=?]", "seller[number]"
       assert_select "input#seller_initials[name=?]", "seller[initials]"
-      assert_select "input#seller_rate[name=?]", "seller[rate]"
+      assert_select "input#seller_rate_in_percent[name=?]", "seller[rate_in_percent]"
     end
   end
 end

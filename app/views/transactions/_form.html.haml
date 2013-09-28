@@ -1,3 +1,5 @@
+= audio_tag "error.wav", preload: "auto" #, controls: true
+
 = form_for @transaction do |f|
   - if @transaction.errors.any?
     #error_explanation
@@ -6,5 +8,8 @@
         - @transaction.errors.full_messages.each do |msg|
           %li= msg
 
+  %table
+    = render @transaction.items
+    = render Item.new
   .actions
     = f.submit 'Save'

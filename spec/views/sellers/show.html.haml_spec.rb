@@ -6,7 +6,7 @@ describe "sellers/show" do
       :name => "Name",
       :number => 1,
       :initials => "Initials",
-      :rate => "9.99"
+      :rate => 0.2
     ))
   end
 
@@ -16,6 +16,6 @@ describe "sellers/show" do
     rendered.should match(/Name/)
     rendered.should match(/1/)
     rendered.should match(/Initials/)
-    rendered.should match(/9.99/)
+    rendered.should match(/20\s*%/)
   end
 end

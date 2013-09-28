@@ -24,7 +24,7 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(transaction_params)
 
     if @transaction.save
-      redirect_to @transaction, notice: 'Transaction was successfully created.'
+      redirect_to transactions_path, notice: 'Transaction was successfully created.'
     else
       render action: 'new'
     end
@@ -33,7 +33,7 @@ class TransactionsController < ApplicationController
   # PATCH/PUT /transactions/1
   def update
     if @transaction.update(transaction_params)
-      redirect_to @transaction, notice: 'Transaction was successfully updated.'
+      redirect_to transactions_path, notice: 'Transaction was successfully updated.'
     else
       render action: 'edit'
     end

@@ -4,6 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def index
-    render text: "Hello World"
+    redirect_to transactions_path
   end
 end

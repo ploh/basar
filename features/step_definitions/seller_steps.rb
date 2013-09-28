@@ -10,7 +10,7 @@ When /^I delete the (\d+)(?:st|nd|rd|th) seller$/ do |pos|
 end
 
 Then /^I should see the following sellers:$/ do |expected_sellers_table|
-  rows = find("table").all('tr')
+  rows = find("table#sellers").all('tr')
   table = rows.map { |r| r.all('th,td').map { |c| c.text.strip } }
   expected_sellers_table.diff!(table)
 end

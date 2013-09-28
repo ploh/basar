@@ -1,0 +1,20 @@
+!!! 5
+%html
+  %head
+    %title Ichthys-Basar
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+
+  %body
+    - if flash[:notice]
+      #notice.message= flash[:notice]
+    - elsif flash[:warning]
+      #warning.message= flash[:warning]
+
+    %table#menu
+      %tr
+        %td= link_to "Sellers", sellers_path
+        %td= link_to "Transactions", transactions_path
+
+    = yield

@@ -75,9 +75,9 @@ describe TransactionsController do
         assigns(:transaction).should be_persisted
       end
 
-      it "redirects to the created transaction" do
+      it "redirects to the transactions page" do
         post :create, {:transaction => valid_attributes}, valid_session
-        response.should redirect_to(Transaction.last)
+        response.should redirect_to transactions_path
       end
     end
 

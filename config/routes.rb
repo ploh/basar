@@ -1,8 +1,6 @@
 Basar::Application.routes.draw do
   resources :transactions
 
-  resources :items
-
   resources :sellers
 
   # The priority is based upon order of creation: first created -> highest priority.
