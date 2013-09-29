@@ -4,6 +4,6 @@ class Transaction < ActiveRecord::Base
   accepts_nested_attributes_for :items
 
   def total_price
-    items.map {|item| item.price}.inject(0, :+)
+    items.map {|item| item.price || 0}.inject(0, :+)
   end
 end

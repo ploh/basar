@@ -1,9 +1,0 @@
-%tr
-  %td
-    .field
-      = label_tag :seller
-      = text_field_tag :seller, item.seller, size: 10, maxlength: 10
-  %td
-    .field
-      = label_tag :price
-      = number_field_tag :price, item.price, in: 0..1000, step: 0.01

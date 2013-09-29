@@ -21,6 +21,7 @@ class TransactionsController < ApplicationController
 
   # POST /transactions
   def create
+#     debugger
     @transaction = Transaction.new(transaction_params)
 
     if @transaction.save
@@ -53,6 +54,13 @@ class TransactionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def transaction_params
-      params[:transaction]
+      result = params.require(:transaction).permit(:items_attributes => [:id, :seller_code, :price, :transaction_id])
+      result["items_attributes"].delete_if do |id, values|
+        values["seller_code"].blank? && values["price"].blank?
+      end
+      result["items_attributes"].each do |id, values|
+        values["price"] = values["price"].gsub(",",".") if values["price"]
+      end
+      result
     end
 end

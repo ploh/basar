@@ -1,5 +1,23 @@
-%p#notice= notice
-
+%p
+  %b Created at:
+  = @transaction.created_at
+%p{style: "margin-bottom: 5ex"}
+  %b Updated at:
+  = @transaction.created_at
+- @transaction.items.each do |item|
+  %p
+    %b Seller:
+    = item.seller.initials
+    = item.seller.name
+  %p{style: "margin-bottom: 5ex"}
+    %b Price:
+    = item.price
+%p
+  %b Number of items:
+  = @transaction.items.count
+%p
+  %b Total Amount:
+  = @transaction.total_price
 
 = link_to 'Edit', edit_transaction_path(@transaction)
 \|
