@@ -1,5 +1,10 @@
 = audio_tag "error.wav", preload: "auto" #, controls: true
 
+- if @transaction.created_at
+  .timestamp
+    Created at:
+    = @transaction.created_at
+
 = form_for @transaction do |f|
   - if @transaction.errors.any?
     #error_explanation

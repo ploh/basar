@@ -21,5 +21,7 @@ module Basar
     # config.i18n.default_locale = :de
 
     config.sass.preferred_syntax = :sass
+
+    config.time_zone = "Berlin"
   end
 end
