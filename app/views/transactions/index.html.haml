@@ -1,13 +1,19 @@
 %h1 Listing transactions
 
-%table
+%table#transactions.element_list
   %tr
+    %th Created at
+    %th Num. of items
+    %th Amount
     %th
     %th
     %th
 
   - @transactions.each do |transaction|
     %tr
+      %td= transaction.created_at
+      %td= transaction.items.count
+      %td= transaction.total_price
       %td= link_to 'Show', transaction
       %td= link_to 'Edit', edit_transaction_path(transaction)
       %td= link_to 'Destroy', transaction, :method => :delete, :data => { :confirm => 'Are you sure?' }

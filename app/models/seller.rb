@@ -6,6 +6,6 @@ class Seller < ActiveRecord::Base
   end
 
   def rate_in_percent=(percentage)
-    self.rate = percentage.to_i / 100.0
+    self.rate = percentage && percentage.to_i / 100.0
   end
 end
