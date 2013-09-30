@@ -24,11 +24,10 @@ class Seller < ActiveRecord::Base
 
   def self.get_all_by_code(code)
     result = []
-#     debugger
     if pair = split_code(code)
       initials, number = pair
-      result += self.find_all_by_initials(initials)
-      result += self.find_all_by_number(number)
+      result += self.where(initials: initials).all
+      result += self.where(number: number).all
     end
     result.uniq!
     result
@@ -41,4 +40,9 @@ class Seller < ActiveRecord::Base
       [ $~[:initials], $~[:number] ]
     end
   end
+end
+
+
+class DummySeller
+  attr_accessor :initials, :name, :number, :rate
 end

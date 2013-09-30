@@ -1,30 +1,29 @@
-= audio_tag "error.wav", preload: "auto" #, controls: true
+#transaction_form
+  - if @transaction.created_at
+    .timestamp
+      Created at:
+      = @transaction.created_at
 
-- if @transaction.created_at
-  .timestamp
-    Created at:
-    = @transaction.created_at
+  = form_for @transaction do |f|
+    - if @transaction.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@transaction.errors.count, "error")} prohibited this transaction from being saved:"
+        %ul
+          - @transaction.errors.full_messages.each do |msg|
+            %li= msg
 
-= form_for @transaction do |f|
-  - if @transaction.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@transaction.errors.count, "error")} prohibited this transaction from being saved:"
-      %ul
-        - @transaction.errors.full_messages.each do |msg|
-          %li= msg
-
-  %table
-    - 5.times {@transaction.items.build} unless @transaction.errors.any?
-    - @transaction.items.each do |item|
-      %tr
-        = f.fields_for :items, item do |i|
-          %td
-            .field
-              = i.label :seller, for: :seller_code
-              = i.text_field :seller_code, size: 10, maxlength: 10
-          %td
-            .field
-              = i.label :price
-              = i.number_field :price, in: 0..1000, step: 0.01
-  .actions
-    = f.submit 'Save'
+    %table
+      - 5.times {@transaction.items.build} unless @transaction.errors.any?
+      - @transaction.items.each do |item|
+        %tr
+          = f.fields_for :items, item do |i|
+            %td
+              .field
+                = i.label :seller, for: :seller_code
+                = i.text_field :seller_code, size: 10, maxlength: 10
+            %td
+              .field
+                = i.label :price
+                = i.number_field :price, in: 0..1000, step: 0.01
+    .actions
+      = f.submit 'Save'
