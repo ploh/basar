@@ -1,2 +1,2 @@
-= audio_tag "error.wav", preload: "auto" #, controls: true
+= audio_tag "error.wav", preload: "auto", autoplay: @transaction.errors.any?
 = render 'form'

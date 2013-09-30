@@ -19,7 +19,7 @@
           = f.fields_for :items, item do |i|
             %td
               .field
-                = i.label :seller, for: :seller_code
+                = i.label :seller_code, "Seller"
                 = i.text_field :seller_code, size: 10, maxlength: 10
             %td
               .field

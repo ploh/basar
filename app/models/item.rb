@@ -3,36 +3,38 @@ class Item < ActiveRecord::Base
   belongs_to :transaction
 
   validates :price, presence: true, numericality: { greater_than: 0, less_than_or_equal_to: 1000 }
-  validates :transaction, presence: true
-  validate :seller_uniquely_exists
+#   validates :transaction, presence: true
+  validate :seller_code_uniquely_exists
 
-  def seller_uniquely_exists
-    unless seller.kind_of? Seller
+  def seller_code_uniquely_exists
+    unless seller
       msg = "does not exist"
-      if seller
-        sellers = Seller.get_all_by_code(seller)
-        unless sellers.empty?
-          msg << ", maybe you meant one of #{sellers.join(", ")}"
-        end
+      sellers = Seller.find_all_by_similar_code(seller_code)
+      unless sellers.empty?
+        msg << ", maybe you meant #{sellers.size > 1 ? "one of " : ""}#{sellers.map {|s| s.code}.join(", ")}"
       end
-      errors.add :seller, msg
+      errors.add :seller_code, msg
     end
+  end
+
+  def seller=(*args, &block)
+    @seller_code = nil
+    super(*args, &block)
   end
 
   def seller_code
-    if seller.kind_of? Seller
+    if self.seller
       self.seller.code
     else
-      self.seller
+      @seller_code
     end
   end
 
-  def seller_code=(obj)
-    sellers = Seller.get_all_by_code( obj )
-    if sellers.size == 1
-      self.seller = sellers.first
-    else
-      @seller = obj
+  def seller_code=(code)
+    seller = Seller.find_by_code(code)
+    self.seller = seller
+    unless seller
+      @seller_code = code
     end
     self.seller_code
   end

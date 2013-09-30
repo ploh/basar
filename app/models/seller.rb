@@ -22,7 +22,14 @@ class Seller < ActiveRecord::Base
     "#{self.initials}#{"%02d" % self.number}"
   end
 
-  def self.get_all_by_code(code)
+  def self.find_by_code(code)
+    if pair = split_code(code)
+      initials, number = pair
+      self.where(initials: initials, number: number).first
+    end
+  end
+
+  def self.find_all_by_similar_code(code)
     result = []
     if pair = split_code(code)
       initials, number = pair
@@ -33,10 +40,26 @@ class Seller < ActiveRecord::Base
     result
   end
 
+  def number_of_items
+    items.count
+  end
+
+  def total_revenue
+    items.map {|item| item.price || 0}.inject(0, :+)
+  end
+
+  def total_commission
+    total_revenue * rate
+  end
+
+  def total_payout
+    total_revenue - total_commission
+  end
+
   private
 
   def self.split_code(code)
-    if code.strip.upcase =~ /^(?<initials>[[:alpha:]]+)\s*(?<number>\d+)$/
+    if code.strip.upcase =~ /^(?<initials>[[:alpha:]]*)\s*(?<number>\d*)$/
       [ $~[:initials], $~[:number] ]
     end
   end
