@@ -9,29 +9,30 @@
 
 # CSV has to be saved in RAILS_ROOT/data with ';' as field delimiter and without any text delimiter
 def load_initial_sellers(csv_file)
-  csv_line_regexp = /^\s*([[:alpha:]]/
-  lines = File.readlines(File.join(Rails.root, 'data', csv_file))
+  lines = File.readlines(File.join(Rails.root, 'data', csv_file)).map {|line| line.chomp}
 
-  lines.shift unless build_seller_from_line(line)
-  sellers = []
+  lines.shift unless build_seller_from_line(lines.first).valid?
+  sellers_with_lines = []
   lines.each_with_index do |line|
-    seller = build_seller_from_line(line)
-    if seller
-      sellers << seller
-    else
-      raise "Not a valid description of a seller: #{line}"
-    end
+    sellers_with_lines << [ build_seller_from_line(line), line ]
   end
   Seller.transaction do
-    sellers.each {|seller| seller.save!}
+    sellers_with_lines.each do |seller, line|
+      if seller.valid?
+        seller.save!
+        Rails.logger.info "Saved seller: #{seller}"
+      else
+        raise "Seller #{seller} from line '#{line.chomp}' not valid! #{seller.errors.full_messages.join("; ")}"
+      end
+    end
   end
 end
 
 def build_seller_from_line(line)
-  fields = line.split(";")
+  fields = line.split(";", -1)
   code, name, rate_category = fields[0], fields[1].strip, fields[3].strip.upcase
-  result = Seller.new
-  pair = split_code(code)
+  seller = Seller.new
+  pair = Seller.split_code(code)
   if pair
     seller.initials = pair[0]
     seller.number = pair[1]
@@ -45,8 +46,7 @@ def build_seller_from_line(line)
     else
       20
     end
-  result = nil unless result.valid?
-  result
+  seller
 end
 
 load_initial_sellers 'initial_sellers.csv'

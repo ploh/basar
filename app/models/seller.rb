@@ -56,6 +56,10 @@ class Seller < ActiveRecord::Base
     total_revenue - total_commission
   end
 
+  def to_s
+    "<Seller: #{code} #{name}, #{rate_in_percent}%>"
+  end
+
   private
 
   def self.split_code(code)
