@@ -19,13 +19,6 @@ class Item < ActiveRecord::Base
     end
   end
 
-#   before_validation do
-#     if seller
-#     p "AAAAAAAAAAAAA"
-#     p errors
-#     debugger
-#   end
-
   def seller_code
     if seller.kind_of? Seller
       self.seller.code
@@ -36,8 +29,11 @@ class Item < ActiveRecord::Base
 
   def seller_code=(obj)
     sellers = Seller.get_all_by_code( obj )
-    debugger
-    self.seller =  sellers.size == 1 ? sellers.first : obj
+    if sellers.size == 1
+      self.seller = sellers.first
+    else
+      @seller = obj
+    end
     self.seller_code
   end
 end
