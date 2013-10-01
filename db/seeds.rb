@@ -21,6 +21,7 @@ def load_initial_sellers(csv_file)
       if seller.valid?
         seller.save!
         Rails.logger.info "Saved seller: #{seller}"
+        p "Saved seller: #{seller}"
       else
         raise "Seller #{seller} from line '#{line.chomp}' not valid! #{seller.errors.full_messages.join("; ")}"
       end

@@ -1,9 +1,8 @@
 class Seller < ActiveRecord::Base
   has_many :items, dependent: :restrict_with_exception
 
-  validates :initials, presence: true, uniqueness: true, length: { in: 2..5 }
+  validates :initials, presence: true, length: { in: 2..5 }
   validates :number, presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
-  validates :name, presence: true, uniqueness: true
   validates :rate, presence: true, numericality: true, inclusion: { in: [0.1, 0.15, 0.2], message: "has to be 10, 15 or 20%" }
 
   def rate_in_percent
