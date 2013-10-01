@@ -1,0 +1,1 @@
+- seller form: rate as selection list

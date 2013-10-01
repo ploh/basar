@@ -24,7 +24,7 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(transaction_params)
 
     if @transaction.save
-      redirect_to transactions_path, notice: 'Transaction was successfully created.'
+      redirect_to @transaction, notice: 'Transaction was successfully created.'
     else
       render action: 'new'
     end
@@ -33,7 +33,7 @@ class TransactionsController < ApplicationController
   # PATCH/PUT /transactions/1
   def update
     if @transaction.update(transaction_params)
-      redirect_to transactions_path, notice: 'Transaction was successfully updated.'
+      redirect_to @transaction, notice: 'Transaction was successfully updated.'
     else
       render action: 'edit'
     end
@@ -43,6 +43,13 @@ class TransactionsController < ApplicationController
   def destroy
     @transaction.destroy
     redirect_to transactions_url, notice: 'Transaction was successfully destroyed.'
+  end
+
+  # for AJAX validation requests
+  def validate
+    @transaction = Transaction.new(transaction_params)
+    @transaction.valid?
+    render partial: 'form'
   end
 
   private
@@ -58,7 +65,7 @@ class TransactionsController < ApplicationController
         values["seller_code"].blank? && values["price"].blank?
       end
       result["items_attributes"].each do |id, values|
-        values["price"] = values["price"].gsub(",",".") if values["price"]
+        values["price"] = values["price"].gsub(",", ".") if values["price"]
       end
       result
     end

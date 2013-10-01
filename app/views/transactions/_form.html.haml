@@ -1,9 +1,6 @@
 #transaction_form
-  - if @transaction.created_at
-    .timestamp
-      Created at:
-      = @transaction.created_at
-
+  - if @transaction.id
+    = render "summary"
   = form_for @transaction do |f|
     - if @transaction.errors.any?
       #error_explanation
@@ -20,10 +17,10 @@
             %td
               .field
                 = i.label :seller_code, "Seller"
-                = i.text_field :seller_code, size: 10, maxlength: 10
+                = i.text_field :seller_code, size: 10, maxlength: 10, autocomplete: :off
             %td
               .field
                 = i.label :price
-                = i.number_field :price, in: 0..1000, step: 0.01
-    .actions
+                = i.number_field :price, in: 0..1000, step: 0.01, autocomplete: :off
+    .actions{style: "margin-bottom: 3ex"}
       = f.submit 'Save'

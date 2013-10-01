@@ -1,9 +1,6 @@
-%p
-  %b Created at:
-  = @transaction.created_at
-%p{style: "margin-bottom: 5ex"}
-  %b Updated at:
-  = @transaction.created_at
+%h1 View transaction
+
+= render "summary"
 - @transaction.items.each do |item|
   %p
     %b Seller:
@@ -12,13 +9,10 @@
   %p{style: "margin-bottom: 5ex"}
     %b Price:
     = item.price
-%p
-  %b Number of items:
-  = @transaction.items.count
-%p
-  %b Total Amount:
-  = @transaction.total_price
+    EUR
 
 = link_to 'Edit', edit_transaction_path(@transaction)
 \|
-= link_to 'Back', transactions_path
+= link_to 'New', new_transaction_path
+\|
+= link_to 'List', transactions_path

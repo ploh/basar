@@ -1,6 +1,8 @@
 Basar::Application.routes.draw do
   resources :transactions
 
+  get 'transactions/validate' => 'transactions#validate', as: :validate_transaction
+
   resources :sellers
 
   # The priority is based upon order of creation: first created -> highest priority.

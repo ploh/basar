@@ -8,16 +8,16 @@
 
   .field
     = f.label :name
-    = f.text_field :name
+    = f.text_field :name, autocomplete: :off
   .field
     = f.label :number
-    = f.number_field :number
+    = f.number_field :number, autocomplete: :off
   .field
     = f.label :initials
-    = f.text_field :initials
+    = f.text_field :initials, autocomplete: :off
   .field
-    = f.label :rate, for: :seller_rate_in_percent
-    = f.number_field :rate_in_percent
+    = f.label :rate_in_percent, "Rate"
+    = f.number_field :rate_in_percent, autocomplete: :off
     \%
   .actions
     = f.submit 'Save'
