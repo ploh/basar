@@ -21,10 +21,9 @@
       %td= seller.initials
       %td= "#{seller.rate_in_percent} %"
       %td= seller.number_of_items
-      %td= seller.total_revenue
-      %td= seller.total_commission
-      %td= seller.total_payout
-      %td= link_to 'Show', seller
+      %td= money_string seller.total_revenue
+      %td= money_string seller.total_commission
+      %td= money_string seller.total_payout
       %td= link_to 'Edit', edit_seller_path(seller)
       %td= link_to 'Destroy', seller, :method => :delete, :data => { :confirm => 'Are you sure?' }
 

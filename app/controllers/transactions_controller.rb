@@ -48,7 +48,9 @@ class TransactionsController < ApplicationController
   # for AJAX validation requests
   def validate
     @transaction = Transaction.new(transaction_params)
+    @transaction.items.each {|item| item.price ||= 999}
     @transaction.valid?
+    @transaction.items.each {|item| item.price = nil if item.price == 999}
     render partial: 'form'
   end
 

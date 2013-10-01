@@ -8,8 +8,7 @@
     = item.seller.name
   %p{style: "margin-bottom: 5ex"}
     %b Price:
-    = item.price
-    EUR
+    = money_string item.price
 
 = link_to 'Edit', edit_transaction_path(@transaction)
 \|

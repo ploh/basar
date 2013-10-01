@@ -1,26 +1,25 @@
-#transaction_form
-  - if @transaction.id
-    = render "summary"
-  = form_for @transaction do |f|
-    - if @transaction.errors.any?
-      #error_explanation
-        %h2= "#{pluralize(@transaction.errors.count, "error")} prohibited this transaction from being saved:"
-        %ul
-          - @transaction.errors.full_messages.each do |msg|
-            %li= msg
+- if @transaction.id
+  = render "summary"
+= form_for @transaction do |f|
+  - if @transaction.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@transaction.errors.count, "error")} prohibited this transaction from being saved:"
+      %ul
+        - @transaction.errors.full_messages.each do |msg|
+          %li= msg
 
-    %table
-      - 5.times {@transaction.items.build} unless @transaction.errors.any?
-      - @transaction.items.each do |item|
-        %tr
-          = f.fields_for :items, item do |i|
-            %td
-              .field
-                = i.label :seller_code, "Seller"
-                = i.text_field :seller_code, size: 10, maxlength: 10, autocomplete: :off
-            %td
-              .field
-                = i.label :price
-                = i.number_field :price, in: 0..1000, step: 0.01, autocomplete: :off
-    .actions{style: "margin-bottom: 3ex"}
-      = f.submit 'Save'
+  %table
+    - 3.times {@transaction.items.build} # unless @transaction.errors.any?
+    - @transaction.items.each do |item|
+      %tr
+        = f.fields_for :items, item do |i|
+          %td
+            .field
+              = i.label :seller_code, "Seller"
+              = i.text_field :seller_code, size: 10, maxlength: 10, autocomplete: :off
+          %td
+            .field
+              = i.label :price
+              = i.number_field :price, in: 0..1000, step: 0.01, autocomplete: :off
+  .actions{style: "margin-bottom: 3ex"}
+    = f.submit 'Save'
