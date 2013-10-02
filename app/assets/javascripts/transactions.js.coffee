@@ -18,12 +18,13 @@ set_focus = (focus_id) ->
 
 register_handler = ->
   $(".field input").blur ->
-    if $(this).attr("type") == "number" && $(this).val() == ""
+    if $(this).attr("type") == "number" && /^\s*$/.test $(this).val()
       $(this).val("a")
     $.ajax "/transactions/validate", { data: $("#transaction_form form").serialize(), timeout: 2000, success: replace_transaction_form }
 
 replace_transaction_form = (data, status, jqXHR) ->
   focus_id = $(":focus").attr("id")
+#   if focus_id != "transaction_submit"
   $("#transaction_form").html data
   process_page_change(focus_id)
 

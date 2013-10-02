@@ -3,15 +3,17 @@ class Transaction < ActiveRecord::Base
 
   accepts_nested_attributes_for :items
 
-  before_save do
-    self.updated_at = (items.map {|item| item.updated_at || Time.at(0)} + [self.updated_at || Time.at(0)]).max
-  end
+#   around_save do
+#     big_bang = Time.at(0)
+#     newest_update = (items.map {|item| item.updated_at || big_bang} + [self.updated_at || big_bang]).max
+#     self.updated_at =  newest_update == big_bang ? nil : newest_update
+#   end
 
   def total_price
     items.map {|item| item.price || 0}.inject(0, :+)
   end
 
   def number_of_items
-    items.count
+    items.map {|i| 1}.inject(0, :+)
   end
 end

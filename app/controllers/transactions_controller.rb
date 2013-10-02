@@ -28,6 +28,8 @@ class TransactionsController < ApplicationController
     else
       render action: 'new'
     end
+#     @transaction.save
+#     redirect_to @transaction, notice: 'Transaction was successfully created.'
   end
 
   # PATCH/PUT /transactions/1
