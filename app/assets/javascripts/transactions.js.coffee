@@ -2,6 +2,32 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+create_overlay = ->
+  d = document.createElement('div');
+  $(d).css(
+    background: 'lightgray',
+#     opacity: '0.4',
+    width: '50%',
+    height: '50%',
+    position: 'absolute',
+    top: '25%',
+    left: '25%',
+    zIndex: 100
+  ).attr('id', 'cash_overlay')
+  $('body').append(d)
+
+display_overlay = ->
+  if $('#cash_overlay').length == 0
+    create_overlay()
+  $('#cash_overlay').html \
+    """
+    <p>
+    #{$("#total_price").html()}
+    </p>
+    """
+  window.prompt "Cash given (in EUR):"
+  bind_overlay_hotkeys()
+
 handle_errors = ->
   if $("#error_explanation").length > 0
     $("audio").trigger "play"
@@ -35,20 +61,33 @@ process_page_change = (focus_id) ->
     handle_errors()
     set_focus(focus_id)
     register_handler()
+  bind_overlay_hotkeys()
+
+bind_element_to_hotkey = (selector, key, handler) ->
+  element = $(selector)
+  if element.length > 0
+    if !handler
+      handler = -> element[0].click()
+    $(document).on('keypress', null, key, handler)
 
 bind_link_to_hotkey = (href, key) ->
-  link = $('a[href="' + href + '"]')
-  if link.length > 0
-    $(document).on('keypress', null, key, -> link[0].click())
+  bind_element_to_hotkey 'a[href="' + href + '"]', key
 
 bind_hotkeys = ->
   bind_link_to_hotkey "/transactions", "l"
   bind_link_to_hotkey "/transactions/new", "n"
+  bind_element_to_hotkey "#cash_given_link", "g", display_overlay
 
 bind_transaction_form_hotkeys = ->
   $("input").keyup (e) ->
     if e.keyCode == 27
       window.location.href = "/transactions"
+
+bind_overlay_hotkeys = ->
+  $(document).keyup (e) ->
+    if e.keyCode == 27
+      $("#cash_overlay").remove()
+  bind_element_to_hotkey "#cash_given_link", "g", display_overlay
 
 jQuery ->
   process_page_change()

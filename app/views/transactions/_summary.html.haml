@@ -8,6 +8,6 @@
 %p
   %b Number of items:
   = @transaction.number_of_items
-%p{style: "margin-bottom: 5ex"}
+%p#total_price{style: "margin-bottom: 5ex"}
   %b Total Price:
   = money_string @transaction.total_price
