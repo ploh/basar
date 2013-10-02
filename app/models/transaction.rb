@@ -3,6 +3,10 @@ class Transaction < ActiveRecord::Base
 
   accepts_nested_attributes_for :items
 
+  before_save do
+    items.each {|item| item.destroy if item.price == 0.0}
+  end
+
 #   around_save do
 #     big_bang = Time.at(0)
 #     newest_update = (items.map {|item| item.updated_at || big_bang} + [self.updated_at || big_bang]).max

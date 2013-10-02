@@ -24,7 +24,7 @@ class SellersController < ApplicationController
     @seller = Seller.new(seller_params)
 
     if @seller.save
-      redirect_to @seller, notice: 'Seller was successfully created.'
+      redirect_to sellers_path, notice: 'Seller was successfully created.'
     else
       render action: 'new'
     end
@@ -33,7 +33,7 @@ class SellersController < ApplicationController
   # PATCH/PUT /sellers/1
   def update
     if @seller.update(seller_params)
-      redirect_to @seller, notice: 'Seller was successfully updated.'
+      redirect_to sellers_path, notice: 'Seller was successfully updated.'
     else
       render action: 'edit'
     end
