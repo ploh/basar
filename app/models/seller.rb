@@ -24,7 +24,9 @@ class Seller < ActiveRecord::Base
   def self.find_by_code(code)
     if pair = split_code(code)
       initials, number = pair
-      self.where(initials: initials, number: number).first
+      conditions = {number: number}
+      conditions.merge!({initials: initials}) unless initials.blank?
+      self.where(conditions).first
     end
   end
 

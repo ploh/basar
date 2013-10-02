@@ -29,7 +29,9 @@ replace_transaction_form = (data, status, jqXHR) ->
   process_page_change(focus_id)
 
 process_page_change = (focus_id) ->
+  bind_hotkeys()
   if $("#transaction_form").length > 0
+    bind_transaction_form_hotkeys()
     handle_errors()
     set_focus(focus_id)
     register_handler()
@@ -39,7 +41,14 @@ bind_link_to_hotkey = (href, key) ->
   if link.length > 0
     $(document).on('keypress', null, key, -> link[0].click())
 
-jQuery ->
+bind_hotkeys = ->
   bind_link_to_hotkey "/transactions", "l"
   bind_link_to_hotkey "/transactions/new", "n"
+
+bind_transaction_form_hotkeys = ->
+  $("input").keyup (e) ->
+    if e.keyCode == 27
+      window.location.href = "/transactions"
+
+jQuery ->
   process_page_change()

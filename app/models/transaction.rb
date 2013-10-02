@@ -16,4 +16,25 @@ class Transaction < ActiveRecord::Base
   def number_of_items
     items.map {|i| 1}.inject(0, :+)
   end
+
+  def self.create_dummy_transactions(quantity)
+    start = Time.now
+    seed = Random.new_seed
+    p "Random seed: #{seed}"
+    generator = Random.new seed
+    sellers = Seller.all.to_a
+    quantity.times do
+      transaction = Transaction.new
+      number_of_items = generator.rand(10..20)
+      number_of_items.times do
+        seller = sellers.sample
+        price = (generator.rand * 100).round / 10.0
+        transaction.items.build(seller: seller, price: price)
+      end
+      unless transaction.save
+        raise
+      end
+    end
+    p "Created #{quantity} random transactions in #{Time.now-start} seconds"
+  end
 end
