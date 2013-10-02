@@ -47,7 +47,7 @@ class TransactionsController < ApplicationController
 
   # for AJAX validation requests
   def validate
-    @transaction = Transaction.new(transaction_params)
+    @transaction = Transaction.new(transaction_params(false))
     @transaction.items.each {|item| item.price ||= 999}
     @transaction.valid?
     @transaction.items.each {|item| item.price = nil if item.price == 999}
@@ -61,8 +61,9 @@ class TransactionsController < ApplicationController
     end
 
     # Only allow a trusted parameter "white list" through.
-    def transaction_params
-      result = params.require(:transaction).permit(:items_attributes => [:id, :seller_code, :price, :transaction_id])
+    def transaction_params(with_item_id = true)
+      allowed_item_attributes = (with_item_id ? [:id] : []) + [:seller_code, :price, :transaction_id]
+      result = params.require(:transaction).permit(:items_attributes => allowed_item_attributes)
       result["items_attributes"].delete_if do |id, values|
         values["seller_code"].blank? && values["price"].blank?
       end

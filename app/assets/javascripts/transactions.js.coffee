@@ -7,8 +7,8 @@ handle_errors = ->
     $("audio").trigger "play"
 
 set_focus = (focus_id) ->
+  $(".field input").focus(-> $(this).select())
   if $(".field_with_errors").length > 0
-    $(".field_with_errors input:first").select()
     $(".field_with_errors input:first").focus()
   else
     if focus_id
@@ -17,9 +17,10 @@ set_focus = (focus_id) ->
       $(".field input").filter(-> $(this).val() == "").first().focus()
 
 register_handler = ->
-  if $("#transaction_form").length > 0
-    $(".field input").blur ->
-      $.ajax "/transactions/validate", { data: $("#transaction_form form").serialize(), timeout: 2000, success: replace_transaction_form }
+  $(".field input").blur ->
+    if $(this).attr("type") == "number" && $(this).val() == ""
+      $(this).val("a")
+    $.ajax "/transactions/validate", { data: $("#transaction_form form").serialize(), timeout: 2000, success: replace_transaction_form }
 
 replace_transaction_form = (data, status, jqXHR) ->
   focus_id = $(":focus").attr("id")
@@ -27,9 +28,10 @@ replace_transaction_form = (data, status, jqXHR) ->
   process_page_change(focus_id)
 
 process_page_change = (focus_id) ->
-  handle_errors()
-  set_focus(focus_id)
-  register_handler()
+  if $("#transaction_form").length > 0
+    handle_errors()
+    set_focus(focus_id)
+    register_handler()
 
 jQuery ->
   process_page_change()
