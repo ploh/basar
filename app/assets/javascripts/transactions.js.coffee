@@ -34,6 +34,12 @@ process_page_change = (focus_id) ->
     set_focus(focus_id)
     register_handler()
 
+bind_link_to_hotkey = (href, key) ->
+  link = $('a[href="' + href + '"]')
+  if link.length > 0
+    $(document).on('keypress', null, key, -> link[0].click())
+
 jQuery ->
-  $(document).bind('keypress', 'l', -> alert('hallo'))
+  bind_link_to_hotkey "/transactions", "l"
+  bind_link_to_hotkey "/transactions/new", "n"
   process_page_change()
