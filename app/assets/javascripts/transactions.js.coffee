@@ -35,4 +35,5 @@ process_page_change = (focus_id) ->
     register_handler()
 
 jQuery ->
+  $(document).bind('keypress', 'l', -> alert('hallo'))
   process_page_change()

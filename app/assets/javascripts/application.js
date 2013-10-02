@@ -12,7 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-// # require turbolinks
+//= require jquery-hotkeys
+//= require jquery.turbolinks
+//= require turbolinks
 //= require_tree .
 
 // window.onload = function() {

@@ -17,6 +17,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/1/edit
   def edit
+    redirect_to @transaction
   end
 
   # POST /transactions
