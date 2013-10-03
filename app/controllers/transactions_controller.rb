@@ -3,7 +3,12 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   def index
+    @transactions = Transaction.order("created_at desc").limit(50)
+  end
+
+  def index_all
     @transactions = Transaction.order("created_at desc")
+    render "index"
   end
 
   # GET /transactions/1

@@ -10,7 +10,9 @@
     %table#menu
       %tr
         %td= link_to "Sellers", sellers_path
-        %td= link_to "Transactions", transactions_path
+        %td
+          = link_to "Transactions", transactions_path
+          = link_to "(all)", all_transactions_path
 
     - if flash[:notice]
       #notice.message= flash[:notice]

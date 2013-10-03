@@ -1,5 +1,6 @@
 Basar::Application.routes.draw do
 
+  get 'transactions/all' => 'transactions#index_all', as: :all_transactions
   post 'transactions/validate' => 'transactions#validate', as: :validate_transaction
   resources :transactions
 
