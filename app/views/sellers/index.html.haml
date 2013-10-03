@@ -27,6 +27,18 @@
       %td= link_to 'Edit', edit_seller_path(seller)
       %td= link_to 'Destroy', seller, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
+  %tr
+    %td SUMME
+    %td
+    %td
+    %td
+    %td= @sellers.map {|seller| seller.number_of_items}.inject(0, :+)
+    %td= money_string @sellers.map {|seller| seller.total_revenue}.inject(0, :+)
+    %td= money_string @sellers.map {|seller| seller.total_commission}.inject(0, :+)
+    %td= money_string @sellers.map {|seller| seller.total_payout}.inject(0, :+)
+    %td
+    %td
+
 %br
 
 = link_to 'New Seller', new_seller_path
