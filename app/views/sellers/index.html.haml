@@ -31,12 +31,12 @@
       %td= money_string seller.total_commission
       %td= money_string seller.total_payout
       %td
-      %td= money_string seller.total_commission(10)
-      %td= money_string seller.total_payout(10)
-      %td= money_string seller.total_commission(15)
-      %td= money_string seller.total_payout(15)
-      %td= money_string seller.total_commission(20)
-      %td= money_string seller.total_payout(20)
+      %td= money_string seller.total_commission(0.10)
+      %td= money_string seller.total_payout(0.10)
+      %td= money_string seller.total_commission(0.15)
+      %td= money_string seller.total_payout(0.15)
+      %td= money_string seller.total_commission(0.20)
+      %td= money_string seller.total_payout(0.20)
       %td= link_to 'Edit', edit_seller_path(seller)
       %td= link_to 'Destroy', seller, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
@@ -50,12 +50,12 @@
     %td= money_string @sellers.map {|seller| seller.total_commission}.inject(0, :+)
     %td= money_string @sellers.map {|seller| seller.total_payout}.inject(0, :+)
     %td
-    %td= money_string @sellers.map {|seller| seller.total_commission(10)}.inject(0, :+)
-    %td= money_string @sellers.map {|seller| seller.total_payout(10)}.inject(0, :+)
-    %td= money_string @sellers.map {|seller| seller.total_commission(15)}.inject(0, :+)
-    %td= money_string @sellers.map {|seller| seller.total_payout(15)}.inject(0, :+)
-    %td= money_string @sellers.map {|seller| seller.total_commission(20)}.inject(0, :+)
-    %td= money_string @sellers.map {|seller| seller.total_payout(20)}.inject(0, :+)
+    %td= money_string @sellers.map {|seller| seller.total_commission(0.10)}.inject(0, :+)
+    %td= money_string @sellers.map {|seller| seller.total_payout(0.10)}.inject(0, :+)
+    %td= money_string @sellers.map {|seller| seller.total_commission(0.15)}.inject(0, :+)
+    %td= money_string @sellers.map {|seller| seller.total_payout(0.15)}.inject(0, :+)
+    %td= money_string @sellers.map {|seller| seller.total_commission(0.20)}.inject(0, :+)
+    %td= money_string @sellers.map {|seller| seller.total_payout(0.20)}.inject(0, :+)
     %td
     %td
 
