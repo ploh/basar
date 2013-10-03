@@ -49,12 +49,12 @@ class Seller < ActiveRecord::Base
     items.map {|item| item.price || 0}.inject(0, :+)
   end
 
-  def total_commission
+  def total_commission(rate = self.rate)
     total_revenue * rate
   end
 
-  def total_payout
-    total_revenue - total_commission
+  def total_payout(rate = self.rate)
+    total_revenue - total_commission(rate)
   end
 
   def to_s
