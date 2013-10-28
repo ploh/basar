@@ -49,6 +49,10 @@ When /^(?:|I )go to (.+)$/ do |page_name|
   visit path_to(page_name)
 end
 
+When /^(?:|I )press Enter$/ do
+  first('input').native.send_keys :return
+end
+
 When /^(?:|I )press "([^"]*)"$/ do |button|
   click_button(button)
 end
@@ -63,6 +67,10 @@ end
 
 When /^(?:|I )fill in "([^"]*)" for "([^"]*)"$/ do |value, field|
   fill_in(field, :with => value)
+end
+
+When /^(?:|I )fill in the (\d+)(?:st|nd|rd|th) "([^"]*)" with "([^"]*)"$/ do |number, field, value|
+  all(:field, field).at(number.to_i-1).set value
 end
 
 # Use this to fill in an entire form with data from a table. Example:
@@ -104,11 +112,7 @@ end
 
 Then /^(?:|I )should see "([^"]*)"$/ do |text|
   content = text.include?("(...)") ? Regexp.new(text.split("(...)").map {|part| Regexp.escape(part)}.join(".*")) : text
-  if page.respond_to? :should
-    page.should have_content(content)
-  else
-    assert page.has_content?(content)
-  end
+  page.should have_content(content)
 end
 
 Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
@@ -252,4 +256,12 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+Then /^debug$/ do
+  byebug
+end
+
+When /^(?:|I )wait for (\d+) seconds?$/ do |seconds|
+  sleep seconds.to_i
 end

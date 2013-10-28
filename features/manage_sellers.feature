@@ -14,15 +14,3 @@ Scenario: Register new seller
   And I should see "1"
   And I should see "SCM"
   And I should see "20 %"
-
-Scenario: Delete seller
-  Given the following sellers:
-    |name|number|initials|rate_in_percent|
-    |Inge Schmidt|1     |SCM     |20 |
-    |Anna Lohmann|2     |AL      |10 |
-    |Astrid Meyer|3     |AM      |15|
-  When I delete the 2nd seller
-  Then I should see the following sellers:
-    |Name|Number|Initials|Rate|
-    |Inge Schmidt|1|SCM|20 % |
-    |Astrid Meyer|3|AM |15 %|
