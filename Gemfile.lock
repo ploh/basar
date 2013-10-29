@@ -65,7 +65,7 @@ GEM
       rails (>= 3.0.0)
     cucumber-rails-training-wheels (1.0.0)
       cucumber-rails (>= 1.1.1)
-    database_cleaner (1.1.1)
+    database_cleaner (1.0.1)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.4)
     erubis (2.7.0)
@@ -207,7 +207,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   cucumber-rails
   cucumber-rails-training-wheels
-  database_cleaner
+  database_cleaner (<= 1.0.1)
   haml
   haml-rails
   headless

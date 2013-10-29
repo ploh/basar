@@ -15,12 +15,14 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
-    when /the new transaction page/
+    when /^the new transaction page$/
       new_transaction_path
 
-    when /the new seller page/
+    when /^the new seller page$/
       new_seller_path
 
+    when /^a (.+)'s page$/
+      /^#{Regexp.escape(self.send( $1.split(/\s+/).push('path').join('_').to_sym, 1).sub(/1$/, ''))}\d+/
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

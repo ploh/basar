@@ -231,15 +231,16 @@ Then /^the "([^"]*)" checkbox(?: within (.*))? should not be checked$/ do |label
     end
   end
 end
- 
+
 Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
-  if current_path.respond_to? :should
-    current_path.should == path_to(page_name)
-  else
-    assert_equal path_to(page_name), current_path
-  end
+  current_path.should match path_to page_name
 end
+
+# Then /^(?:|I )should be on a (.+)'s page$/ do |model_name|
+#   current_path = URI.parse(current_url).path
+#   current_path.should == self.send(model_name.split(/\s+/).push('path').join('_').to_sym)
+# end
 
 Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query
@@ -258,7 +259,7 @@ Then /^show me the page$/ do
   save_and_open_page
 end
 
-When /^(?:|I )wait for (\d+) seconds?$/ do |seconds|
+When /^(?:|I )wait (?:for )?(\d+) seconds?$/ do |seconds|
   sleep seconds.to_i
 end
 
