@@ -80,6 +80,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    headless (1.0.1)
     hike (1.2.3)
     i18n (0.6.5)
     jquery-hotkeys-rails (0.7.9.1)
@@ -209,6 +210,7 @@ DEPENDENCIES
   database_cleaner
   haml
   haml-rails
+  headless
   jquery-hotkeys-rails
   jquery-rails
   jquery-turbolinks

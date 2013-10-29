@@ -258,10 +258,15 @@ Then /^show me the page$/ do
   save_and_open_page
 end
 
+When /^(?:|I )wait for (\d+) seconds?$/ do |seconds|
+  sleep seconds.to_i
+end
+
 Then /^debug$/ do
   byebug
 end
 
-When /^(?:|I )wait for (\d+) seconds?$/ do |seconds|
-  sleep seconds.to_i
+Then /^prompt$/ do
+  $stdout.puts "Press ENTER to continue!"
+  $stdin.gets
 end

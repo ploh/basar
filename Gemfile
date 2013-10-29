@@ -67,6 +67,10 @@ group :test do
   gem 'ZenTest'
 end
 
+group :cucumber do
+  gem 'headless'
+end
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'

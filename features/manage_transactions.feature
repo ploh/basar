@@ -12,10 +12,9 @@ Scenario: Enter new transaction
     |Astrid Meyer|3     |AM      |15|
   And I am on the new transaction page
   When I fill in the 1st "Seller" with "SCM01"
-  And I wait for 1 second
   And I fill in the 1st "Price" with "3,20"
   And I wait for 1 second
   And I fill in the 1st "Price" with "3,20"
-  And I wait for 1 second
   And I press Enter
+  And prompt
   Then I should see "Transaction (...) created"
