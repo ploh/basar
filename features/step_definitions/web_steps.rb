@@ -49,8 +49,8 @@ When /^(?:|I )go to (.+)$/ do |page_name|
   visit path_to(page_name)
 end
 
-When /^(?:|I )press Enter$/ do
-  first('input').native.send_keys :return
+When /^(?:|I )press ([^"]+)$/ do |key|
+  first('input').native.send_keys key.downcase.to_sym
 end
 
 When /^(?:|I )press "([^"]*)"$/ do |button|
@@ -236,11 +236,6 @@ Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
   current_path.should match path_to page_name
 end
-
-# Then /^(?:|I )should be on a (.+)'s page$/ do |model_name|
-#   current_path = URI.parse(current_url).path
-#   current_path.should == self.send(model_name.split(/\s+/).push('path').join('_').to_sym)
-# end
 
 Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query

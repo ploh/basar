@@ -1,11 +1,10 @@
 = render "summary"
 = form_for @transaction do |f|
-  - if @transaction.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@transaction.errors.count, "error")} prohibited this transaction from being saved:"
-      %ul
-        - @transaction.errors.full_messages.each do |msg|
-          %li= msg
+  #error_explanation{ class: !@transaction.errors.any? && "hidden" }
+    %h2= "#{pluralize(@transaction.errors.count, "error")} prohibited this transaction from being saved:"
+    %ul
+      - @transaction.errors.full_messages.each do |msg|
+        %li= msg
 
   %table
     - 3.times {@transaction.items.build} # unless @transaction.errors.any?

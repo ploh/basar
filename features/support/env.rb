@@ -8,18 +8,27 @@ require 'cucumber/rails'
 
 
 # Headless UI tests
-require 'headless'
-headless = Headless.new
-at_exit do
-  headless.destroy
-end
+$view_tests = ENV["VIEW"]
 
-Before("@selenium,@javascript", "~@no-headless") do
-  headless.start if Capybara.current_driver == :selenium
-end
+if $view_tests
+  AfterStep("@selenium,@javascript") do
+    sleep 1
+  #   $stdin.gets
+  end
+else
+  require 'headless'
+  headless = Headless.new
+  at_exit do
+    headless.destroy
+  end
 
-After("@selenium,@javascript", "~@no-headless") do
-  headless.stop if Capybara.current_driver == :selenium
+  Before("@selenium,@javascript", "~@no-headless") do
+    headless.start if Capybara.current_driver == :selenium
+  end
+
+  After("@selenium,@javascript", "~@no-headless") do
+    headless.stop if Capybara.current_driver == :selenium
+  end
 end
 
 
@@ -72,8 +81,3 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
-
-
-# AfterStep do
-#   sleep 1
-# end

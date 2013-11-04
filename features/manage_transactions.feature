@@ -3,14 +3,18 @@ Feature: Enter transaction
   a check-out person
   wants to enter a transaction with all its items
 
-@javascript
-Scenario: Enter new transaction
+
+Background:
   Given the following sellers:
     |name|number|initials|rate_in_percent|
     |Inge Schmidt|1     |SCM     |20 |
     |Anna Lohmann|2     |AL      |10 |
     |Astrid Meyer|3     |AM      |15|
-  And I am on the new transaction page
+
+
+@javascript
+Scenario: Enter new transaction
+  Given I am on the new transaction page
   When I fill in the 1st "Seller" with "SCM01"
 #  And fill in the 1st "Price" with "a"
 #  And wait 1 second
@@ -20,3 +24,11 @@ Scenario: Enter new transaction
   And press Enter
   Then I should be on a transaction's page
   And should see "Transaction (...) created"
+
+
+@javascript
+Scenario: Enter erroneous transaction
+  Given I am on the new transaction page
+  When I fill in the 1st "Seller" with "SCM02"
+  And press Tab
+  Then I should see "Items seller code does not exist, maybe you meant one of SCM01, AL02"
