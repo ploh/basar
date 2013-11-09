@@ -46,11 +46,11 @@ register_handlers = ->
   $("input.seller_code").blur ->
 #     if $(this).attr("type") == "number" && /^\s*$/.test $(this).val()
 #       $(this).val("a")
-    alert "test"
-    $.ajax "/seller/validate_code", { type: "POST", data: $(this).val(), timeout: 2000, success: update_field($(this).attr("id")) }
+#     alert "test"
+    $.ajax "/sellers/validate_code", { type: "POST", context: $(this), data: {seller_code: $(this).val()}, timeout: 2000, success: update_field }
 
-update_filed = (id) ->
-  alert id
+update_field = (data, status, jqXHR) ->
+  alert $(this).attr("id")
 
 replace_transaction_form = (data, status, jqXHR) ->
   focus_id = $(":focus").attr("id")
