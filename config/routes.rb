@@ -1,9 +1,10 @@
 Basar::Application.routes.draw do
 
   get 'transactions/all' => 'transactions#index_all', as: :all_transactions
-  post 'transactions/validate' => 'transactions#validate', as: :validate_transaction
+  post 'transactions/validate_price' => 'transactions#validate_price', as: :validate_price
   resources :transactions
 
+  post 'sellers/validate_code' => 'sellers#validate_code', as: :validate_seller_code
   resources :sellers
 
   # The priority is based upon order of creation: first created -> highest priority.

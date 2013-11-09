@@ -12,12 +12,10 @@
       %tr
         = f.fields_for :items, item do |i|
           %td
-            .field
-              = i.label :seller_code, "Seller"
-              = i.text_field :seller_code, size: 10, maxlength: 10, autocomplete: :off
+            = i.label :seller_code, "Seller"
+            = i.text_field :seller_code, class: "seller_code", size: 10, maxlength: 10, autocomplete: :off
           %td
-            .field
-              = i.label :price
-              = i.number_field :price, in: 0..1000, step: 0.01, autocomplete: :off
+            = i.label :price
+            = i.number_field :price, class: "price", in: 0..1000, step: 0.01, autocomplete: :off
   .actions{style: "margin-bottom: 3ex"}
     = f.submit 'Save', id: :transaction_submit

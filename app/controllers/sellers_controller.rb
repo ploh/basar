@@ -45,6 +45,16 @@ class SellersController < ApplicationController
     redirect_to sellers_url, notice: 'Seller was successfully destroyed.'
   end
 
+  # for AJAX validation requests
+  def validate_code
+    # TODO: create fake item with dummy price and given seller code, then validate it and return partials for items price as well as error_explanation via json
+    @transaction = Transaction.new(transaction_params(false))
+    @transaction.items.each {|item| item.price ||= 999}
+    @transaction.valid?
+    @transaction.items.each {|item| item.price = nil if item.price == 999}
+    render partial: 'form'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_seller

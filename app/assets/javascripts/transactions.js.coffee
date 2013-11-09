@@ -33,7 +33,7 @@ handle_errors = ->
     $("audio").trigger "play"
 
 set_focus = (focus_id) ->
-  $(".field input").focus(-> $(this).select())
+  $("input").focus(-> $(this).select())
   if $(".field_with_errors").length > 0
     $(".field_with_errors input:first").focus()
   else
@@ -42,11 +42,11 @@ set_focus = (focus_id) ->
     else
       $(".field input").filter(-> $(this).val() == "").first().focus()
 
-register_handler = ->
-  $(".field input").blur ->
-    if $(this).attr("type") == "number" && /^\s*$/.test $(this).val()
-      $(this).val("a")
-    $.ajax "/transactions/validate", { type: "POST", data: $("#transaction_form form").serialize(), timeout: 2000, success: replace_transaction_form }
+register_handlers = ->
+  $("input.seller_code").blur ->
+#     if $(this).attr("type") == "number" && /^\s*$/.test $(this).val()
+#       $(this).val("a")
+    $.ajax "/seller/validate_code", { type: "POST", data: $(this).val(), timeout: 2000, success: update_field($(this).attr("id")) }
 
 replace_transaction_form = (data, status, jqXHR) ->
   focus_id = $(":focus").attr("id")
@@ -60,7 +60,7 @@ process_page_change = (focus_id) ->
     bind_transaction_form_hotkeys()
     handle_errors()
     set_focus(focus_id)
-    register_handler()
+    register_handlers()
 #   bind_overlay_hotkeys()
 
 bind_element_to_hotkey = (selector, key, handler) ->
