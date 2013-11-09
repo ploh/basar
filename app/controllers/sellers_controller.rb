@@ -47,6 +47,12 @@ class SellersController < ApplicationController
 
   # for AJAX validation requests
   def validate_code
+    p params
+    return
+    dummy_item = Item.create_dummy
+    dummy_item.seller_code = params
+    dummy_transaction = Transaction.create_dummy
+    dummy_transaction
     # TODO: create fake item with dummy price and given seller code, then validate it and return partials for items price as well as error_explanation via json
     @transaction = Transaction.new(transaction_params(false))
     @transaction.items.each {|item| item.price ||= 999}
