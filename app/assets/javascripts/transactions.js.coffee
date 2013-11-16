@@ -33,7 +33,6 @@ handle_errors = ->
     $("audio").trigger "play"
 
 set_focus = (focus_id) ->
-  $(".field input").focus(-> $(this).select())
   if $(".field_with_errors").length > 0
     $(".field_with_errors input:first").focus()
   else
@@ -50,13 +49,16 @@ register_handler = ->
 
 replace_transaction_form = (data, status, jqXHR) ->
   focus_id = $(":focus").attr("id")
+  focus_value = $(":focus").val()
 #   if focus_id != "transaction_submit"
   $("#transaction_form").html data
+  $("#" + focus_id).val focus_value
   process_page_change(focus_id)
 
 process_page_change = (focus_id) ->
   bind_hotkeys()
   if $("#transaction_form").length > 0
+    $(".field input").focus(-> $(this).select())
     bind_transaction_form_hotkeys()
     handle_errors()
     set_focus(focus_id)
