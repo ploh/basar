@@ -1,5 +1,6 @@
-#error_explanation{ class: messages.empty? && "hidden" }
-  %h2= "#{pluralize(messages.count, "error")} prohibited this transaction from being valid:"
-  %ul
-    - messages.each do |msg|
-      %li= msg
+- unless messages.empty?
+  #error_explanation
+    %h2= "#{pluralize(messages.count, "error")} prohibited this transaction from being valid:"
+    %ul
+      - messages.each do |msg|
+        %li= msg
