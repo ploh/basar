@@ -76,7 +76,7 @@ class TransactionsController < ApplicationController
         values["seller_code"].blank? && values["price"].blank?
       end
       result["items_attributes"].each do |id, values|
-        values["price"] = values["price"].gsub(",", ".") if values["price"]
+        values["price"].gsub!(",", ".") if values["price"]
       end
       result
     end

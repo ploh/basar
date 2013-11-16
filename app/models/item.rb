@@ -38,4 +38,8 @@ class Item < ActiveRecord::Base
     end
     self.seller_code
   end
+
+  def self.create_dummy
+    new seller: Seller.first, price: 0.00
+  end
 end

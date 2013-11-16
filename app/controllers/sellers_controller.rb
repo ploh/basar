@@ -45,6 +45,26 @@ class SellersController < ApplicationController
     redirect_to sellers_url, notice: 'Seller was successfully destroyed.'
   end
 
+#   # for AJAX validation requests
+#   def validate_code
+# #     params.each {|pa| p pa}
+# 
+#     dummy_item = Item.create_dummy
+#     dummy_item.seller_code = params[:seller_code]
+#     dummy_transaction = Transaction.create_dummy
+#     dummy_transaction.items << dummy_item
+#     dummy_transaction.valid?
+#     render json: { error_explanation: render_to_string( partial: 'transactions/error_explanation', locals: {messages: dummy_transaction.errors.full_messages}),
+#                    seller_code: render_to_string( partial: 'items/seller_code', locals: {item: dummy_transaction.items.first}) }
+#     
+#     # TODO: create fake item with dummy price and given seller code, then validate it and return partials for items price as well as error_explanation via json
+# #     @transaction = Transaction.new(transaction_params(false))
+# #     @transaction.items.each {|item| item.price ||= 999}
+# #     @transaction.valid?
+# #     @transaction.items.each {|item| item.price = nil if item.price == 999}
+# #     render partial: 'form'
+#   end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_seller

@@ -34,8 +34,8 @@ class Seller < ActiveRecord::Base
     result = []
     if pair = split_code(code)
       initials, number = pair
-      result += self.where(initials: initials).all
-      result += self.where(number: number).all
+      result += self.where(initials: initials).to_a
+      result += self.where(number: number).to_a
     end
     result.uniq!
     result

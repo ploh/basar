@@ -41,4 +41,8 @@ class Transaction < ActiveRecord::Base
     end
     p "Created #{quantity} random transactions in #{Time.now-start} seconds"
   end
+
+  def self.create_dummy
+    new
+  end
 end

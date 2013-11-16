@@ -15,7 +15,7 @@
 #     zIndex: 100
 #   ).attr('id', 'cash_overlay')
 #   $('body').append(d)
-# 
+#
 # display_overlay = ->
 #   if $('#cash_overlay').length == 0
 #     create_overlay()

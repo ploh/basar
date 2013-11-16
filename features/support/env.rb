@@ -6,6 +6,32 @@
 
 require 'cucumber/rails'
 
+
+# Headless UI tests
+$view_tests = ENV["VIEW"]
+
+if $view_tests
+  AfterStep("@selenium,@javascript") do
+    sleep 1
+  #   $stdin.gets
+  end
+else
+  require 'headless'
+  headless = Headless.new
+  at_exit do
+    headless.destroy
+  end
+
+  Before("@selenium,@javascript", "~@no-headless") do
+    headless.start if Capybara.current_driver == :selenium
+  end
+
+  After("@selenium,@javascript", "~@no-headless") do
+    headless.stop if Capybara.current_driver == :selenium
+  end
+end
+
+
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
 # selectors in your step definitions to use the XPath syntax.
@@ -55,4 +81,3 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
-

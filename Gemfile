@@ -47,12 +47,13 @@ gem 'haml-rails'
 group :development, :test do
   gem 'sqlite3'
   gem 'byebug'
-  gem 'database_cleaner'
+  gem 'database_cleaner', '<= 1.0.1'
   gem 'capybara'
 #   gem 'launchy'
   gem 'rspec-rails'
   gem 'simplecov'
 #   gem 'minitest', '>= 5.0.0'
+  gem 'selenium-webdriver'
 end
 
 group :development do
@@ -64,6 +65,10 @@ group :test do
   gem 'cucumber-rails-training-wheels'
   gem 'autotest-rails'
   gem 'ZenTest'
+end
+
+group :cucumber do
+  gem 'headless'
 end
 
 group :production do
