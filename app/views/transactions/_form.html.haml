@@ -4,12 +4,13 @@
 
   %table
     - 3.times {@transaction.items.build} # unless @transaction.errors.any?
-    - @transaction.items.each do |item|
-      %tr
-        = f.fields_for :items, item do |i|
-          %td
-            = render partial: 'items/seller_code', locals: {item: i}
-          %td
-            = render partial: 'items/price', locals: {item: i}
+    - @transaction.items.each_with_index do |item, index|
+      - cache [item.seller_code, item.price, index] do
+        %tr
+          = f.fields_for :items, item do |form_item|
+            %td
+              = render partial: 'items/seller_code', locals: {item: form_item}
+            %td
+              = render partial: 'items/price', locals: {item: form_item}
   .actions{style: "margin-bottom: 3ex"}
     = f.submit 'Save', id: :transaction_submit

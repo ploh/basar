@@ -10,12 +10,12 @@ require 'cucumber/rails'
 # Headless UI tests
 $view_tests = ENV["VIEW"]
 
-if $view_tests
-  AfterStep("@selenium,@javascript") do
-    sleep 1
-  #   $stdin.gets
-  end
-else
+AfterStep("@selenium,@javascript") do
+  sleep ($view_tests ? 1 : 0.1)
+#   $stdin.gets
+end
+
+unless $view_tests
   require 'headless'
   headless = Headless.new
   at_exit do

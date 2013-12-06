@@ -70,6 +70,7 @@ When /^(?:|I )fill in "([^"]*)" for "([^"]*)"$/ do |value, field|
 end
 
 When /^(?:|I )fill in the (\d+)(?:st|nd|rd|th) "([^"]*)" with "([^"]*)"$/ do |number, field, value|
+#   sleep 0.2
   all(:field, field).at(number.to_i-1).set value
 end
 
