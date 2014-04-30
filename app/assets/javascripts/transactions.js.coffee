@@ -43,7 +43,7 @@ set_focus = (focus_id) ->
 
 register_handler = ->
   $(".field input").blur ->
-    if $(this).attr("type") == "number" && /^\s*$/.test $(this).val()
+    if $(this).attr("size") == "7" && /^\s*$/.test $(this).val()
       $(this).val("a")
     $.ajax "/transactions/validate", { type: "POST", data: $("#transaction_form form").serialize(), timeout: 2000, success: replace_transaction_form }
 
