@@ -31,7 +31,7 @@ end
 
 def build_seller_from_line(line)
   fields = line.split(";", -1)
-  code, name, rate_category = fields[0], fields[1].strip, fields[3].strip.upcase
+  code, name, rate_category = fields[0], fields[1].strip, fields[2].strip.upcase
   seller = Seller.new
   pair = Seller.split_code(code)
   if pair
