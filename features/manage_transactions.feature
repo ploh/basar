@@ -16,11 +16,10 @@ Background:
 Scenario: Enter new transaction
   Given I am on the new transaction page
   When I fill in the 1st "Seller" with "SCM01"
-#  And fill in the 1st "Price" with "a"
-#  And wait 1 second
   And fill in the 1st "Price" with "3,20"
   And fill in the 2nd "Seller" with "02"
-  And fill in the 2nd "Price" with ".4"
+#  And fill in the 2nd "Price" with ".4"
+  And fill in "transaction[items_attributes][1][price]" with ".4"
   And press Enter
   Then I should be on a transaction's page
   And should see "Transaction (...) created"

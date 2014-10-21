@@ -50,6 +50,15 @@ When /^(?:|I )go to (.+)$/ do |page_name|
 end
 
 When /^(?:|I )press ([^"]+)$/ do |key|
+#  keycode = case key.downcase.to_sym
+#    when :enter
+#      13
+#    when :tab
+#      9
+#    else
+#      raise
+#    end
+#  page.driver.browser.execute_script( "var e = $.Event('keydown', { keyCode: #{keycode} }); $('body').trigger(e);" )
   first('input').native.send_keys key.downcase.to_sym
 end
 

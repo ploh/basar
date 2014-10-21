@@ -17,18 +17,22 @@ AfterStep("@selenium,@javascript") do
 end
 
 unless $view_tests
-  require 'headless'
-  headless = Headless.new
-  at_exit do
-    headless.destroy
-  end
+#  Capybara.javascript_driver = :webkit
 
-  Before("@selenium,@javascript", "~@no-headless") do
-    headless.start if Capybara.current_driver == :selenium
-  end
+  if Capybara.javascript_driver == :selenium
+    require 'headless'
+    headless = Headless.new
+    at_exit do
+      headless.destroy
+    end
 
-  After("@selenium,@javascript", "~@no-headless") do
-    headless.stop if Capybara.current_driver == :selenium
+    Before("@selenium,@javascript", "~@no-headless") do
+      headless.start
+    end
+
+    After("@selenium,@javascript", "~@no-headless") do
+      headless.stop
+    end
   end
 end
 
