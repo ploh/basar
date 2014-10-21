@@ -54,6 +54,7 @@ group :development, :test do
   gem 'simplecov'
 #   gem 'minitest', '>= 5.0.0'
   gem 'selenium-webdriver'
+  gem 'capybara-webkit'
 end
 
 group :development do
