@@ -6,6 +6,7 @@
 
 require 'cucumber/rails'
 
+$test = true
 
 # Headless UI tests
 $view_tests = ENV["VIEW"]
