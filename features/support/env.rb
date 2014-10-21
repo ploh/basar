@@ -12,7 +12,7 @@ $test = true
 $view_tests = ENV["VIEW"]
 
 AfterStep("@selenium,@javascript") do
-  sleep ($view_tests ? 1 : 0.1)
+  sleep 1 if $view_tests
 #   $stdin.gets
 end
 
