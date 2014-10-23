@@ -44,6 +44,8 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'haml'
 gem 'haml-rails'
 
+gem 'paloma'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'byebug'

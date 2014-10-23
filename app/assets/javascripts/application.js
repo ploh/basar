@@ -13,10 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-hotkeys
-// # require jquery.turbolinks
-// # require turbolinks
+//= require turbolinks
+//= require jquery.turbolinks
+//= require paloma
 //= require_tree .
-
-// window.onload = function() {
-//   alert("hallo");
-// }
