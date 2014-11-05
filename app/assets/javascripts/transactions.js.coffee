@@ -91,5 +91,8 @@ bind_transaction_form_hotkeys = ->
 #       $("#cash_overlay").remove()
 #   bind_element_to_hotkey "#cash_given_link", "g", display_overlay
 
-jQuery ->
-  process_page_change()
+
+TransactionsController = Paloma.controller "Transactions"
+TransactionsController::default = ->
+  jQuery ->
+    process_page_change()
