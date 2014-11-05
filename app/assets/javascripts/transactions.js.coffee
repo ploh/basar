@@ -17,7 +17,7 @@
 #   $('body').append(d)
 #
 # display_overlay = ->
-#   if $('#cash_overlay').length == 0
+#   if !$('#cash_overlay').length
 #     create_overlay()
 #   $('#cash_overlay').html \
 #     """
@@ -29,11 +29,11 @@
 #   bind_overlay_hotkeys()
 
 handle_errors = ->
-  if $("#error_explanation").length > 0
+  if $("#error_explanation").length
     $("audio").trigger "play"
 
 set_focus = (focus_id) ->
-  if $(".field_with_errors").length > 0
+  if $(".field_with_errors").length
     $(".field_with_errors input:first").focus()
   else
     if focus_id
@@ -57,33 +57,27 @@ replace_transaction_form = (data, status, jqXHR) ->
 
 process_page_change = (focus_id) ->
   bind_hotkeys()
-  if $("#transaction_form").length > 0
+  if $("#transaction_form").length
     $(".field input").focus(-> $(this).select())
-    bind_transaction_form_hotkeys()
     handle_errors()
     set_focus(focus_id)
     register_handler()
 #   bind_overlay_hotkeys()
 
-bind_element_to_hotkey = (selector, key, handler) ->
-  element = $(selector)
-  if element.length > 0
-    if !handler
-      handler = -> element[0].click()
-    $(document).on('keypress', null, key, handler)
-
-bind_link_to_hotkey = (href, key) ->
-  bind_element_to_hotkey 'a[href="' + href + '"]', key
-
 bind_hotkeys = ->
-  bind_link_to_hotkey "/transactions", "l"
-  bind_link_to_hotkey "/transactions/new", "n"
-#   bind_element_to_hotkey "#cash_given_link", "g", display_overlay
-
-bind_transaction_form_hotkeys = ->
-  $("input").keyup (e) ->
-    if e.keyCode == 27
+  $(document).keydown (event) ->
+    target = switch event.keyCode
+      when 'L'.charCodeAt(0) then "/transactions"
+      when 'N'.charCodeAt(0) then "/transactions/new"
+    if target
+      event.stopPropagation()
+      window.location.href = target
+  $("#transaction_form input").keydown (event) ->
+    if event.keyCode == 27
+      event.preventDefault()
+      event.stopPropagation()
       window.location.href = "/transactions"
+
 
 # bind_overlay_hotkeys = ->
 #   $(document).keyup (e) ->
