@@ -28,9 +28,42 @@
 #   window.prompt "Cash given (in EUR):"
 #   bind_overlay_hotkeys()
 
-handle_errors = ->
-  if $("#error_explanation").length
-    $("audio").trigger "play"
+mark_error = (element) ->
+  play_error_sound()
+  element.parent().addClass "field_with_errors"
+  setTimeout ( ->
+    $(document.activeElement).off "blur" ),
+    0
+  setTimeout ( ->
+    change_to_element = $(document.activeElement)
+    setTimeout (-> change_to_element.blur input_blur_handler), 0
+    element.focus() ),
+    0
+
+unmark_error = (element) ->
+  element.parent().removeClass "field_with_errors"
+
+is_valid_price = (element) ->
+  /^\d*[.,]?\d*$/.test element.val()
+
+seller_list =
+  1: "AL"
+  11: "NL"
+
+validate_seller = (element) ->
+  text = element.val()
+  if /^\d+$/.test text
+    number = parseInt text
+    seller_list[number]? && element.val seller_list[number] + number
+
+check_field = (element, test_function) ->
+  if test_function element
+    unmark_error element
+  else
+    mark_error element
+
+play_error_sound = ->
+  $("audio").trigger "play"
 
 set_focus = (focus_id) ->
   if $(".field_with_errors").length
@@ -41,15 +74,22 @@ set_focus = (focus_id) ->
     else
       $(".field input").filter(-> $(this).val() == "").first().focus()
 
+input_blur_handler = ->
+  field_name = /\[([^\]]*)\]$/.exec( $(this).attr('name') )[1]
+  switch field_name
+    when "price"
+      check_field $(this), is_valid_price
+    when "seller_code"
+      check_field $(this), validate_seller
+    else
+      $.ajax "/transactions/validate", { type: "POST", data: $("#transaction_form form").serialize(), timeout: 2000, success: replace_transaction_form }
+
 register_handler = ->
-  $(".field input").blur ->
-    if $(this).attr("size") == "7" && /^\s*$/.test $(this).val()
-      $(this).val("a")
-    $.ajax "/transactions/validate", { type: "POST", data: $("#transaction_form form").serialize(), timeout: 2000, success: replace_transaction_form }
+  $(".field input").blur input_blur_handler
 
 replace_transaction_form = (data, status, jqXHR) ->
-  focus_id = $(":focus").attr("id")
-  focus_value = $(":focus").val()
+  focus_id = $(document.activeElement).attr("id")
+  focus_value = $(document.activeElement).val()
 #   if focus_id != "transaction_submit"
   $("#transaction_form").html data
   $("#" + focus_id).val focus_value
@@ -59,25 +99,23 @@ process_page_change = (focus_id) ->
   bind_hotkeys()
   if $("#transaction_form").length
     $(".field input").focus(-> $(this).select())
-    handle_errors()
     set_focus(focus_id)
     register_handler()
 #   bind_overlay_hotkeys()
 
 bind_hotkeys = ->
   $(document).keydown (event) ->
-    target = switch event.keyCode
+    target = switch event.which
       when 'L'.charCodeAt(0) then "/transactions"
       when 'N'.charCodeAt(0) then "/transactions/new"
-    if target
+    if target && !$(event.target).is "input"
       event.stopPropagation()
       window.location.href = target
   $("#transaction_form input").keydown (event) ->
     if event.keyCode == 27
-      event.preventDefault()
       event.stopPropagation()
+      event.preventDefault()
       window.location.href = "/transactions"
-
 
 # bind_overlay_hotkeys = ->
 #   $(document).keyup (e) ->
