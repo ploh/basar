@@ -43,21 +43,27 @@ mark_error = (element) ->
 unmark_error = (element) ->
   element.parent().removeClass "field_with_errors"
 
-is_valid_price = (element) ->
-  /^\d*[.,]?\d*$/.test element.val()
+is_valid_price = (text) ->
+  /^\d*[.,]?\d*$/.test text.trim()
 
 seller_list =
   1: "AL"
   11: "NL"
 
-validate_seller = (element) ->
-  text = element.val()
-  if /^\d+$/.test text
-    number = parseInt text
-    seller_list[number]? && element.val seller_list[number] + number
+is_valid_seller = (text, new_text) ->
+  match = /^([a-zA-Z]*)\s*(\d+)$/.exec text
+  if match
+    initials = match[1].toUpperCase()
+    number = parseInt match[2]
+    if seller_list[number]? && ( !initials || initials == seller_list[number] )
+      new_text.val = seller_list[number] + number
+  else
+    !text.trim()
 
-check_field = (element, test_function) ->
-  if test_function element
+check_and_correct_field = (element, test_function) ->
+  new_val = val: element.val()
+  if test_function element.val(), new_val
+    element.val new_val.val
     unmark_error element
   else
     mark_error element
@@ -78,11 +84,12 @@ input_blur_handler = ->
   field_name = /\[([^\]]*)\]$/.exec( $(this).attr('name') )[1]
   switch field_name
     when "price"
-      check_field $(this), is_valid_price
+      check_and_correct_field $(this), is_valid_price
+      # TODO also check corresponding seller
     when "seller_code"
-      check_field $(this), validate_seller
-    else
-      $.ajax "/transactions/validate", { type: "POST", data: $("#transaction_form form").serialize(), timeout: 2000, success: replace_transaction_form }
+      check_and_correct_field $(this), is_valid_seller
+#    else
+#      $.ajax "/transactions/validate", { type: "POST", data: $("#transaction_form form").serialize(), timeout: 2000, success: replace_transaction_form }
 
 register_handler = ->
   $(".field input").blur input_blur_handler
