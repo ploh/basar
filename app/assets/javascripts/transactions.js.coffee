@@ -47,8 +47,6 @@ is_valid_price = (text) ->
   /^\d*[.,]?\d*$/.test text.trim()
 
 seller_list =
-  1: "AL"
-  11: "NL"
 
 is_valid_seller = (text, new_text) ->
   match = /^([a-zA-Z]*)\s*(\d+)$/.exec text
@@ -86,6 +84,20 @@ input_blur_handler = ->
     when "price"
       check_and_correct_field $(this), is_valid_price
       # TODO also check corresponding seller
+      row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(this).attr('name') )[1]
+      transaction_rows = $("table#items_table > tbody > tr")
+      if row_index >= transaction_rows.length - 3
+        last_row = transaction_rows.filter(":last")
+        last_row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(".field input", last_row).attr('name') )[1]
+        new_row_index = parseInt(last_row_index) + 1
+        console.log new_row_index
+        new_row = last_row.clone()
+        $(".field label", new_row).each ->
+          $(this).attr("for", $(this).attr("for").replace(last_row_index, new_row_index))
+        $(".field input", new_row).each ->
+          $(this).attr("id", $(this).attr("id").replace(last_row_index, new_row_index))
+          $(this).attr("name", $(this).attr("name").replace(last_row_index, new_row_index))
+        new_row.insertAfter(last_row)
     when "seller_code"
       check_and_correct_field $(this), is_valid_seller
 #    else
@@ -102,9 +114,13 @@ replace_transaction_form = (data, status, jqXHR) ->
   $("#" + focus_id).val focus_value
   process_page_change(focus_id)
 
+update_seller_list = ->
+  seller_list = $("#seller_list").data("list")
+
 process_page_change = (focus_id) ->
   bind_hotkeys()
   if $("#transaction_form").length
+    update_seller_list()
     $(".field input").focus(-> $(this).select())
     set_focus(focus_id)
     register_handler()

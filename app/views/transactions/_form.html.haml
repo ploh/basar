@@ -8,7 +8,7 @@
         - @transaction.errors.full_messages.each do |msg|
           %li= msg
 
-  %table
+  %table#items_table
     - 3.times {@transaction.items.build} # unless @transaction.errors.any?
     - @transaction.items.each do |item|
       %tr
