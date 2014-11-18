@@ -17,3 +17,8 @@ Then /^(?:|I )should see an error mark on the (\d+)(?:st|nd|rd|th) "([^"]*)"$/ d
   input_field = all(:fillable_field, field).at(number.to_i-1)
   input_field.find(:xpath, "..")[:class].split(" ").should include "field_with_errors"
 end
+
+Then /^(?:|I )should not see an error mark on the (\d+)(?:st|nd|rd|th) "([^"]*)"$/ do |number, field|
+  input_field = all(:fillable_field, field).at(number.to_i-1)
+  input_field.find(:xpath, "..")[:class].split(" ").should_not include "field_with_errors"
+end

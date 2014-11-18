@@ -39,3 +39,28 @@ Scenario: Press enter on erroneous transaction
   And press Enter
   Then I should see an error mark on the 1st "Seller"
   And I should see "Items seller code does not exist, maybe you meant one of SCM01, AL02"
+
+
+@javascript
+Scenario: Add seller during transaction input
+  When I am in the 1st browser window
+  And I am on the new transaction page
+  And I fill in the 1st "Seller" with "SCM01"
+  And fill in the 1st "Price" with "3,20"
+  And press Tab
+  Then I should not see an error mark on the 1st "Seller"
+
+  When I am in a 2nd browser window
+  And I am on the new seller page
+  And I fill in "Name" with "Petra Meyer"
+  And I fill in "Number" with "04"
+  And I fill in "Initials" with "PM"
+  And I fill in "Rate" with "15"
+  And press Enter
+  Then I should be on the sellers page
+  And should see "Seller (...) created"
+
+  When I am in the 1st browser window
+  And I fill in the 2nd "Seller" with "PM04"
+  And press Tab
+  Then PENDING I should not see an error mark on the 2nd "Seller"
