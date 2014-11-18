@@ -46,6 +46,9 @@ gem 'haml-rails'
 
 gem 'paloma'
 
+gem 'devise'
+
+
 group :development, :test do
   gem 'sqlite3'
   gem 'byebug'
