@@ -18,16 +18,24 @@ Scenario: Enter new transaction
   When I fill in the 1st "Seller" with "SCM01"
   And fill in the 1st "Price" with "3,20"
   And fill in the 2nd "Seller" with "02"
-#  And fill in the 2nd "Price" with ".4"
-  And fill in "transaction[items_attributes][1][price]" with ".4"
+  And fill in the 2nd "Price" with ".4"
   And press Enter
   Then I should be on a transaction's page
   And should see "Transaction (...) created"
 
 
 @javascript
-Scenario: Enter erroneous transaction
+Scenario: Input erroneous transaction
   Given I am on the new transaction page
   When I fill in the 1st "Seller" with "SCM02"
   And press Tab
-  Then I should see "Items seller code does not exist, maybe you meant one of SCM01, AL02"
+  Then I should see an error mark on the 1st "Seller"
+
+
+@javascript
+Scenario: Press enter on erroneous transaction
+  Given I am on the new transaction page
+  When I fill in the 1st "Seller" with "SCM02"
+  And press Enter
+  Then I should see an error mark on the 1st "Seller"
+  And I should see "Items seller code does not exist, maybe you meant one of SCM01, AL02"

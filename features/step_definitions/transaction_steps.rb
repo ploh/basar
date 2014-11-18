@@ -13,3 +13,7 @@ Then /^I should see the following transactions:$/ do |expected_transactions_tabl
   expected_transactions_table.diff!(tableish('table tr', 'td,th'))
 end
 
+Then /^(?:|I )should see an error mark on the (\d+)(?:st|nd|rd|th) "([^"]*)"$/ do |number, field|
+  input_field = all(:fillable_field, field).at(number.to_i-1)
+  input_field.find(:xpath, "..")[:class].split(" ").should include "field_with_errors"
+end
