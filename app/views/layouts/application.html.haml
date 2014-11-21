@@ -14,9 +14,11 @@
           = link_to "Transactions", transactions_path
           = link_to "(all)", all_transactions_path
 
+    - if flash[:alert]
+      #alert.message= flash[:alert]
+    - if flash[:warning]
+      #warning.message= flash[:warning]
     - if flash[:notice]
       #notice.message= flash[:notice]
-    - elsif flash[:warning]
-      #warning.message= flash[:warning]
 
     = yield
