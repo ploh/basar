@@ -55,13 +55,13 @@ class TransactionsController < ApplicationController
   end
 
   # for AJAX validation requests
-  def validate
-    @transaction = Transaction.new(transaction_params(false))
-    @transaction.items.each {|item| item.price ||= 999}
-    @transaction.valid?
-    @transaction.items.each {|item| item.price = nil if item.price == 999}
-    render partial: 'form'
-  end
+  # def validate
+  #   @transaction = Transaction.new(transaction_params(false))
+  #   @transaction.items.each {|item| item.price ||= 999}
+  #   @transaction.valid?
+  #   @transaction.items.each {|item| item.price = nil if item.price == 999}
+  #   render partial: 'form'
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
