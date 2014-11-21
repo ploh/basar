@@ -16,6 +16,8 @@
 
     - if flash[:alert]
       #alert.message= flash[:alert]
+    - if flash[:error]
+      #error.message= flash[:error]
     - if flash[:warning]
       #warning.message= flash[:warning]
     - if flash[:notice]
