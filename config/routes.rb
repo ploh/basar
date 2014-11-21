@@ -1,5 +1,6 @@
 Basar::Application.routes.draw do
 
+  devise_for :users
   get 'transactions/all' => 'transactions#index_all', as: :all_transactions
 #   post 'transactions/validate_price' => 'transactions#validate_price', as: :validate_price
 #  post 'transactions/validate' => 'transactions#validate', as: :validate_transaction
