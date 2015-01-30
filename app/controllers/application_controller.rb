@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :authenticate
+  before_action :authenticate_user!
 
   def index
     redirect_to transactions_path
@@ -11,9 +11,9 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def authenticate
-    authenticate_or_request_with_http_basic do |username, password|
-      username == "ichthys" && password == "testpasswort"
-    end if Rails.env == "production"
-  end
+  # def authenticate
+  #   authenticate_or_request_with_http_basic do |username, password|
+  #     username == "ichthys" && password == "testpasswort"
+  #   end if Rails.env == "production"
+  # end
 end
