@@ -1,6 +1,6 @@
 Basar::Application.routes.draw do
 
-  root 'application#index'
+  root 'pages#home'
 
   devise_for :users
 

@@ -1,6 +1,5 @@
 class TransactionsController < ApplicationController
-  before_action :set_transaction, only: [:show, :edit, :update, :destroy]
-  js :default
+  load_and_authorize_resource
 
   # GET /transactions
   def index
@@ -64,11 +63,6 @@ class TransactionsController < ApplicationController
   # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_transaction
-      @transaction = Transaction.find(params[:id])
-    end
-
     # Only allow a trusted parameter "white list" through.
     def transaction_params(with_item_id = true)
       allowed_item_attributes = (with_item_id ? [:id] : []) + [:seller_code, :price, :transaction_id]

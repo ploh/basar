@@ -1,5 +1,5 @@
 class SellersController < ApplicationController
-  before_action :set_seller, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /sellers
   def index
@@ -66,11 +66,6 @@ class SellersController < ApplicationController
 #   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_seller
-      @seller = Seller.find(params[:id])
-    end
-
     # Only allow a trusted parameter "white list" through.
     def seller_params
       params.require(:seller).permit(:name, :number, :initials, :rate_in_percent)

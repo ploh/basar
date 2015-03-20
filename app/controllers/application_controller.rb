@@ -5,15 +5,9 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
 
-  def index
-    redirect_to transactions_path
+  check_authorization :unless => :devise_controller?
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
   end
-
-  protected
-
-  # def authenticate
-  #   authenticate_or_request_with_http_basic do |username, password|
-  #     username == "ichthys" && password == "testpasswort"
-  #   end if Rails.env == "production"
-  # end
 end
