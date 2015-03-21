@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "sellers/show" do
+RSpec.describe "sellers/show" do
   before(:each) do
     @seller = assign(:seller, stub_model(Seller,
       :name => "Name",

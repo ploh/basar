@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe SellersController do
+RSpec.describe SellersController do
   describe "routing" do
 
     it "routes to #index" do

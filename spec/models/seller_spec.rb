@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Seller do
+RSpec.describe Seller do
 end

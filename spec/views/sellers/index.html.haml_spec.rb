@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "sellers/index" do
+RSpec.describe "sellers/index" do
   before(:each) do
     assign(:sellers, [
       stub_model(Seller,

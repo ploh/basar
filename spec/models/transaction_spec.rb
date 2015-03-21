@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Transaction do
+RSpec.describe Transaction do
 end

@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Item do
+RSpec.describe Item do
 end

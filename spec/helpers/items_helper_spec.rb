@@ -10,5 +10,5 @@ require 'spec_helper'
 #     end
 #   end
 # end
-describe ItemsHelper do
+RSpec.describe ItemsHelper do
 end

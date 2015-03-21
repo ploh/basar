@@ -10,5 +10,5 @@ require 'spec_helper'
 #     end
 #   end
 # end
-describe TransactionsHelper do
+RSpec.describe TransactionsHelper do
 end
