@@ -19,7 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe TransactionsController do
-  before(:each) { mock_sign_in }
+  before(:each) { mock_sign_in :assistant }
 
   # This should return the minimal set of attributes required to create a valid
   # Transaction. As you add validations to Transaction, be sure to
