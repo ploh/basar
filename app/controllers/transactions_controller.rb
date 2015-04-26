@@ -20,11 +20,6 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new
   end
 
-  # GET /transactions/1/edit
-  def edit
-    redirect_to @transaction
-  end
-
   # POST /transactions
   def create
     @transaction = Transaction.new(transaction_params)

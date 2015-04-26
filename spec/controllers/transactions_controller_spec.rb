@@ -34,7 +34,7 @@ RSpec.describe TransactionsController do
   describe "GET index" do
     it "assigns all transactions as @transactions" do
       transaction = Transaction.create! valid_attributes
-      get :index, {}
+      get :index, {}, valid_session
       expect(assigns(:transactions)).to eq([transaction])
     end
   end
@@ -42,7 +42,7 @@ RSpec.describe TransactionsController do
   describe "GET show" do
     it "assigns the requested transaction as @transaction" do
       transaction = Transaction.create! valid_attributes
-      get :show, :id => transaction.to_param
+      get :show, {:id => transaction.to_param}, valid_session
       expect(assigns(:transaction)).to eq(transaction)
     end
   end
@@ -51,14 +51,6 @@ RSpec.describe TransactionsController do
     it "assigns a new transaction as @transaction" do
       get :new, {}, valid_session
       expect(assigns(:transaction)).to be_a_new(Transaction)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested transaction as @transaction" do
-      transaction = Transaction.create! valid_attributes
-      get :edit, {:id => transaction.to_param}, valid_session
-      expect(assigns(:transaction)).to eq(transaction)
     end
   end
 
@@ -76,7 +68,7 @@ RSpec.describe TransactionsController do
         expect(assigns(:transaction)).to be_persisted
       end
 
-      it "redirects to the created transaction's page" do
+      it "redirects to the created transaction" do
         post :create, {:transaction => valid_attributes}, valid_session
         expect(response).to redirect_to transaction_path(assigns(:transaction).id)
       end
