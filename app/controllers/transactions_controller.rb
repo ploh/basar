@@ -1,5 +1,6 @@
 class TransactionsController < ApplicationController
   load_and_authorize_resource
+  js :index
 
   # GET /transactions
   def index

@@ -100,19 +100,9 @@ input_blur_handler = ->
         new_row.insertAfter(last_row)
     when "seller_code"
       check_and_correct_field $(this), is_valid_seller
-#    else
-#      $.ajax "/transactions/validate", { type: "POST", data: $("#transaction_form form").serialize(), timeout: 2000, success: replace_transaction_form }
 
 register_handler = ->
   $(".field input").blur input_blur_handler
-
-replace_transaction_form = (data, status, jqXHR) ->
-  focus_id = $(document.activeElement).attr("id")
-  focus_value = $(document.activeElement).val()
-#   if focus_id != "transaction_submit"
-  $("#transaction_form").html data
-  $("#" + focus_id).val focus_value
-  process_page_change(focus_id)
 
 update_seller_list = ->
   seller_list = $("#seller_list").data("list")
@@ -148,6 +138,6 @@ bind_hotkeys = ->
 
 
 TransactionsController = Paloma.controller "Transactions"
-TransactionsController::default = ->
+TransactionsController.prototype.index = ->
   jQuery ->
     process_page_change()
