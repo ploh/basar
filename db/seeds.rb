@@ -40,6 +40,8 @@ def build_seller_from_line(line)
   end
   seller.name = name
   seller.rate_in_percent = case rate_category
+    when "D"
+      10
     when "C"
       10
     when "B"
@@ -51,3 +53,5 @@ def build_seller_from_line(line)
 end
 
 load_initial_sellers 'initial_sellers.csv'
+
+User.create!(email: "ichthys@test.host", password: "testpasswort", role: :admin, confirmed_at: Time.now)
