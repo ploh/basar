@@ -6,10 +6,6 @@ class SellersController < ApplicationController
     @sellers = Seller.order("number")
   end
 
-  # GET /sellers/1
-  def show
-  end
-
   # GET /sellers/new
   def new
     @seller = Seller.new
@@ -48,7 +44,7 @@ class SellersController < ApplicationController
 #   # for AJAX validation requests
 #   def validate_code
 # #     params.each {|pa| p pa}
-# 
+#
 #     dummy_item = Item.create_dummy
 #     dummy_item.seller_code = params[:seller_code]
 #     dummy_transaction = Transaction.create_dummy
@@ -56,7 +52,7 @@ class SellersController < ApplicationController
 #     dummy_transaction.valid?
 #     render json: { error_explanation: render_to_string( partial: 'transactions/error_explanation', locals: {messages: dummy_transaction.errors.full_messages}),
 #                    seller_code: render_to_string( partial: 'items/seller_code', locals: {item: dummy_transaction.items.first}) }
-#     
+#
 #     # TODO: create fake item with dummy price and given seller code, then validate it and return partials for items price as well as error_explanation via json
 # #     @transaction = Transaction.new(transaction_params(false))
 # #     @transaction.items.each {|item| item.price ||= 999}

@@ -19,11 +19,12 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe SellersController do
+  before(:each) { mock_sign_in :admin }
 
   # This should return the minimal set of attributes required to create a valid
   # Seller. As you add validations to Seller, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "name" => "MyString" } }
+  let(:valid_attributes) { { initials: "AL", number: 1, name: "Anna", rate: 0.1, rate_in_percent: 10 } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -34,22 +35,14 @@ RSpec.describe SellersController do
     it "assigns all sellers as @sellers" do
       seller = Seller.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:sellers).should eq([seller])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested seller as @seller" do
-      seller = Seller.create! valid_attributes
-      get :show, {:id => seller.to_param}, valid_session
-      assigns(:seller).should eq(seller)
+      expect(assigns(:sellers)).to eq([seller])
     end
   end
 
   describe "GET new" do
     it "assigns a new seller as @seller" do
       get :new, {}, valid_session
-      assigns(:seller).should be_a_new(Seller)
+      expect(assigns(:seller)).to be_a_new(Seller)
     end
   end
 
@@ -57,7 +50,7 @@ RSpec.describe SellersController do
     it "assigns the requested seller as @seller" do
       seller = Seller.create! valid_attributes
       get :edit, {:id => seller.to_param}, valid_session
-      assigns(:seller).should eq(seller)
+      expect(assigns(:seller)).to eq(seller)
     end
   end
 
@@ -71,29 +64,29 @@ RSpec.describe SellersController do
 
       it "assigns a newly created seller as @seller" do
         post :create, {:seller => valid_attributes}, valid_session
-        assigns(:seller).should be_a(Seller)
-        assigns(:seller).should be_persisted
+        expect(assigns(:seller)).to be_a(Seller)
+        expect(assigns(:seller)).to be_persisted
       end
 
-      it "redirects to the created seller" do
+      it "redirects to the sellers list" do
         post :create, {:seller => valid_attributes}, valid_session
-        response.should redirect_to(Seller.last)
+        expect(response).to redirect_to(sellers_url)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved seller as @seller" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Seller.any_instance.stub(:save).and_return(false)
-        post :create, {:seller => { "name" => "invalid value" }}, valid_session
-        assigns(:seller).should be_a_new(Seller)
+        allow_any_instance_of(Seller).to receive(:save).and_return(false)
+        post :create, {:seller => { "initials" => "invalid value" }}, valid_session
+        expect(assigns(:seller)).to be_a_new(Seller)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Seller.any_instance.stub(:save).and_return(false)
-        post :create, {:seller => { "name" => "invalid value" }}, valid_session
-        response.should render_template("new")
+        allow_any_instance_of(Seller).to receive(:save).and_return(false)
+        post :create, {:seller => { "initials" => "invalid value" }}, valid_session
+        expect(response).to render_template("new")
       end
     end
   end
@@ -106,20 +99,20 @@ RSpec.describe SellersController do
         # specifies that the Seller created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Seller.any_instance.should_receive(:update).with({ "name" => "MyString" })
+        allow_any_instance_of(Seller).to receive(:update).with({ "name" => "MyString" })
         put :update, {:id => seller.to_param, :seller => { "name" => "MyString" }}, valid_session
       end
 
       it "assigns the requested seller as @seller" do
         seller = Seller.create! valid_attributes
         put :update, {:id => seller.to_param, :seller => valid_attributes}, valid_session
-        assigns(:seller).should eq(seller)
+        expect(assigns(:seller)).to eq(seller)
       end
 
-      it "redirects to the seller" do
+      it "redirects to the sellers list" do
         seller = Seller.create! valid_attributes
         put :update, {:id => seller.to_param, :seller => valid_attributes}, valid_session
-        response.should redirect_to(seller)
+        expect(response).to redirect_to(sellers_url)
       end
     end
 
@@ -127,17 +120,17 @@ RSpec.describe SellersController do
       it "assigns the seller as @seller" do
         seller = Seller.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Seller.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Seller).to receive(:save).and_return(false)
         put :update, {:id => seller.to_param, :seller => { "name" => "invalid value" }}, valid_session
-        assigns(:seller).should eq(seller)
+        expect(assigns(:seller)).to eq(seller)
       end
 
       it "re-renders the 'edit' template" do
         seller = Seller.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Seller.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Seller).to receive(:save).and_return(false)
         put :update, {:id => seller.to_param, :seller => { "name" => "invalid value" }}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -153,7 +146,7 @@ RSpec.describe SellersController do
     it "redirects to the sellers list" do
       seller = Seller.create! valid_attributes
       delete :destroy, {:id => seller.to_param}, valid_session
-      response.should redirect_to(sellers_url)
+      expect(response).to redirect_to(sellers_url)
     end
   end
 
