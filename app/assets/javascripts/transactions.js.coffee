@@ -31,14 +31,16 @@
 mark_error = (element) ->
   play_error_sound()
   element.parent().addClass "field_with_errors"
-  setTimeout ( ->
-    $(document.activeElement).off "blur" ),
-    0
-  setTimeout ( ->
-    change_to_element = $(document.activeElement)
-    setTimeout (-> change_to_element.blur input_blur_handler), 0
-    element.focus() ),
-    0
+  # deactivate blur handler of newly focused element ->
+  # setTimeout() because this code here is executed _before_ the focus actually changed
+  setTimeout (-> $(document.activeElement).off "blur"), 0
+  # re-focus the currently focused element (will be unfocused right after this blur handler finishes)
+  # ...and afterwards reinstall the blur handler of the intermediately focused element
+  setTimeout( ( ->
+      newly_focused_element = $(document.activeElement)
+      setTimeout (-> newly_focused_element.blur input_blur_handler), 0
+      element.focus() ),
+    1 )
 
 unmark_error = (element) ->
   element.parent().removeClass "field_with_errors"
@@ -69,15 +71,6 @@ check_and_correct_field = (element, test_function) ->
 play_error_sound = ->
   $("audio").trigger "play"
 
-set_focus = (focus_id) ->
-  if $(".field_with_errors").length
-    $(".field_with_errors input:first").focus()
-  else
-    if focus_id
-      $("#" + focus_id).focus()
-    else
-      $(".field input").filter(-> $(this).val() == "").first().focus()
-
 input_blur_handler = ->
   field_name = /\[([^\]]*)\]$/.exec( $(this).attr('name') )[1]
   switch field_name
@@ -97,38 +90,14 @@ input_blur_handler = ->
         $(".field input", new_row).each ->
           $(this).attr("id", $(this).attr("id").replace(last_row_index, new_row_index))
           $(this).attr("name", $(this).attr("name").replace(last_row_index, new_row_index))
+          register_field this
         new_row.insertAfter(last_row)
     when "seller_code"
       check_and_correct_field $(this), is_valid_seller
 
-register_handler = ->
-  $(".field input").blur input_blur_handler
-
-update_seller_list = ->
-  seller_list = $("#seller_list").data("list")
-
-process_page_change = (focus_id) ->
-  bind_hotkeys()
-  if $("#transaction_form").length
-    update_seller_list()
-    $(".field input").focus(-> $(this).select())
-    set_focus(focus_id)
-    register_handler()
-#   bind_overlay_hotkeys()
-
-bind_hotkeys = ->
-  $(document).keydown (event) ->
-    target = switch event.which
-      when 'L'.charCodeAt(0) then "/transactions"
-      when 'N'.charCodeAt(0) then "/transactions/new"
-    if target && !$(event.target).is "input"
-      event.stopPropagation()
-      window.location.href = target
-  $("#transaction_form input").keydown (event) ->
-    if event.keyCode == 27
-      event.stopPropagation()
-      event.preventDefault()
-      window.location.href = "/transactions"
+register_field = (field )->
+  $(field).blur input_blur_handler
+  $(field).focus(-> $(this).select())
 
 # bind_overlay_hotkeys = ->
 #   $(document).keyup (e) ->
@@ -138,6 +107,19 @@ bind_hotkeys = ->
 
 
 TransactionsController = Paloma.controller "Transactions"
-TransactionsController.prototype.index = ->
+TransactionsController.prototype.new = ->
   jQuery ->
-    process_page_change()
+    $(document).keydown (event) ->
+      if event.keyCode == 27
+        event.stopPropagation()
+        event.preventDefault()
+        window.location.href = "/transactions"
+    seller_list = $("#seller_list").data("list")
+    $(".field input").each ->
+      register_field this
+    if $(".field_with_errors").length
+      $(".field_with_errors input:first").focus()
+      play_error_sound()
+    else
+      $(".field input").filter(-> $(this).val() == "").first().focus()
+    # bind_overlay_hotkeys()

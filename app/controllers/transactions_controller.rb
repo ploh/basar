@@ -1,6 +1,5 @@
 class TransactionsController < ApplicationController
   load_and_authorize_resource
-  js :index
 
   # GET /transactions
   def index
@@ -28,6 +27,7 @@ class TransactionsController < ApplicationController
     if @transaction.save
       redirect_to @transaction, notice: 'Transaction was successfully created.'
     else
+      js :new
       render action: 'new'
     end
   end
