@@ -1,5 +1,7 @@
 %h1 Listing transactions
 
+= link_to 'New Transaction', new_transaction_path
+
 %table#transactions.element_list
   %tr
     %th Created at
@@ -12,11 +14,7 @@
   - @transactions.each do |transaction|
     %tr
       %td= transaction.created_at
-      %td= transaction.items.count
-      %td= ("%1.2f EUR" % transaction.total_price).gsub(".", ",")
+      %td.number= transaction.items.count
+      %td.money= money_string transaction.total_price
       %td= link_to 'Show', transaction
       %td= link_to 'Destroy', transaction, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Transaction', new_transaction_path

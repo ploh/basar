@@ -2,4 +2,8 @@
 
 = render 'form'
 
+= link_to 'Destroy', @seller, :method => :delete, :data => { :confirm => 'Are you sure?' }
+\|
+= link_to 'New', new_seller_path
+\|
 = link_to 'List', sellers_path
