@@ -7,6 +7,8 @@
     %th Name
     %th Number
     %th Initials
+    - @tasks.each do |task|
+      %th= task.description
     %th Rate&nbsp;&nbsp;
     %th # Sold items
     %th Total revenue
@@ -26,6 +28,8 @@
       %td= seller.name
       %td.number= seller.number
       %td.initials= seller.initials
+      - @tasks.each do |task|
+        %td
       %td.number= "#{seller.rate_in_percent} %"
       %td.number= seller.number_of_items
       %td.money= money_string seller.total_revenue
@@ -44,6 +48,8 @@
     %td SUMME
     %td
     %td
+    - @tasks.each do |task|
+      %td
     %td
     %td.number= @sellers.map {|seller| seller.number_of_items}.inject(0, :+)
     %td.money= money_string @sellers.map {|seller| seller.total_revenue}.inject(0, :+)

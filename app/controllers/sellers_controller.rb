@@ -4,6 +4,7 @@ class SellersController < ApplicationController
   # GET /sellers
   def index
     @sellers = Seller.order("number")
+    @tasks = Task.all
   end
 
   # GET /sellers/new
