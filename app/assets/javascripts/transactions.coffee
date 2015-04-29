@@ -95,7 +95,7 @@ input_blur_handler = ->
     when "seller_code"
       check_and_correct_field $(this), is_valid_seller
 
-register_field = (field )->
+register_field = (field) ->
   $(field).blur input_blur_handler
   $(field).focus(-> $(this).select())
 
@@ -104,6 +104,14 @@ register_field = (field )->
 #     if e.keyCode == 27
 #       $("#cash_overlay").remove()
 #   bind_element_to_hotkey "#cash_given_link", "g", display_overlay
+
+set_last_value = (field) ->
+  if $(field).val() == ""
+    row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(field).attr('name') )[1]
+    if row_index > 0
+      prev_row_index = parseInt(row_index) - 1
+      prev_field = $("#" + $(field).attr("id").replace(row_index, prev_row_index))
+      $(field).val(prev_field.val())
 
 
 TransactionsController = Paloma.controller "Transactions"
@@ -114,6 +122,10 @@ TransactionsController.prototype.new = ->
         event.stopPropagation()
         event.preventDefault()
         window.location.href = "/transactions"
+      if event.keyCode == 38 && $(event.target).is "input"
+        event.stopPropagation()
+#        event.preventDefault()
+        set_last_value(event.target)
     seller_list = $("#seller_list").data("list")
     $(".field input").each ->
       register_field this
