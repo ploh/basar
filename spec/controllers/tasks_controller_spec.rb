@@ -19,13 +19,12 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe TasksController, type: :controller do
+  before(:each) { mock_sign_in :admin }
 
   # This should return the minimal set of attributes required to create a valid
   # Task. As you add validations to Task, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:valid_attributes) { {} }
 
   let(:invalid_attributes) {
     skip("Add a hash of attributes invalid for your model")
@@ -89,11 +88,13 @@ RSpec.describe TasksController, type: :controller do
 
     context "with invalid params" do
       it "assigns a newly created but unsaved task as @task" do
+        allow_any_instance_of(Task).to receive(:save).and_return(false)
         post :create, {:task => invalid_attributes}, valid_session
         expect(assigns(:task)).to be_a_new(Task)
       end
 
       it "re-renders the 'new' template" do
+        allow_any_instance_of(Task).to receive(:save).and_return(false)
         post :create, {:task => invalid_attributes}, valid_session
         expect(response).to render_template("new")
       end
@@ -129,12 +130,14 @@ RSpec.describe TasksController, type: :controller do
     context "with invalid params" do
       it "assigns the task as @task" do
         task = Task.create! valid_attributes
+        allow_any_instance_of(Task).to receive(:save).and_return(false)
         put :update, {:id => task.to_param, :task => invalid_attributes}, valid_session
         expect(assigns(:task)).to eq(task)
       end
 
       it "re-renders the 'edit' template" do
         task = Task.create! valid_attributes
+        allow_any_instance_of(Task).to receive(:save).and_return(false)
         put :update, {:id => task.to_param, :task => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end

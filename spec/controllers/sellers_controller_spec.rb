@@ -26,6 +26,8 @@ RSpec.describe SellersController do
   # adjust the attributes here as well.
   let(:valid_attributes) { { initials: "AL", number: 1, name: "Anna", rate: 0.1, rate_in_percent: 10 } }
 
+  let(:invalid_attributes) { { initials: "invalid value" } }
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # SellersController. Be sure to keep this updated too.
@@ -77,15 +79,15 @@ RSpec.describe SellersController do
     describe "with invalid params" do
       it "assigns a newly created but unsaved seller as @seller" do
         # Trigger the behavior that occurs when invalid params are submitted
-        allow_any_instance_of(Seller).to receive(:save).and_return(false)
-        post :create, {:seller => { "initials" => "invalid value" }}, valid_session
+        #allow_any_instance_of(Seller).to receive(:save).and_return(false)
+        post :create, {:seller => invalid_attributes}, valid_session
         expect(assigns(:seller)).to be_a_new(Seller)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        allow_any_instance_of(Seller).to receive(:save).and_return(false)
-        post :create, {:seller => { "initials" => "invalid value" }}, valid_session
+        #allow_any_instance_of(Seller).to receive(:save).and_return(false)
+        post :create, {:seller => invalid_attributes}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -99,7 +101,7 @@ RSpec.describe SellersController do
         # specifies that the Seller created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        allow_any_instance_of(Seller).to receive(:update).with({ "name" => "MyString" })
+        #allow_any_instance_of(Seller).to receive(:update).with({ "name" => "MyString" })
         put :update, {:id => seller.to_param, :seller => { "name" => "MyString" }}, valid_session
       end
 
@@ -120,16 +122,16 @@ RSpec.describe SellersController do
       it "assigns the seller as @seller" do
         seller = Seller.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        allow_any_instance_of(Seller).to receive(:save).and_return(false)
-        put :update, {:id => seller.to_param, :seller => { "name" => "invalid value" }}, valid_session
+        #allow_any_instance_of(Seller).to receive(:save).and_return(false)
+        put :update, {:id => seller.to_param, :seller => invalid_attributes}, valid_session
         expect(assigns(:seller)).to eq(seller)
       end
 
       it "re-renders the 'edit' template" do
         seller = Seller.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        allow_any_instance_of(Seller).to receive(:save).and_return(false)
-        put :update, {:id => seller.to_param, :seller => { "name" => "invalid value" }}, valid_session
+        #allow_any_instance_of(Seller).to receive(:save).and_return(false)
+        put :update, {:id => seller.to_param, :seller => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
     end

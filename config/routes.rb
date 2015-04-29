@@ -1,6 +1,5 @@
 Basar::Application.routes.draw do
 
-  resources :tasks
   # @@@ change back to  'pages#home'
   root 'transactions#index'
 
@@ -13,6 +12,8 @@ Basar::Application.routes.draw do
 
 #   post 'sellers/validate_code' => 'sellers#validate_code', as: :validate_seller_code
   resources :sellers
+
+  resources :tasks
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
