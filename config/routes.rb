@@ -1,5 +1,6 @@
 Basar::Application.routes.draw do
 
+  resources :tasks
   # @@@ change back to  'pages#home'
   root 'transactions#index'
 
