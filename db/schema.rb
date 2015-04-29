@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150429203305) do
+ActiveRecord::Schema.define(version: 20150429204648) do
 
   create_table "items", force: :cascade do |t|
     t.integer  "seller_id"
@@ -34,8 +34,10 @@ ActiveRecord::Schema.define(version: 20150429203305) do
   end
 
   create_table "sellers_tasks", id: false, force: :cascade do |t|
-    t.integer "seller_id", null: false
-    t.integer "task_id",   null: false
+    t.integer "seller_id",     null: false
+    t.integer "task_id",       null: false
+    t.integer "planned_count"
+    t.integer "actual_count"
   end
 
   add_index "sellers_tasks", ["seller_id"], name: "index_sellers_tasks_on_seller_id"
