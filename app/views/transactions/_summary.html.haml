@@ -5,6 +5,9 @@
   %p
     %b Updated at:
     = @transaction.updated_at
+  %p
+    %b Client:
+    = @transaction.client_key
 %p
   %b Number of items:
   = @transaction.number_of_items

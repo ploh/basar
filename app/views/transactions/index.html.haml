@@ -5,6 +5,7 @@
 %table#transactions.element_list
   %tr
     %th Created at
+    %th Client
     %th Num. of items
     %th Amount
     %th
@@ -14,6 +15,7 @@
   - @transactions.each do |transaction|
     %tr
       %td= transaction.created_at
+      %td= transaction.client_key
       %td.number= transaction.items.count
       %td.money= money_string transaction.total_price
       %td= link_to 'Show', transaction

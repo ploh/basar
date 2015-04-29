@@ -3,7 +3,8 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   def index
-    @transactions = Transaction.order("created_at desc").limit(50)
+    filtered_list = @client_key ? Transaction.where(client_key: @client_key) : Transaction
+    @transactions = filtered_list.order("created_at desc").limit(50)
   end
 
   def index_all
@@ -23,6 +24,7 @@ class TransactionsController < ApplicationController
   # POST /transactions
   def create
     @transaction = Transaction.new(transaction_params)
+    @transaction.client_key = @client_key
 
     if @transaction.save
       redirect_to @transaction, notice: 'Transaction was successfully created.'
