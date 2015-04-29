@@ -1,4 +1,5 @@
 class Transaction < ActiveRecord::Base
+  belongs_to :user
   has_many :items, dependent: :destroy
 
   accepts_nested_attributes_for :items
@@ -44,5 +45,9 @@ class Transaction < ActiveRecord::Base
 
   def self.create_dummy
     new
+  end
+
+  def user_description
+    user && user.email
   end
 end

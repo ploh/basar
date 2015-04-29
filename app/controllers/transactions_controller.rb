@@ -3,8 +3,10 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   def index
-    filtered_list = @client_key ? Transaction.where(client_key: @client_key) : Transaction
-    @transactions = filtered_list.order("created_at desc").limit(50)
+    filtered_list = Transaction
+    filtered_list = filtered_list.where(user: current_user) if current_user
+    filtered_list = filtered_list.where(client_key: @client_key) if @client_key
+    @transactions = filtered_list.order("created_at desc").limit(20)
   end
 
   def index_all
@@ -24,6 +26,7 @@ class TransactionsController < ApplicationController
   # POST /transactions
   def create
     @transaction = Transaction.new(transaction_params)
+    @transaction.user = current_user
     @transaction.client_key = @client_key
 
     if @transaction.save

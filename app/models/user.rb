@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 
   enum role: [:seller, :assistant, :admin]
 
+  has_many :transactions, dependent: :restrict_with_exception
+
   after_initialize :set_default_role, :if => :new_record?
 
   def set_default_role
