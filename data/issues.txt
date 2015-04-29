@@ -3,3 +3,5 @@
 - easier seller rate manipulation
 - total price larger/bold
 - cash given feature
+- request confirmation dialog if transaction contains item that costs more than X EUR
+  (alternative: confirmation dialog directly when entering the high price)
