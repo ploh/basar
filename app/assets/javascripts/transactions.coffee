@@ -32,7 +32,7 @@ mark_error = (element) ->
   play_error_sound()
   element.parent().addClass "field_with_errors"
   # deactivate blur handler of newly focused element ->
-  # setTimeout() because this code here is executed _before_ the focus actually changed
+  # setTimeout() because this code here is executed _before_ the focus actually changes
   setTimeout (-> $(document.activeElement).off "blur"), 0
   # re-focus the currently focused element (will be unfocused right after this blur handler finishes)
   # ...and afterwards reinstall the blur handler of the intermediately focused element
@@ -48,6 +48,9 @@ unmark_error = (element) ->
 is_valid_price = (text) ->
   /^\d*[.,]?\d*$/.test text.trim()
 
+is_high_price = (price) ->
+  price >= 30
+
 seller_list =
 
 is_valid_seller = (text, new_text) ->
@@ -60,9 +63,16 @@ is_valid_seller = (text, new_text) ->
   else
     !text.trim()
 
-check_and_correct_field = (element, test_function) ->
+check_and_correct_field = (element, test_function, warn_function) ->
+  # wrapper for pass-by-modifiable-reference
   new_val = val: element.val()
+  correct = false
   if test_function element.val(), new_val
+    correct = true
+    if warn_function && warn_function new_val.val
+      play_error_sound()
+      correct = confirm "Really?"
+  if correct
     element.val new_val.val
     unmark_error element
   else
@@ -75,7 +85,7 @@ input_blur_handler = ->
   field_name = /\[([^\]]*)\]$/.exec( $(this).attr('name') )[1]
   switch field_name
     when "price"
-      check_and_correct_field $(this), is_valid_price
+      check_and_correct_field $(this), is_valid_price, is_high_price
       # TODO also check corresponding seller
       row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(this).attr('name') )[1]
       transaction_rows = $("table#items_table > tbody > tr")
@@ -122,10 +132,15 @@ TransactionsController.prototype.new = ->
         event.stopPropagation()
         event.preventDefault()
         window.location.href = "/transactions"
-      if event.keyCode == 38 && $(event.target).is "input"
-        event.stopPropagation()
-#        event.preventDefault()
-        set_last_value(event.target)
+      if $(event.target).is "input"
+        if event.keyCode == 38
+          event.stopPropagation()
+          set_last_value(event.target)
+#        if event.keyCode == 13
+#          event.stopPropagation()
+#          form_tag = $(event.target).closest("form")
+#          setTimeout ( -> $(event.target).blur() ), 0
+#          setTimeout ( -> form_tag.submit() ), 100
     seller_list = $("#seller_list").data("list")
     $(".field input").each ->
       register_field this
