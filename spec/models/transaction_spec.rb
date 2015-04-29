@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-RSpec.describe Transaction do
+RSpec.describe Transaction, type: :model do
 end

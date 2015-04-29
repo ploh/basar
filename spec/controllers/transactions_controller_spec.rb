@@ -19,12 +19,15 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe TransactionsController do
-  before(:each) { mock_sign_in :assistant }
+  before(:each) do
+    mock_sign_in :assistant
+    cookies.permanent.signed[:client_key] = "0000"
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # Transaction. As you add validations to Transaction, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { items_attributes: {} } }
+  let(:valid_attributes) { { items_attributes: {}, client_key: "0000" } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
