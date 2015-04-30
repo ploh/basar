@@ -1,7 +1,7 @@
 class Seller < ActiveRecord::Base
   has_many :items, dependent: :restrict_with_exception
 
-  has_many :activities
+  has_many :activities, dependent: :destroy
   has_many :tasks, through: :activities
   accepts_nested_attributes_for :activities
 
