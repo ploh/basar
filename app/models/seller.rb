@@ -70,7 +70,37 @@ class Seller < ActiveRecord::Base
     "#{counts[0]} / #{counts[1]}"
   end
 
-  def self.activities_summary(task)
+  def activities_summary
+    counts = activities_counts
+    "#{counts[0]} / #{counts[1]}"
+  end
+
+  def computed_rate
+    actual_work = activities_counts[0]
+    if actual_work < 1.999
+      0.2
+    elsif actual_work < 3.999
+      0.15
+    else
+      0.1
+    end
+  end
+
+  def computed_rate_in_percent
+    self.computed_rate && (self.computed_rate * 100).round
+  end
+
+  def self.activities_summary
+    counts = [0, 0]
+    Seller.all.each do |seller|
+      seller_counts = seller.activities_counts
+      counts[0] += seller_counts[0]
+      counts[1] += seller_counts[1]
+    end
+    "#{counts[0]} / #{counts[1]}"
+  end
+
+  def self.activity_summary(task)
     counts = [0, 0]
     Seller.all.each do |seller|
       seller_counts = seller.activity_counts(task)
@@ -85,12 +115,23 @@ class Seller < ActiveRecord::Base
     if activity
       [activity.actual_count, activity.planned_count].map do |float|
         int = float.round
-        int == float ? int : float
+        int == float ? int : float.round(2)
       end
     else
       [0, 0]
     end
   end
+
+  def activities_counts
+    counts = [0, 0]
+    Task.all.each do |task|
+      task_counts = activity_counts(task)
+      counts[0] += task_counts[0]
+      counts[1] += task_counts[1]
+    end
+    counts
+  end
+
 
   private
 

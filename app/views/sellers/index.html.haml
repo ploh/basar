@@ -6,7 +6,7 @@
   = render 'table_header'
 
   - @sellers.each_with_index do |seller, i|
-    - if i % 20 == 0 && @sellers.size - i > 5
+    - if (i+1) % 20 == 0 && @sellers.size - (i+1) > 5
       = render 'table_header'
     %tr
       %td= seller.name
@@ -14,6 +14,8 @@
       %td.initials= seller.initials
       - @tasks.each do |task|
         %td.number= seller.activity_summary(task)
+      %td.number= seller.activities_summary
+      %td.number= "#{seller.computed_rate_in_percent} %"
       %td.number= "#{seller.rate_in_percent} %"
       %td.number= seller.number_of_items
       %td.money= money_string seller.total_revenue
@@ -33,7 +35,9 @@
     %td
     %td
     - @tasks.each do |task|
-      %td.number= Seller.activities_summary(task)
+      %td.number= Seller.activity_summary(task)
+    %td.number= Seller.activities_summary
+    %td
     %td
     %td.number= @sellers.map {|seller| seller.number_of_items}.inject(0, :+)
     %td.money= money_string @sellers.map {|seller| seller.total_revenue}.inject(0, :+)
