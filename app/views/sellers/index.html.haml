@@ -29,7 +29,7 @@
       %td.number= seller.number
       %td.initials= seller.initials
       - @tasks.each do |task|
-        %td
+        %td.number= seller.activity_description(task)
       %td.number= "#{seller.rate_in_percent} %"
       %td.number= seller.number_of_items
       %td.money= money_string seller.total_revenue

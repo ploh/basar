@@ -1,19 +1,22 @@
 class SellersController < ApplicationController
   load_and_authorize_resource
 
+  before_action :load_tasks, except: :destroy
+
   # GET /sellers
   def index
     @sellers = Seller.order("number")
-    @tasks = Task.all
   end
 
   # GET /sellers/new
   def new
     @seller = Seller.new
+    fill_activities
   end
 
   # GET /sellers/1/edit
   def edit
+    fill_activities
   end
 
   # POST /sellers
@@ -29,6 +32,7 @@ class SellersController < ApplicationController
 
   # PATCH/PUT /sellers/1
   def update
+    p seller_params
     if @seller.update(seller_params)
       redirect_to sellers_path, notice: 'Seller was successfully updated.'
     else
@@ -63,8 +67,23 @@ class SellersController < ApplicationController
 #   end
 
   private
-    # Only allow a trusted parameter "white list" through.
-    def seller_params
-      params.require(:seller).permit(:name, :number, :initials, :rate_in_percent)
+
+  def load_tasks
+    @tasks = Task.all
+  end
+
+  def fill_activities
+    @tasks.each do |task|
+      @seller.activities.build task: task unless @seller.activities.exists? task: task
     end
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def seller_params
+    params.require(:seller).permit( :name,
+                                    :number,
+                                    :initials,
+                                    :rate_in_percent,
+                                    activities_attributes: [:planned_count, :actual_count, :task_id, :id] )
+  end
 end
