@@ -83,7 +83,10 @@ class Seller < ActiveRecord::Base
   def activity_counts(task)
     activity = activities.find_by(task: task)
     if activity
-      [activity.actual_count, activity.planned_count]
+      [activity.actual_count, activity.planned_count].map do |float|
+        int = float.round
+        int == float ? int : float
+      end
     else
       [0, 0]
     end

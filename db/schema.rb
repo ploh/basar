@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430174402) do
+ActiveRecord::Schema.define(version: 20150430200120) do
 
   create_table "activities", force: :cascade do |t|
-    t.integer  "seller_id",                 null: false
-    t.integer  "task_id",                   null: false
-    t.integer  "planned_count", default: 0, null: false
-    t.integer  "actual_count",  default: 0, null: false
+    t.integer  "seller_id",                   null: false
+    t.integer  "task_id",                     null: false
+    t.float    "planned_count", default: 0.0, null: false
+    t.float    "actual_count",  default: 0.0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
