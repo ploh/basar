@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430070425) do
+ActiveRecord::Schema.define(version: 20150430070726) do
+
+  create_table "activities", force: :cascade do |t|
+    t.integer "seller_id",     null: false
+    t.integer "task_id",       null: false
+    t.integer "planned_count"
+    t.integer "actual_count"
+  end
+
+  add_index "activities", ["seller_id"], name: "index_activities_on_seller_id"
+  add_index "activities", ["task_id", "seller_id"], name: "index_activities_on_task_id_and_seller_id", unique: true
+  add_index "activities", ["task_id"], name: "index_activities_on_task_id"
 
   create_table "items", force: :cascade do |t|
     t.integer  "seller_id"
@@ -32,17 +43,6 @@ ActiveRecord::Schema.define(version: 20150430070425) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "sellers_tasks", force: :cascade do |t|
-    t.integer "seller_id",     null: false
-    t.integer "task_id",       null: false
-    t.integer "planned_count"
-    t.integer "actual_count"
-  end
-
-  add_index "sellers_tasks", ["seller_id"], name: "index_sellers_tasks_on_seller_id"
-  add_index "sellers_tasks", ["task_id", "seller_id"], name: "index_sellers_tasks_on_task_id_and_seller_id", unique: true
-  add_index "sellers_tasks", ["task_id"], name: "index_sellers_tasks_on_task_id"
 
   create_table "tasks", force: :cascade do |t|
     t.string   "description"
