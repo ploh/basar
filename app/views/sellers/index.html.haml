@@ -3,33 +3,17 @@
 = link_to 'New Seller', new_seller_path
 
 %table#sellers.element_list
-  %tr
-    %th Name
-    %th Number
-    %th Initials
-    - @tasks.each do |task|
-      %th= task.description
-    %th Rate&nbsp;&nbsp;
-    %th # Sold items
-    %th Total revenue
-    %th Commission
-    %th Total Payout
-    %th
-    %th
-    %th Commission 10%
-    %th Payout 10%
-    %th Commission 15%
-    %th Payout 15%
-    %th Commission 20%
-    %th Payout 20%
+  = render 'table_header'
 
-  - @sellers.each do |seller|
+  - @sellers.each_with_index do |seller, i|
+    - if i % 20 == 0 && @sellers.size - i > 5
+      = render 'table_header'
     %tr
       %td= seller.name
       %td.number= seller.number
       %td.initials= seller.initials
       - @tasks.each do |task|
-        %td.number= seller.activity_description(task)
+        %td.number= seller.activity_summary(task)
       %td.number= "#{seller.rate_in_percent} %"
       %td.number= seller.number_of_items
       %td.money= money_string seller.total_revenue
@@ -44,12 +28,12 @@
       %td.money= money_string seller.total_commission(0.20)
       %td.money= money_string seller.total_payout(0.20)
 
-  %tr
-    %td SUMME
+  %tr.summary
+    %td SUM
     %td
     %td
     - @tasks.each do |task|
-      %td
+      %td.number= Seller.activities_summary(task)
     %td
     %td.number= @sellers.map {|seller| seller.number_of_items}.inject(0, :+)
     %td.money= money_string @sellers.map {|seller| seller.total_revenue}.inject(0, :+)

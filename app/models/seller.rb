@@ -65,12 +65,27 @@ class Seller < ActiveRecord::Base
     "<Seller: #{code} #{name}, #{rate_in_percent}%>"
   end
 
-  def activity_description(task)
+  def activity_summary(task)
+    counts = activity_counts(task)
+    "#{counts[0]} / #{counts[1]}"
+  end
+
+  def self.activities_summary(task)
+    counts = [0, 0]
+    Seller.all.each do |seller|
+      seller_counts = seller.activity_counts(task)
+      counts[0] += seller_counts[0]
+      counts[1] += seller_counts[1]
+    end
+    "#{counts[0]} / #{counts[1]}"
+  end
+
+  def activity_counts(task)
     activity = activities.find_by(task: task)
     if activity
-      "#{activity.actual_count} / #{activity.planned_count}"
+      [activity.actual_count, activity.planned_count]
     else
-      "0 / 0"
+      [0, 0]
     end
   end
 
