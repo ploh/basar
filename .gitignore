@@ -17,3 +17,8 @@
 
 # Ignore config secrets
 /config/secret
+
+# Ignore compiled assets
+/public/assets/application-*.css*
+/public/assets/application-*.js*
+/public/assets/manifest-*.json
