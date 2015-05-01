@@ -2,6 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+
 # create_overlay = ->
 #   d = document.createElement('div');
 #   $(d).css(
@@ -93,7 +94,6 @@ input_blur_handler = ->
         last_row = transaction_rows.filter(":last")
         last_row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(".field input", last_row).attr('name') )[1]
         new_row_index = parseInt(last_row_index) + 1
-        console.log new_row_index
         new_row = last_row.clone()
         $(".field label", new_row).each ->
           $(this).attr("for", $(this).attr("for").replace(last_row_index, new_row_index))
@@ -136,6 +136,7 @@ TransactionsController.prototype.new = ->
         if event.keyCode == 38
           event.stopPropagation()
           set_last_value(event.target)
+          # @@@ fix for ENTER press
 #        if event.keyCode == 13
 #          event.stopPropagation()
 #          form_tag = $(event.target).closest("form")
