@@ -8,6 +8,7 @@ bind_hotkeys = ->
       when 'A'.charCodeAt(0) then "/transactions/all"
       when 'L'.charCodeAt(0) then "/transactions"
       when 'N'.charCodeAt(0) then "/transactions/new"
+      when 'R'.charCodeAt(0) then "/sellers/revenue"
       when 'S'.charCodeAt(0) then "/sellers"
     if target && !$(event.target).is "input"
       event.stopPropagation()

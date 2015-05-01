@@ -19,18 +19,8 @@
       %td.number= seller.activities_summary
       %td.number= "#{seller.computed_rate_in_percent} %"
       %td.number= "#{seller.rate_in_percent} %"
-      %td.number= seller.number_of_items
-      %td.money= money_string seller.total_revenue
-      %td.money= money_string seller.total_commission
-      %td.money= money_string seller.total_payout
       %td= link_to 'Edit', edit_seller_path(seller)
       %td= link_to 'Destroy', seller, :method => :delete, :data => { :confirm => 'Are you sure?' }
-      %td.money= money_string seller.total_commission(0.10)
-      %td.money= money_string seller.total_payout(0.10)
-      %td.money= money_string seller.total_commission(0.15)
-      %td.money= money_string seller.total_payout(0.15)
-      %td.money= money_string seller.total_commission(0.20)
-      %td.money= money_string seller.total_payout(0.20)
 
   %tr.summary
     %td SUM
@@ -41,15 +31,5 @@
     %td.number= Seller.activities_summary
     %td
     %td
-    %td.number= @sellers.map {|seller| seller.number_of_items}.inject(0, :+)
-    %td.money= money_string @sellers.map {|seller| seller.total_revenue}.inject(0, :+)
-    %td.money= money_string @sellers.map {|seller| seller.total_commission}.inject(0, :+)
-    %td.money= money_string @sellers.map {|seller| seller.total_payout}.inject(0, :+)
     %td
     %td
-    %td.money= money_string @sellers.map {|seller| seller.total_commission(0.10)}.inject(0, :+)
-    %td.money= money_string @sellers.map {|seller| seller.total_payout(0.10)}.inject(0, :+)
-    %td.money= money_string @sellers.map {|seller| seller.total_commission(0.15)}.inject(0, :+)
-    %td.money= money_string @sellers.map {|seller| seller.total_payout(0.15)}.inject(0, :+)
-    %td.money= money_string @sellers.map {|seller| seller.total_commission(0.20)}.inject(0, :+)
-    %td.money= money_string @sellers.map {|seller| seller.total_payout(0.20)}.inject(0, :+)

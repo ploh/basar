@@ -1,0 +1,55 @@
+%h1 Listing sellers with revenues
+
+= link_to 'New Seller', new_seller_path
+
+#seller_list{data: {list: ( hash = {}; Seller.all.each {|seller| hash[seller.number] = seller.id}; hash.to_json)}}
+
+%table#sellers.element_list
+  = render 'revenue_table_header'
+
+  - @sellers.each_with_index do |seller, i|
+    - if (i+1) % 20 == 0 && @sellers.size - (i+1) > 5
+      = render 'revenue_table_header'
+    %tr
+      %td= seller.name
+      %td.number= seller.number
+      %td.initials= seller.initials
+      - @tasks.each do |task|
+        %td.number= seller.activity_summary(task)
+      %td.number= seller.activities_summary
+      %td.number= "#{seller.computed_rate_in_percent} %"
+      %td.number= "#{seller.rate_in_percent} %"
+      %td.number= seller.number_of_items
+      %td.money= money_string seller.total_revenue
+      %td.money= money_string seller.total_commission
+      %td.money= money_string seller.total_payout
+      %td= link_to 'Edit', edit_seller_path(seller)
+      %td= link_to 'Destroy', seller, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td.money= money_string seller.total_commission(0.10)
+      %td.money= money_string seller.total_payout(0.10)
+      %td.money= money_string seller.total_commission(0.15)
+      %td.money= money_string seller.total_payout(0.15)
+      %td.money= money_string seller.total_commission(0.20)
+      %td.money= money_string seller.total_payout(0.20)
+
+  %tr.summary
+    %td SUM
+    %td
+    %td
+    - @tasks.each do |task|
+      %td.number= Seller.activity_summary(task)
+    %td.number= Seller.activities_summary
+    %td
+    %td
+    %td.number= @sellers.map {|seller| seller.number_of_items}.inject(0, :+)
+    %td.money= money_string @sellers.map {|seller| seller.total_revenue}.inject(0, :+)
+    %td.money= money_string @sellers.map {|seller| seller.total_commission}.inject(0, :+)
+    %td.money= money_string @sellers.map {|seller| seller.total_payout}.inject(0, :+)
+    %td
+    %td
+    %td.money= money_string @sellers.map {|seller| seller.total_commission(0.10)}.inject(0, :+)
+    %td.money= money_string @sellers.map {|seller| seller.total_payout(0.10)}.inject(0, :+)
+    %td.money= money_string @sellers.map {|seller| seller.total_commission(0.15)}.inject(0, :+)
+    %td.money= money_string @sellers.map {|seller| seller.total_payout(0.15)}.inject(0, :+)
+    %td.money= money_string @sellers.map {|seller| seller.total_commission(0.20)}.inject(0, :+)
+    %td.money= money_string @sellers.map {|seller| seller.total_payout(0.20)}.inject(0, :+)

@@ -10,7 +10,7 @@ get_seller_id = (list, text) ->
 
 
 SellersController = Paloma.controller "Sellers"
-SellersController.prototype.index = ->
+index_action = ->
   jQuery ->
     seller_list = $("#seller_list").data("list")
     $(document).keydown (event) ->
@@ -23,6 +23,8 @@ SellersController.prototype.index = ->
           window.location.href = "/sellers/" + number + "/edit"
         else
           alert("Seller number not found: " + text)
+SellersController.prototype.index = index_action
+SellersController.prototype.revenue = index_action
 
 SellersController.prototype.edit = ->
   jQuery ->

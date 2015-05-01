@@ -8,6 +8,10 @@ class SellersController < ApplicationController
     @sellers = Seller.order("number")
   end
 
+  def revenue
+    @sellers = Seller.order("number")
+  end
+
   # GET /sellers/new
   def new
     @seller = Seller.new
