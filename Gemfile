@@ -50,6 +50,7 @@ gem 'devise'
 
 gem 'cancancan'
 
+gem 'yaml_db'
 
 group :development, :test do
   gem 'sqlite3'
