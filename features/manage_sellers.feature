@@ -4,7 +4,8 @@ Feature: Manage sellers
   wants to view, create, edit and delete sellers
 
 Scenario: Register new seller
-  Given I am on the new seller page
+  Given I am a new, authenticated admin
+  And I am on the new seller page
   When I fill in "Name" with "Inge Schmidt"
   And I fill in "Number" with "01"
   And I fill in "Initials" with "SCM"

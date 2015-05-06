@@ -121,7 +121,7 @@ end
 
 Then /^(?:|I )should see "([^"]*)"$/ do |text|
   content = text.include?("(...)") ? Regexp.new(text.split("(...)").map {|part| Regexp.escape(part)}.join(".*")) : text
-  page.should have_content(content)
+  expect(page).to have_content(content)
 end
 
 Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
@@ -243,15 +243,15 @@ end
 
 Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
-  current_path.should match path_to page_name
+  expect(current_path).to match path_to page_name
 end
 
 Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query
   actual_params = query ? CGI.parse(query) : {}
   expected_params = {}
-  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')} 
-  
+  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')}
+
   if actual_params.respond_to? :should
     actual_params.should == expected_params
   else

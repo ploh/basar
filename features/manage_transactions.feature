@@ -10,6 +10,7 @@ Background:
     |Inge Schmidt|1     |SCM     |20 |
     |Anna Lohmann|2     |AL      |10 |
     |Astrid Meyer|3     |AM      |15|
+  And I am a new, authenticated admin
 
 
 @javascript
@@ -51,6 +52,7 @@ Scenario: Add seller during transaction input
   Then I should not see an error mark on the 1st "Seller"
 
   When I am in a 2nd browser window
+  And I am a new, authenticated admin
   And I am on the new seller page
   And I fill in "Name" with "Petra Meyer"
   And I fill in "Number" with "04"

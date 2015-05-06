@@ -5,36 +5,36 @@
 # files.
 
 require 'cucumber/rails'
+require 'headless'
 
-$test = true
-
-# Headless UI tests
-$view_tests = ENV["VIEW"]
-
-AfterStep("@selenium,@javascript") do
-  sleep 1 if $view_tests
-#   $stdin.gets
+headless = Headless.new
+at_exit do
+  headless.destroy
 end
 
-unless $view_tests
-#  Capybara.javascript_driver = :webkit
 
-  if Capybara.javascript_driver == :selenium
-    require 'headless'
-    headless = Headless.new
-    at_exit do
-      headless.destroy
-    end
+Before("@selenium,@javascript", "~@view", "~@ack") do
+  headless.start
+end if Capybara.javascript_driver == :selenium
 
-    Before("@selenium,@javascript", "~@no-headless") do
-      headless.start
-    end
-
-    After("@selenium,@javascript", "~@no-headless") do
-      headless.stop
-    end
-  end
+Before("@selenium,@javascript") do
+  Capybara.session_name = "1"
 end
+
+
+AfterStep("@view") do |scenario|
+  sleep 1
+end if Capybara.javascript_driver == :selenium
+
+AfterStep("@ack") do |scenario|
+  print "Press Enter to continue"
+  STDIN.gets
+end if Capybara.javascript_driver == :selenium
+
+
+After("@selenium,@javascript", "~@view", "~@ack") do
+  headless.stop
+end if Capybara.javascript_driver == :selenium
 
 
 # Capybara defaults to CSS3 selectors rather than XPath.
@@ -43,8 +43,8 @@ end
 # Capybara.default_selector = :xpath
 
 # By default, any exception happening in your Rails application will bubble up
-# to Cucumber so that your scenario will fail. This is a different from how 
-# your application behaves in the production environment, where an error page will 
+# to Cucumber so that your scenario will fail. This is a different from how
+# your application behaves in the production environment, where an error page will
 # be rendered instead.
 #
 # Sometimes we want to override this default behaviour and allow Rails to rescue
