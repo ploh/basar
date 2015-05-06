@@ -6,11 +6,14 @@
 
 require 'cucumber/rails'
 require 'headless'
+require 'capybara/poltergeist'
 
 headless = Headless.new
 at_exit do
   headless.destroy
 end
+
+Capybara.javascript_driver = :poltergeist
 
 
 Before("@selenium,@javascript", "~@view", "~@ack") do
