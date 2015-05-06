@@ -21,6 +21,7 @@ Scenario: Enter new transaction
   And fill in the 2nd "Seller" with "02"
   And fill in the 2nd "Price" with ".4"
   And press Enter
+  And wait 0.5 seconds
   Then I should be on a transaction's page
   And should see "Transaction (...) created"
 

@@ -59,7 +59,8 @@ When /^(?:|I )press ([^"]+)$/ do |key|
 #      raise
 #    end
 #  page.driver.browser.execute_script( "var e = $.Event('keydown', { keyCode: #{keycode} }); $('body').trigger(e);" )
-  first('input').native.send_keys key.downcase.to_sym
+  key = key.downcase if Capybara.javascript_driver == :selenium
+  first('input').native.send_keys key.to_sym
 end
 
 When /^(?:|I )press "([^"]*)"$/ do |button|
@@ -261,17 +262,4 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
-end
-
-When /^(?:|I )wait (?:for )?(\d+) seconds?$/ do |seconds|
-  sleep seconds.to_i
-end
-
-Then /^debug$/ do
-  byebug
-end
-
-Then /^prompt$/ do
-  $stdout.puts "Press ENTER to continue!"
-  $stdin.gets
 end

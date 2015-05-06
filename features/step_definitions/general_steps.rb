@@ -5,3 +5,16 @@ end
 Given /^PENDING/ do
   pending
 end
+
+When /^(?:|I )wait (?:for )?(\d+(?:\.\d+)?) seconds?$/ do |seconds|
+  sleep seconds.to_f
+end
+
+Then /^debug$/ do
+  byebug
+end
+
+Then /^prompt$/ do
+  print "Press ENTER to continue!"
+  STDIN.gets
+end

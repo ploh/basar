@@ -5,39 +5,42 @@
 # files.
 
 require 'cucumber/rails'
-require 'headless'
+#require 'headless'
 require 'capybara/poltergeist'
 
-headless = Headless.new
-at_exit do
-  headless.destroy
-end
-
-Capybara.javascript_driver = :poltergeist
+#headless = Headless.new
+#at_exit do
+#  headless.destroy
+#end
 
 
-Before("@selenium,@javascript", "~@view", "~@ack") do
-  headless.start
-end if Capybara.javascript_driver == :selenium
+acknowledge_tests = ENV["ACK"]
+view_tests = acknowledge_tests || ENV["VIEW"]
 
-Before("@selenium,@javascript") do
+Capybara.javascript_driver = view_tests ? :selenium : :poltergeist
+
+
+#Before("@javascript", "~@wip") do
+#  headless.start
+#end if Capybara.javascript_driver == :selenium
+
+Before("@javascript") do
   Capybara.session_name = "1"
 end
 
 
-AfterStep("@view") do |scenario|
-  sleep 1
-end if Capybara.javascript_driver == :selenium
+AfterStep("@javascript") do |scenario|
+  if acknowledge_tests
+    step "prompt"
+  else
+    step "wait 1 second"
+  end
+end if view_tests
 
-AfterStep("@ack") do |scenario|
-  print "Press Enter to continue"
-  STDIN.gets
-end if Capybara.javascript_driver == :selenium
 
-
-After("@selenium,@javascript", "~@view", "~@ack") do
-  headless.stop
-end if Capybara.javascript_driver == :selenium
+#After("@javascript", "~@wip") do
+#  headless.stop
+#end if Capybara.javascript_driver == :selenium
 
 
 # Capybara defaults to CSS3 selectors rather than XPath.
