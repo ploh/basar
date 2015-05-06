@@ -1,7 +1,6 @@
 Basar::Application.routes.draw do
 
-  # @@@ change back to  'pages#home'
-  root 'transactions#index'
+  root 'pages#home'
 
   devise_for :users
 

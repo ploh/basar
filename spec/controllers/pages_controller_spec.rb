@@ -4,7 +4,6 @@ RSpec.describe PagesController, :type => :controller do
 
   describe "GET home" do
     it "returns http success" do
-      pending # reactivate home page after current basar is over
       get :home
       expect(response).to have_http_status(:success)
     end
