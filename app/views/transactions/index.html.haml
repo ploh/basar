@@ -1,4 +1,4 @@
-%h1 Listing transactions
+%h1= "Listing #{action_name == "index_all" ? "all" : "your"} transactions"
 
 = link_to 'New Transaction', new_transaction_path
 
