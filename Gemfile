@@ -59,6 +59,8 @@ group :development, :test do
   gem 'capybara'
 #   gem 'launchy'
   gem 'rspec-rails'
+  gem 'autotest-rails'
+  gem 'rspec-autotest'
   gem 'simplecov'
 #   gem 'minitest', '>= 5.0.0'
   gem 'selenium-webdriver'
@@ -73,7 +75,6 @@ end
 group :test do
   gem 'cucumber-rails', require: false
   gem 'cucumber-rails-training-wheels'
-  gem 'autotest-rails'
   gem 'ZenTest'
 end
 

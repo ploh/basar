@@ -191,6 +191,8 @@ GEM
     ref (1.0.5)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
+    rspec-autotest (1.0.0)
+      rspec-core (>= 2.99.0.beta1, < 4.0.0)
     rspec-core (3.2.2)
       rspec-support (~> 3.2.0)
     rspec-expectations (3.2.0)
@@ -300,6 +302,7 @@ DEPENDENCIES
   rails (~> 4.2.0)
   rails-erd
   rails_12factor
+  rspec-autotest
   rspec-rails
   sass-rails
   sdoc
