@@ -2,8 +2,6 @@
 
 = link_to 'New Seller', new_seller_path
 
-#seller_list{data: {list: ( hash = {}; Seller.all.each {|seller| hash[seller.number] = seller.id}; hash.to_json)}}
-
 %table#sellers.element_list
   = render 'revenue_table_header'
 

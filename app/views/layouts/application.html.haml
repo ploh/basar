@@ -3,10 +3,11 @@
   %head
     %title Ichthys-Basar
     = stylesheet_link_tag 'application'
-    = javascript_include_tag 'application'
+    = javascript_include_tag 'application', "data-turbolinks-track" => true
     = csrf_meta_tags
 
   %body
+    #seller_list{data: {list: ( hash = {}; Seller.all.each {|seller| hash[seller.number] = seller.initials}; hash.to_json)}}
     %table#menu
       %tr
         - if user_signed_in?

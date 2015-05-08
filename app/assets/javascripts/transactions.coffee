@@ -52,15 +52,13 @@ is_valid_price = (text) ->
 is_high_price = (price) ->
   price >= 30
 
-seller_list =
-
 is_valid_seller = (text, new_text) ->
   match = /^([a-zA-Z]*)\s*(\d+)$/.exec text
   if match
     initials = match[1].toUpperCase()
     number = parseInt match[2]
-    if seller_list[number]? && ( !initials || initials == seller_list[number] )
-      new_text.val = seller_list[number] + number
+    if window.seller_list[number]? && ( !initials || initials == window.seller_list[number] )
+      new_text.val = window.seller_list[number] + number
   else
     !text.trim()
 
@@ -142,7 +140,6 @@ TransactionsController.prototype.new = ->
 #          form_tag = $(event.target).closest("form")
 #          setTimeout ( -> $(event.target).blur() ), 0
 #          setTimeout ( -> form_tag.submit() ), 100
-    seller_list = $("#seller_list").data("list")
     $(".field input").each ->
       register_field this
     if $(".field_with_errors").length

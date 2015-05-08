@@ -3,23 +3,22 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 
-get_seller_id = (list, text) ->
+get_seller_id = (text) ->
   if /^\d+$/.exec text
     number = parseInt(text)
-    list[number]
+    window.seller_list[number]
 
 
 SellersController = Paloma.controller "Sellers"
 index_action = ->
   jQuery ->
-    seller_list = $("#seller_list").data("list")
     $(document).keydown (event) ->
       if event.which == 'E'.charCodeAt(0) && !$(event.target).is "input"
         event.stopPropagation()
         event.preventDefault()
         text = prompt "Seller number:"
         if text?
-          number = get_seller_id(seller_list, text)
+          number = get_seller_id(text)
           if number?
             window.location.href = "/sellers/" + number + "/edit"
           else
@@ -34,3 +33,6 @@ SellersController.prototype.edit = ->
         event.stopPropagation()
         event.preventDefault()
         window.location.href = "/sellers"
+
+jQuery ->
+  window.seller_list = $("#seller_list").data("list")

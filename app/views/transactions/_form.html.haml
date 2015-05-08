@@ -1,7 +1,5 @@
 = render "summary"
 
-#seller_list{data: {list: ( hash = {}; Seller.all.each {|seller| hash[seller.number] = seller.initials}; hash.to_json)}}
-
 = form_for @transaction do |f|
   - if @transaction.errors.any?
     #error_explanation
