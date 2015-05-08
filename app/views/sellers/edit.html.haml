@@ -2,8 +2,35 @@
 
 = render 'form'
 
+%p
+  Computed rate:
+  = "#{@seller.computed_rate_in_percent} %"
+
 = link_to 'Destroy', @seller, :method => :delete, :data => { :confirm => 'Are you sure?' }
 \|
 = link_to 'New', new_seller_path
 \|
 = link_to 'List', sellers_path
+
+
+%h2 Revenue
+
+%table
+  %tr
+    %td # Sold items
+    %td.number= @seller.number_of_items
+  %tr
+    %td Revenue
+    %td.money= money_string @seller.total_revenue
+  %tr
+    %td Commission
+    %td.money= money_string @seller.total_commission
+  %tr
+    %td Payout
+    %td.money= money_string @seller.total_payout
+
+
+%h3 Sold items
+
+- @seller.items.each do |item|
+  %div= money_string item.price
