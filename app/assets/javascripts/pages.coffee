@@ -2,18 +2,33 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-bind_hotkeys = ->
-  $(document).keydown (event) ->
-    target = switch event.which
-      when 'A'.charCodeAt(0) then "/transactions/all"
-      when 'L'.charCodeAt(0) then "/transactions"
-      when 'N'.charCodeAt(0) then "/transactions/new"
-      when 'R'.charCodeAt(0) then "/sellers/revenue"
-      when 'S'.charCodeAt(0) then "/sellers"
-    if target && !$(event.target).is "input"
-      event.stopPropagation()
-      window.location.href = target
-
-
 jQuery ->
-  bind_hotkeys()
+  $(document).keydown (event) ->
+    action = null
+    event_target = $(event.target)
+    if event_target.is "input"
+      if event.which == 27  # Escape key
+        action = ->
+          event_target.blur()
+    else
+      action = switch event.which
+        when 'A'.charCodeAt(0) then "/transactions/all"
+        when 'L'.charCodeAt(0) then "/transactions"
+        when 'N'.charCodeAt(0) then "/transactions/new"
+        when 'R'.charCodeAt(0) then "/sellers/revenue"
+        when 'S'.charCodeAt(0) then "/sellers"
+        when 'E'.charCodeAt(0) then ->
+          text = prompt "Seller number:"
+          if text?
+            number = window.get_seller_id(text)
+            if number?
+              window.location.href = "/sellers/" + number + "/edit"
+            else
+              alert("Seller number not found: " + text)
+
+    if action
+      event.stopPropagation()
+      if typeof action == 'string'
+        window.location.href = action
+      else
+        action()

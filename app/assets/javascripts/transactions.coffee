@@ -57,8 +57,8 @@ is_valid_seller = (text, new_text) ->
   if match
     initials = match[1].toUpperCase()
     number = parseInt match[2]
-    if window.seller_list[number]? && ( !initials || initials == window.seller_list[number] )
-      new_text.val = window.seller_list[number] + number
+    if window.seller_list[number]? && ( !initials || initials == window.seller_list[number][1] )
+      new_text.val = window.seller_list[number][1] + number
   else
     !text.trim()
 
@@ -126,16 +126,12 @@ TransactionsController = Paloma.controller "Transactions"
 TransactionsController.prototype.new = ->
   jQuery ->
     $(document).keydown (event) ->
-      if event.keyCode == 27
-        event.stopPropagation()
-        event.preventDefault()
-        window.location.href = "/transactions"
-      if $(event.target).is "input"
-        if event.keyCode == 38
+      if $(event.target).is "input" &&
+            event.which == 38  # up arrow key
           event.stopPropagation()
           set_last_value(event.target)
-          # @@@ fix for ENTER press
-#        if event.keyCode == 13
+# @@@ fix for ENTER press
+#        if event.which == 13
 #          event.stopPropagation()
 #          form_tag = $(event.target).closest("form")
 #          setTimeout ( -> $(event.target).blur() ), 0
