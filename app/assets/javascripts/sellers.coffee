@@ -8,6 +8,13 @@ window.get_seller_id = (text) ->
     number = parseInt(text)
     window.seller_list[number] && window.seller_list[number][0]
 
+SellersController = Paloma.controller "Sellers"
+SellersController.prototype.new =
+SellersController.prototype.edit = ->
+  jQuery ->
+    $(".field input").each ->
+      $(this).focus(-> $(this).select())
+    $("#seller_activities_attributes_0_actual_count").focus()
 
 jQuery ->
   window.seller_list = $("#seller_list").data("list")
