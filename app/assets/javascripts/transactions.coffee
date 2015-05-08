@@ -29,19 +29,11 @@
 #   window.prompt "Cash given (in EUR):"
 #   bind_overlay_hotkeys()
 
-mark_error = (element) ->
+mark_error = (event, element) ->
   play_error_sound()
   element.parent().addClass "field_with_errors"
-  # deactivate blur handler of newly focused element ->
-  # setTimeout() because this code here is executed _before_ the focus actually changes
-  setTimeout (-> $(document.activeElement).off "blur"), 0
-  # re-focus the currently focused element (will be unfocused right after this blur handler finishes)
-  # ...and afterwards reinstall the blur handler of the intermediately focused element
-  setTimeout( ( ->
-      newly_focused_element = $(document.activeElement)
-      setTimeout (-> newly_focused_element.blur input_blur_handler), 0
-      element.focus() ),
-    1 )
+  event.preventDefault()
+  element.select()
 
 unmark_error = (element) ->
   element.parent().removeClass "field_with_errors"
@@ -62,7 +54,7 @@ is_valid_seller = (text, new_text) ->
   else
     !text.trim()
 
-check_and_correct_field = (element, test_function, warn_function) ->
+check_and_correct_field = (event, element, test_function, warn_function) ->
   # wrapper for pass-by-modifiable-reference
   new_val = val: element.val()
   correct = false
@@ -75,36 +67,37 @@ check_and_correct_field = (element, test_function, warn_function) ->
     element.val new_val.val
     unmark_error element
   else
-    mark_error element
+    mark_error event, element
 
 play_error_sound = ->
   $("audio").trigger "play"
 
-input_blur_handler = ->
-  field_name = /\[([^\]]*)\]$/.exec( $(this).attr('name') )[1]
-  switch field_name
-    when "price"
-      check_and_correct_field $(this), is_valid_price, is_high_price
-      # TODO also check corresponding seller
-      row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(this).attr('name') )[1]
-      transaction_rows = $("table#items_table > tbody > tr")
-      if row_index >= transaction_rows.length - 3
-        last_row = transaction_rows.filter(":last")
-        last_row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(".field input", last_row).attr('name') )[1]
-        new_row_index = parseInt(last_row_index) + 1
-        new_row = last_row.clone()
-        $(".field label", new_row).each ->
-          $(this).attr("for", $(this).attr("for").replace(last_row_index, new_row_index))
-        $(".field input", new_row).each ->
-          $(this).attr("id", $(this).attr("id").replace(last_row_index, new_row_index))
-          $(this).attr("name", $(this).attr("name").replace(last_row_index, new_row_index))
-          register_field this
-        new_row.insertAfter(last_row)
-    when "seller_code"
-      check_and_correct_field $(this), is_valid_seller
+input_blur_handler = (event) ->
+  if event.which == 9 || event.which == 13
+    field_name = /\[([^\]]*)\]$/.exec( $(this).attr('name') )[1]
+    switch field_name
+      when "price"
+        check_and_correct_field event, $(this), is_valid_price, is_high_price
+        # TODO also check corresponding seller
+        row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(this).attr('name') )[1]
+        transaction_rows = $("table#items_table > tbody > tr")
+        if row_index >= transaction_rows.length - 3
+          last_row = transaction_rows.filter(":last")
+          last_row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(".field input", last_row).attr('name') )[1]
+          new_row_index = parseInt(last_row_index) + 1
+          new_row = last_row.clone()
+          $(".field label", new_row).each ->
+            $(this).attr("for", $(this).attr("for").replace(last_row_index, new_row_index))
+          $(".field input", new_row).each ->
+            $(this).attr("id", $(this).attr("id").replace(last_row_index, new_row_index))
+            $(this).attr("name", $(this).attr("name").replace(last_row_index, new_row_index))
+            register_field this
+          new_row.insertAfter(last_row)
+      when "seller_code"
+        check_and_correct_field event, $(this), is_valid_seller
 
 register_field = (field) ->
-  $(field).blur input_blur_handler
+  $(field).keydown input_blur_handler
   $(field).focus(-> $(this).select())
 
 # bind_overlay_hotkeys = ->
@@ -130,12 +123,6 @@ TransactionsController.prototype.new = ->
             event.which == 38  # up arrow key
           event.stopPropagation()
           set_last_value(event.target)
-# @@@ fix for ENTER press
-#        if event.which == 13
-#          event.stopPropagation()
-#          form_tag = $(event.target).closest("form")
-#          setTimeout ( -> $(event.target).blur() ), 0
-#          setTimeout ( -> form_tag.submit() ), 100
     $(".field input").each ->
       register_field this
     if $(".field_with_errors").length
