@@ -111,10 +111,10 @@ RSpec.describe SellersController do
         expect(assigns(:seller)).to eq(seller)
       end
 
-      it "redirects to the sellers list" do
+      it "redirects back to the sellers edit page" do
         seller = Seller.create! valid_attributes
         put :update, {:id => seller.to_param, :seller => valid_attributes}, valid_session
-        expect(response).to redirect_to(sellers_url)
+        expect(response).to redirect_to(edit_seller_path(seller))
       end
     end
 

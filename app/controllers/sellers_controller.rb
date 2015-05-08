@@ -37,7 +37,7 @@ class SellersController < ApplicationController
   # PATCH/PUT /sellers/1
   def update
     if @seller.update(seller_params)
-      redirect_to sellers_path, notice: 'Seller was successfully updated.'
+      redirect_to edit_seller_path(@seller), notice: 'Seller was successfully updated.'
     else
       render action: 'edit'
     end
