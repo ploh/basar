@@ -18,11 +18,12 @@ index_action = ->
         event.stopPropagation()
         event.preventDefault()
         text = prompt "Seller number:"
-        number = get_seller_id(seller_list, text)
-        if number?
-          window.location.href = "/sellers/" + number + "/edit"
-        else
-          alert("Seller number not found: " + text)
+        if text?
+          number = get_seller_id(seller_list, text)
+          if number?
+            window.location.href = "/sellers/" + number + "/edit"
+          else
+            alert("Seller number not found: " + text)
 SellersController.prototype.index = index_action
 SellersController.prototype.revenue = index_action
 
