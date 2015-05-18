@@ -5,11 +5,11 @@
 jQuery ->
   $(document).keydown (event) ->
     action = null
-    event_target = $(event.target)
-    if event_target.is "input"
+    target = $(event.target)
+    if target.is "input"
       if event.which == 27  # Escape key
         action = ->
-          event_target.blur()
+          target.blur()
     else
       action = switch event.which
         when 'A'.charCodeAt(0) then "/transactions/all"

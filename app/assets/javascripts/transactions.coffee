@@ -71,34 +71,30 @@ check_and_correct_field = (event, element, test_function, warn_function) ->
 
 play_error_sound = ->
   $("audio").trigger "play"
+1
 
-input_blur_handler = (event) ->
-  if event.which == 9 || event.which == 13
-    field_name = /\[([^\]]*)\]$/.exec( $(this).attr('name') )[1]
-    switch field_name
-      when "price"
-        check_and_correct_field event, $(this), is_valid_price, is_high_price
-        # TODO also check corresponding seller
-        row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(this).attr('name') )[1]
-        transaction_rows = $("table#items_table > tbody > tr")
-        if row_index >= transaction_rows.length - 3
-          last_row = transaction_rows.filter(":last")
-          last_row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(".field input", last_row).attr('name') )[1]
-          new_row_index = parseInt(last_row_index) + 1
-          new_row = last_row.clone()
-          $(".field label", new_row).each ->
-            $(this).attr("for", $(this).attr("for").replace(last_row_index, new_row_index))
-          $(".field input", new_row).each ->
-            $(this).attr("id", $(this).attr("id").replace(last_row_index, new_row_index))
-            $(this).attr("name", $(this).attr("name").replace(last_row_index, new_row_index))
-            register_field this
-          new_row.insertAfter(last_row)
-      when "seller_code"
-        check_and_correct_field event, $(this), is_valid_seller
+expand_table = ->
+  rows = $("#items_table > tbody > tr")
+  last_row = rows.filter(":last")
+  new_row = last_row.clone()
 
-register_field = (field) ->
-  $(field).keydown input_blur_handler
-  $(field).focus(-> $(this).select())
+  last_index = parseInt(rows.length) - 1
+  new_index = last_index + 1
+
+  $(".field input", last_row).each ->
+    $(this).off "focus", expand_table
+
+  $(".field label", new_row).each ->
+    $(this).attr "for", $(this).attr("for").replace(last_index, new_index)
+  $(".field input", new_row).each ->
+    $(this).attr "id", $(this).attr("id").replace(last_index, new_index)
+    $(this).attr "name", $(this).attr("name").replace(last_index, new_index)
+    $(this).focus ->
+      $(this).select()
+    $(this).focus expand_table
+
+  new_row.insertAfter(last_row)
+
 
 # bind_overlay_hotkeys = ->
 #   $(document).keyup (e) ->
@@ -119,12 +115,26 @@ TransactionsController = Paloma.controller "Transactions"
 TransactionsController.prototype.new = ->
   jQuery ->
     $(document).keydown (event) ->
-      if $(event.target).is "input" &&
-            event.which == 38  # up arrow key
-          event.stopPropagation()
-          set_last_value(event.target)
+      target = $(event.target)
+      if target.is "input"
+        switch event.which
+          when 38  # up arrow key
+            event.stopPropagation()
+            set_last_value(event.target)
+          when 9, 13  # tab key, enter key
+            match = /\[([^\]]*)\]$/.exec( target.attr('name') )
+            if match
+              field_name = match[1]
+              switch field_name
+                when "price"
+                  check_and_correct_field event, target, is_valid_price, is_high_price
+                when "seller_code"
+                  check_and_correct_field event, target, is_valid_seller
     $(".field input").each ->
-      register_field this
+      $(this).focus ->
+        $(this).select()
+    $(".field input", $("#items_table > tbody > tr").filter(":last")).each ->
+      $(this).focus expand_table
     if $(".field_with_errors").length
       $(".field_with_errors input:first").focus()
       play_error_sound()

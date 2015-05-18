@@ -21,6 +21,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/new
   def new
     @transaction = Transaction.new
+    @transaction.items.build
   end
 
   # POST /transactions

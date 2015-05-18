@@ -9,7 +9,6 @@
           %li= msg
 
   %table#items_table
-    - 3.times {@transaction.items.build} # unless @transaction.errors.any?
     - @transaction.items.each do |item|
       %tr
         = f.fields_for :items, item do |i|
