@@ -29,13 +29,16 @@
 #   window.prompt "Cash given (in EUR):"
 #   bind_overlay_hotkeys()
 
-mark_error = (element) ->
+mark_error = (element, message) ->
+  unmark_error element
   play_error_sound()
-  element.parent().addClass "field_with_errors"
+  $error_tag = $('<div class="validation_error"></div>')
+  $error_tag.text message
+  $error_tag.insertAfter element
   element.select()
 
 unmark_error = (element) ->
-  element.parent().removeClass "field_with_errors"
+  element.siblings(".validation_error").remove()
 
 play_error_sound = ->
   $("audio").trigger "play"
@@ -92,6 +95,7 @@ TransactionsController.prototype.new = ->
             match = /\[([^\]]*)\]$/.exec( target.attr('name') )
             if match
               field_name = match[1]
+              error_msg = "error"
               correct = switch field_name
                 when "price"
                   if /^\d*[.,]?\d*$/.test target.val().trim()
@@ -102,6 +106,7 @@ TransactionsController.prototype.new = ->
                       play_error_sound()
                       confirm("Really?") || "abort"
                   else
+                    error_msg = "is not a number"
                     false
                 when "seller_code"
                   match = /^([a-zA-Z]*)\s*(\d+)$/.exec target.val().trim()
@@ -112,27 +117,28 @@ TransactionsController.prototype.new = ->
                       target.val(window.seller_list[number][1] + number)
                       true
                     else
+                      error_msg = "does not exist"
                       false
                   else
+                    error_msg = "invalid format"
                     !target.val().trim()
 
-              if typeof correct != 'undefined'
-                if correct
-                  if correct == "abort"
-                    event.preventDefault()
-                  unmark_error target
-                else
-                  if event.which != 13
-                    event.preventDefault()
-                  mark_error target
+              if correct
+                if correct == "abort"
+                  event.preventDefault()
+                unmark_error target
+              else
+                if event.which != 13
+                  event.preventDefault()
+                  mark_error target, error_msg
 
     $(".field input").each ->
       $(this).focus ->
         $(this).select()
     $(".field input", $("#items_table > tbody > tr").filter(":last")).each ->
       $(this).focus expand_table
-    if $(".field_with_errors").length
-      $(".field_with_errors input:first").focus()
+    if $(".validation_error").length
+      $(".validation_error:first").siblings("input").focus()
       play_error_sound()
     else
       $(".field input").filter(-> $(this).val() == "").first().focus()

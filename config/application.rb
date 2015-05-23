@@ -23,5 +23,17 @@ module Basar
     config.sass.preferred_syntax = :sass
 
     config.time_zone = "Berlin"
+
+    config.action_view.field_error_proc = Proc.new do |html_tag, instance|
+      if html_tag.start_with?("<label")
+        html_tag
+      else
+        error_message =
+          instance.error_message.kind_of?(Array) ?
+          instance.error_message.join(', ') :
+          instance.error_message
+        %(#{html_tag}<div class="validation_error">#{error_message}</div>).html_safe
+      end
+    end
   end
 end
