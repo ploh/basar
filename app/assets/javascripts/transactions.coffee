@@ -29,49 +29,16 @@
 #   window.prompt "Cash given (in EUR):"
 #   bind_overlay_hotkeys()
 
-mark_error = (event, element) ->
+mark_error = (element) ->
   play_error_sound()
   element.parent().addClass "field_with_errors"
-  event.preventDefault()
   element.select()
 
 unmark_error = (element) ->
   element.parent().removeClass "field_with_errors"
 
-is_valid_price = (text) ->
-  /^\d*[.,]?\d*$/.test text.trim()
-
-is_high_price = (price) ->
-  price >= 30
-
-is_valid_seller = (text, new_text) ->
-  match = /^([a-zA-Z]*)\s*(\d+)$/.exec text
-  if match
-    initials = match[1].toUpperCase()
-    number = parseInt match[2]
-    if window.seller_list[number]? && ( !initials || initials == window.seller_list[number][1] )
-      new_text.val = window.seller_list[number][1] + number
-  else
-    !text.trim()
-
-check_and_correct_field = (event, element, test_function, warn_function) ->
-  # wrapper for pass-by-modifiable-reference
-  new_val = val: element.val()
-  correct = false
-  if test_function element.val(), new_val
-    correct = true
-    if warn_function && warn_function new_val.val
-      play_error_sound()
-      correct = confirm "Really?"
-  if correct
-    element.val new_val.val
-    unmark_error element
-  else
-    mark_error event, element
-
 play_error_sound = ->
   $("audio").trigger "play"
-1
 
 expand_table = ->
   rows = $("#items_table > tbody > tr")
@@ -103,12 +70,12 @@ expand_table = ->
 #   bind_element_to_hotkey "#cash_given_link", "g", display_overlay
 
 set_last_value = (field) ->
-  if $(field).val() == ""
-    row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( $(field).attr('name') )[1]
+  if field.val() == ""
+    row_index = /\[(\d+)\]\[[^\]]*\]$/.exec( field.attr('name') )[1]
     if row_index > 0
       prev_row_index = parseInt(row_index) - 1
-      prev_field = $("#" + $(field).attr("id").replace(row_index, prev_row_index))
-      $(field).val(prev_field.val())
+      prev_field = $("#" + field.attr("id").replace(row_index, prev_row_index))
+      field.val prev_field.val()
 
 
 TransactionsController = Paloma.controller "Transactions"
@@ -120,16 +87,45 @@ TransactionsController.prototype.new = ->
         switch event.which
           when 38  # up arrow key
             event.stopPropagation()
-            set_last_value(event.target)
+            set_last_value target
           when 9, 13  # tab key, enter key
             match = /\[([^\]]*)\]$/.exec( target.attr('name') )
             if match
               field_name = match[1]
-              switch field_name
+              correct = switch field_name
                 when "price"
-                  check_and_correct_field event, target, is_valid_price, is_high_price
+                  if /^\d*[.,]?\d*$/.test target.val().trim()
+                    target.val target.val().replace(",", ".")
+                    if target.val() < 30
+                      true
+                    else
+                      play_error_sound()
+                      confirm("Really?") || "abort"
+                  else
+                    false
                 when "seller_code"
-                  check_and_correct_field event, target, is_valid_seller
+                  match = /^([a-zA-Z]*)\s*(\d+)$/.exec target.val().trim()
+                  if match
+                    initials = match[1].toUpperCase()
+                    number = parseInt match[2]
+                    if window.seller_list[number]? && ( !initials || initials == window.seller_list[number][1] )
+                      target.val(window.seller_list[number][1] + number)
+                      true
+                    else
+                      false
+                  else
+                    !target.val().trim()
+
+              if typeof correct != 'undefined'
+                if correct
+                  if correct == "abort"
+                    event.preventDefault()
+                  unmark_error target
+                else
+                  if event.which != 13
+                    event.preventDefault()
+                  mark_error target
+
     $(".field input").each ->
       $(this).focus ->
         $(this).select()

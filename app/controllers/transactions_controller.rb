@@ -33,6 +33,7 @@ class TransactionsController < ApplicationController
     if @transaction.save
       redirect_to @transaction, notice: 'Transaction was successfully created.'
     else
+      @transaction.items.build
       js :new
       render action: 'new'
     end
