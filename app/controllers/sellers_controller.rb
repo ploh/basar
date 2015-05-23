@@ -30,6 +30,7 @@ class SellersController < ApplicationController
     if @seller.save
       redirect_to sellers_path, notice: 'Seller was successfully created.'
     else
+      js :new
       render action: 'new'
     end
   end
@@ -39,6 +40,7 @@ class SellersController < ApplicationController
     if @seller.update(seller_params)
       redirect_to edit_seller_path(@seller), notice: 'Seller was successfully updated.'
     else
+      js :edit
       render action: 'edit'
     end
   end

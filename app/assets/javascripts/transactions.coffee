@@ -82,7 +82,8 @@ set_last_value = (field) ->
 
 
 TransactionsController = Paloma.controller "Transactions"
-TransactionsController.prototype.new = ->
+TransactionsController.prototype.new =
+TransactionsController.prototype.edit = ->
   jQuery ->
     $(document).keydown (event) ->
       target = $(event.target)

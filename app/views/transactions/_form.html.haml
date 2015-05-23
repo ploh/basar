@@ -2,6 +2,7 @@
 
 = form_for @transaction do |f|
   %table#items_table
+    - @transaction.items.build
     - @transaction.items.each do |item|
       %tr
         = f.fields_for :items, item do |i|

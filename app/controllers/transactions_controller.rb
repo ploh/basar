@@ -21,7 +21,10 @@ class TransactionsController < ApplicationController
   # GET /transactions/new
   def new
     @transaction = Transaction.new
-    @transaction.items.build
+  end
+
+  # GET /transactions/1/edit
+  def edit
   end
 
   # POST /transactions
@@ -33,9 +36,18 @@ class TransactionsController < ApplicationController
     if @transaction.save
       redirect_to @transaction, notice: 'Transaction was successfully created.'
     else
-      @transaction.items.build
       js :new
       render action: 'new'
+    end
+  end
+
+  # PATCH/PUT /transactions/1
+  def update
+    if @transaction.update(transaction_params)
+      redirect_to @transaction, notice: 'Transaction was successfully updated.'
+    else
+      js :edit
+      render action: 'edit'
     end
   end
 
@@ -49,7 +61,7 @@ class TransactionsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def transaction_params
-    result = params.require(:transaction).permit(items_attributes: [:seller_code, :price])
+    result = params.require(:transaction).permit(items_attributes: [:seller_code, :price, :id])
     result["items_attributes"].delete_if do |id, values|
       values["seller_code"].blank? && values["price"].blank?
     end

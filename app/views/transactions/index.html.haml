@@ -19,4 +19,5 @@
       %td.number= transaction.items.count
       %td.money= money_string transaction.total_price
       %td= link_to 'Show', transaction
+      %td= link_to 'Edit', edit_transaction_path(transaction)
       %td= link_to 'Destroy', transaction, :method => :delete, :data => { :confirm => 'Are you sure?' }
