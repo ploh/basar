@@ -10,6 +10,10 @@ class SellersController < ApplicationController
 
   def revenue
     @sellers = Seller.order("number")
+    respond_to do |format|
+      format.html
+      format.csv { render text: view_context.revenues_csv( @sellers ) }
+    end
   end
 
   # GET /sellers/new
