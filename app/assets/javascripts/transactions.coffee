@@ -59,8 +59,7 @@ expand_table = ->
   $(".field input", new_row).each ->
     $(this).attr "id", $(this).attr("id").replace(last_index, new_index)
     $(this).attr "name", $(this).attr("name").replace(last_index, new_index)
-    $(this).focus ->
-      $(this).select()
+    activate_general_focus_handlers $(this)
     $(this).focus expand_table
 
   new_row.insertAfter(last_row)
@@ -80,11 +79,33 @@ set_last_value = (field) ->
       prev_field = $("#" + field.attr("id").replace(row_index, prev_row_index))
       field.val prev_field.val()
 
+activate_general_focus_handlers = (element) ->
+  element.focus ->
+    $(this).select()
+    match = /\[([^\]]*)\]$/.exec( $(this).attr('name') )
+    if match && match[1] == 'price'
+      old_price = 0
+      if /^\d*\.?\d+$/.test $(this).val()
+        old_price = parseFloat $(this).val()
+      $(this).blur (event) ->
+        $(this).off "blur"
+        new_price = 0
+        if /^\d*\.?\d+$/.test $(this).val()
+          new_price = parseFloat $(this).val()
+
+        window.number_of_items = window.number_of_items + (new_price != 0 ? 1 : 0) - (old_price != 0 ? 1 : 0)
+        $("#number_of_items").text window.number_of_items
+
+        window.total_price = window.total_price + new_price - old_price
+        $("#total_price").text(window.total_price.toFixed(2).replace(".", ",") + " EUR")
+
 
 TransactionsController = Paloma.controller "Transactions"
 TransactionsController.prototype.new =
 TransactionsController.prototype.edit = ->
   jQuery ->
+    window.number_of_items = parseInt $("#number_of_items").data("value")
+    window.total_price = parseFloat $("#total_price").data("value")
     $(document).keydown (event) ->
       target = $(event.target)
       if target.is "input"
@@ -99,8 +120,8 @@ TransactionsController.prototype.edit = ->
               error_msg = "error"
               correct = switch field_name
                 when "price"
-                  if /^\d*[.,]?\d*$/.test target.val().trim()
-                    target.val target.val().replace(",", ".")
+                  if /^\d*[.,]?\d+$/.test target.val().trim()
+                    target.val target.val().trim().replace(",", ".")
                     if target.val() < 30
                       true
                     else
@@ -134,8 +155,7 @@ TransactionsController.prototype.edit = ->
                   mark_error target, error_msg
 
     $(".field input").each ->
-      $(this).focus ->
-        $(this).select()
+      activate_general_focus_handlers $(this)
     $(".field input", $("#items_table > tbody > tr").filter(":last")).each ->
       $(this).focus expand_table
     if $(".validation_error").length

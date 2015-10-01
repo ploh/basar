@@ -8,9 +8,22 @@
   %p
     %b User / Client:
     = "#{@transaction.user_description} / #{@transaction.client_key}"
+-# TODO Update via javascript just like the overlay
 %p
   %b Number of items:
   = @transaction.number_of_items
-%p#total_price{style: "margin-bottom: 5ex"}
+%p{style: "margin-bottom: 5ex"}
   %b Total Price:
   = money_string @transaction.total_price
+
+.summary_overlay
+  %p
+    %b
+      Number of items:
+      - number_of_items = @transaction.number_of_items
+      %span#number_of_items{data: {value: number_of_items}}= number_of_items
+  %p
+    %b
+      Total Price:
+      - total_price = @transaction.total_price
+      %span#total_price{data: {value: total_price}}= money_string total_price
