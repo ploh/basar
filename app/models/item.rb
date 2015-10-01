@@ -1,10 +1,11 @@
 class Item < ActiveRecord::Base
   belongs_to :seller
-  belongs_to :purchase, class_name: :transaction  #, touch: true
+  belongs_to :purchase, class_name: 'Transaction', foreign_key: 'transaction_id', inverse_of: :items, touch: true
 
   validates :price, presence: true, numericality: { greater_than: -1000, less_than_or_equal_to: 1000 }
 #   validates :transaction, presence: true
   validate :seller_code_uniquely_exists
+
 
   def seller_code_uniquely_exists
     unless seller

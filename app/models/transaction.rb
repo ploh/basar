@@ -1,6 +1,6 @@
 class Transaction < ActiveRecord::Base
   belongs_to :user
-  has_many :items, dependent: :destroy
+  has_many :items, inverse_of: :purchase, dependent: :destroy
 
   accepts_nested_attributes_for :items
 
@@ -8,11 +8,6 @@ class Transaction < ActiveRecord::Base
     items.each {|item| item.destroy if item.price == 0.0}
   end
 
-#   around_save do
-#     big_bang = Time.at(0)
-#     newest_update = (items.map {|item| item.updated_at || big_bang} + [self.updated_at || big_bang]).max
-#     self.updated_at =  newest_update == big_bang ? nil : newest_update
-#   end
 
   def total_price
     items.map {|item| item.price || 0}.inject(0, :+)
