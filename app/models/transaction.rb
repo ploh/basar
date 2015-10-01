@@ -43,6 +43,6 @@ class Transaction < ActiveRecord::Base
   end
 
   def user_description
-    user && user.email
+    user && user.description
   end
 end

@@ -14,4 +14,8 @@ class User < ActiveRecord::Base
   def set_default_role
     self.role ||= :seller
   end
+
+  def description
+    self.email
+  end
 end
