@@ -62,11 +62,12 @@ class TransactionsController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def transaction_params
     result = params.require(:transaction).permit(items_attributes: [:seller_code, :price, :id])
-    result["items_attributes"].delete_if do |id, values|
-      values["seller_code"].blank? && values["price"].blank?
-    end
     result["items_attributes"].each do |id, values|
       values["price"].gsub!(",", ".") if values["price"]
+    end
+    result["items_attributes"].delete_if do |id, values|
+      (values["seller_code"].blank? && values["price"].blank?) ||
+      values["price"].strip =~ /^0\.?0?$/
     end
     result
   end
