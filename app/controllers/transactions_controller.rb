@@ -21,6 +21,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/new
   def new
     @transaction = Transaction.new
+    init_transaction
   end
 
   # GET /transactions/1/edit
@@ -30,8 +31,7 @@ class TransactionsController < ApplicationController
   # POST /transactions
   def create
     @transaction = Transaction.new(transaction_params)
-    @transaction.user = current_user
-    @transaction.client_key = @client_key
+    init_transaction
 
     if @transaction.save
       redirect_to @transaction, notice: 'Transaction was successfully created.'
@@ -70,5 +70,10 @@ class TransactionsController < ApplicationController
       values["price"].strip =~ /^0\.?0?$/
     end
     result
+  end
+
+  def init_transaction
+    @transaction.user = current_user
+    @transaction.client_key = @client_key
   end
 end

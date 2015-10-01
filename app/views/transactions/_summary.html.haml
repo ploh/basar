@@ -5,9 +5,11 @@
   %p
     %b Updated at:
     = @transaction.updated_at
-  %p
-    %b User / Client:
-    = "#{@transaction.user_description} / #{@transaction.client_key}"
+
+%p
+  %b User / Client:
+  = "#{@transaction.user_description} / #{@transaction.client_key}"
+
 -# TODO Update via javascript just like the overlay
 %p
   %b Number of items:
