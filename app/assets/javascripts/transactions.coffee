@@ -99,13 +99,35 @@ activate_general_focus_handlers = (element) ->
         window.total_price = window.total_price + new_price - old_price
         $("#total_price").text(window.total_price.toFixed(2).replace(".", ",") + " EUR")
 
+init_summary_overlay_values = ->
+  window.number_of_items = parseInt $("#number_of_items").data("value")
+  window.total_price = parseFloat $("#total_price").data("value")
+
+register_cash_given_hotkey = ->
+  $(document).keydown (event) ->
+    if !$(event.target).is "input"
+      if event.which == 'G'.charCodeAt(0)
+        event.stopPropagation()
+        if window.total_price?
+          text = prompt "Cash given (EUR):"
+          if text?
+            text = text.trim().replace(",", ".")
+            if /^\d*\.?\d+$/.test text
+              given = parseFloat text
+              change = given - window.total_price
+              alert("Change: " + change.toFixed(2).replace(".", ",") + " EUR")
 
 TransactionsController = Paloma.controller "Transactions"
+TransactionsController.prototype.show = ->
+  jQuery ->
+    init_summary_overlay_values()
+    register_cash_given_hotkey()
+
 TransactionsController.prototype.new =
 TransactionsController.prototype.edit = ->
   jQuery ->
-    window.number_of_items = parseInt $("#number_of_items").data("value")
-    window.total_price = parseFloat $("#total_price").data("value")
+    init_summary_overlay_values()
+    register_cash_given_hotkey()
     $(document).keydown (event) ->
       target = $(event.target)
       if target.is "input"

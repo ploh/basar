@@ -1,3 +1,1 @@
 - seller form: rate as selection list
-- total price larger/bold
-- cash given feature
