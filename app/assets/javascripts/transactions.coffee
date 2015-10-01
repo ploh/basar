@@ -85,12 +85,12 @@ activate_general_focus_handlers = (element) ->
     match = /\[([^\]]*)\]$/.exec( $(this).attr('name') )
     if match && match[1] == 'price'
       old_price = 0
-      if /^\d*\.?\d+$/.test $(this).val()
+      if /^-?\d*\.?\d+$/.test $(this).val()
         old_price = parseFloat $(this).val()
       $(this).blur (event) ->
         $(this).off "blur"
         new_price = 0
-        if /^\d*\.?\d+$/.test $(this).val()
+        if /^-?\d*\.?\d+$/.test $(this).val()
           new_price = parseFloat $(this).val()
 
         window.number_of_items = window.number_of_items + (new_price != 0 ? 1 : 0) - (old_price != 0 ? 1 : 0)
@@ -120,9 +120,9 @@ TransactionsController.prototype.edit = ->
               error_msg = "error"
               correct = switch field_name
                 when "price"
-                  if /^\d*[.,]?\d+$/.test target.val().trim()
+                  if /^-?\d*[.,]?\d+$/.test target.val().trim()
                     target.val target.val().trim().replace(",", ".")
-                    if target.val() < 30
+                    if 0 <= target.val() && target.val() < 30
                       true
                     else
                       play_error_sound()
