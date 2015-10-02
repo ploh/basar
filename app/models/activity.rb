@@ -1,5 +1,5 @@
 class Activity < ActiveRecord::Base
-  belongs_to :seller
+  belongs_to :seller, touch: true
   belongs_to :task
 
   def task_description
