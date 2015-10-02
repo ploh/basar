@@ -2,7 +2,13 @@ module SellersHelper
   def revenues_csv sellers
     CSV.generate(col_sep: ";") do |csv|
       sellers.each do |seller|
-        csv << [ seller.code, seller.total_payout ] if seller.total_payout > 0
+        if seller.total_revenue > 0
+          csv << [ seller.code,
+                   seller.name,
+                   money_string(seller.total_revenue),
+                   "#{seller.computed_rate_in_percent}%",
+                   money_string(seller.total_payout) ]
+        end
       end
     end
   end
