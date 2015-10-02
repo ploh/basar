@@ -13,9 +13,12 @@ module SellersHelper
     end
   end
 
-  def inconsistency_class seller, only_if_relevant
-    ( !only_if_relevant || seller.total_revenue > 0 ) &&
-    ( ( seller.computed_rate > seller.rate && 'less_activities' ) ||
-      ( seller.computed_rate < seller.rate && 'more_activities' ) )
+  def inconsistency_class seller
+    if seller.computed_rate > seller.rate
+      'less_activities'
+    elsif seller.computed_rate < seller.rate
+      'more_activities'
+    end
+  end
   end
 end
