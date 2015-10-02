@@ -9,7 +9,7 @@
   - @sellers.each_with_index do |seller, i|
     - if (i+1) % 20 == 0 && @sellers.size - (i+1) > 5
       = render 'revenue_table_header'
-    %tr
+    %tr{class: nothing_sold_class(seller)}
       %td{class: inconsistency_class(seller)}= seller.name
       %td.number= seller.number
       %td.initials= seller.initials

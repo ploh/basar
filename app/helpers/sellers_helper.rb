@@ -20,5 +20,10 @@ module SellersHelper
       'more_activities'
     end
   end
+
+  def nothing_sold_class seller
+    if seller.total_revenue == 0
+      'nothing_sold'
+    end
   end
 end
