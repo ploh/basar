@@ -9,7 +9,7 @@
     - if (i+1) % 20 == 0 && @sellers.size - (i+1) > 5
       = render 'table_header'
     %tr
-      %td= seller.name
+      %td{class: inconsistency_class(seller, false)}= seller.name
       %td.number= seller.number
       %td.initials= seller.initials
       - @tasks.each do |task|
