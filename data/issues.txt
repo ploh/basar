@@ -1,1 +1,7 @@
 - seller form: rate as selection list
+- stats page: per seller, per transaction etc
+- revenue page mit erb statt haml wegen performance
+- mehrfach pfeil hoch in input-feldern
+- hotkey für edit last transaction
+- doppelte transaction von nadine nachvollziehen
+- edit transaction testen / prüfen
