@@ -2,7 +2,7 @@ Basar::Application.routes.draw do
 
   root 'pages#home'
 
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations' }
 
   get 'transactions/all' => 'transactions#index_all', as: :all_transactions
 #   post 'transactions/validate_price' => 'transactions#validate_price', as: :validate_price
