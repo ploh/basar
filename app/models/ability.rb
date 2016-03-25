@@ -29,9 +29,9 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     case user.role
-    when :admin
+    when 'admin'
       can :manage, :all
-    when :assistant
+    when 'assistant'
       can :manage, Transaction
       can :read, :all
     end
