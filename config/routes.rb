@@ -1,5 +1,6 @@
 Basar::Application.routes.draw do
 
+  resources :animals
   root 'pages#home'
 
   devise_for :users, controllers: { registrations: 'users/registrations' }
