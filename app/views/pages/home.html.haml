@@ -1,2 +1,5 @@
 %h1 Hallo beim Basar-Tool
 %p Hier könnt ihr euch anmelden, eure Daten eingeben/ändern und hinterher sehen, wie viel ihr eingenommen habt.
+
+- if !user_signed_in?
+  %p=  link_to "Sign up", new_user_registration_path
