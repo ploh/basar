@@ -1,9 +1,9 @@
 Basar::Application.routes.draw do
 
-  resources :animals
   root 'pages#home'
 
   devise_for :users, controllers: { registrations: 'users/registrations' }
+  resources :users
 
   get 'transactions/all' => 'transactions#index_all', as: :all_transactions
 #   post 'transactions/validate_price' => 'transactions#validate_price', as: :validate_price
