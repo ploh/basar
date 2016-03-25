@@ -11,6 +11,6 @@
     = f.text_field :email
   .field
     = f.label :role
-    = f.number_field :role
+    = f.select :role, options_for_select(User.roles.keys)
   .actions
     = f.submit 'Save'
