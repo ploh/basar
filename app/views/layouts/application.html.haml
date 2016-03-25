@@ -12,16 +12,24 @@
       %tr
         - if user_signed_in?
           %td= link_to "Logout", destroy_user_session_path, :method => :delete
+          %td= link_to "Profile", edit_user_registration_path
         - else
           %td= link_to "Login", new_user_session_path
+
         %td= link_to "Home", root_path
-        %td= link_to "Sellers", sellers_path
-        %td= link_to "Revenue", sellers_revenue_path
-        %td= link_to "Tasks", tasks_path
-        %td
-          = link_to "Transactions", transactions_path
-          = link_to "(all)", all_transactions_path
-        %td= "Client: #@client_key"
+
+        - if can? :read, Seller
+          %td= link_to "Sellers", sellers_path
+          %td= link_to "Revenue", sellers_revenue_path
+
+        - if can? :read, Task
+          %td= link_to "Tasks", tasks_path
+
+        - if can? :read, Transaction
+          %td
+            = link_to "Transactions", transactions_path
+            = link_to "(all)", all_transactions_path
+          %td= "Client: #@client_key"
 
     - if flash[:alert]
       #alert.message= flash[:alert]
