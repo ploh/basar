@@ -3,6 +3,7 @@
 %table.element_list
   %thead
     %tr
+      %th Me
       %th Email
       %th Role
       %th
@@ -11,7 +12,9 @@
   %tbody
     - @users.each do |user|
       %tr
+        %td= user == current_user ? "x" : ""
         %td= user.email
         %td= user.role
         %td= link_to 'Edit', edit_user_path(user)
-        %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        - if can? :destroy, user
+          %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
