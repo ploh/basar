@@ -8,7 +8,9 @@ de:
         password_confirmation: Passwortbestätigung
         remember_me: Angemeldet bleiben
     models:
-      user: Benutzer
+      user:
+        one: Benutzer
+        other: Benutzer
   devise:
     confirmations:
       confirmed: Vielen Dank für Ihre Registrierung. Sie sind jetzt angemeldet.

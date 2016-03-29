@@ -2,3 +2,16 @@ de:
   unauthorized:
     manage:
       all: Sie sind nicht berechtigt, auf diese Seite zuzugreifen.
+  layouts:
+    application:
+      home: Home
+      login: Einloggen
+      logout: ausloggen
+      profile: Profil
+      sellers: Verkäufer
+      revenue: Erlös
+      tasks: Aufgaben
+      transactions:
+        title: Transaktionen
+        all: alle
+        client: client
