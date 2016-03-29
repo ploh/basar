@@ -1,2 +1,4 @@
 de:
-  hello: "Hallo Welt"
+  unauthorized:
+    manage:
+      all: Sie sind nicht berechtigt, auf diese Seite zuzugreifen.
