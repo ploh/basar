@@ -3,6 +3,7 @@ ruby '2.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 4.2.0'
+gem 'rails-i18n'
 
 # Use SCSS for stylesheets
 gem 'sass-rails'
@@ -47,6 +48,7 @@ gem 'haml-rails'
 gem 'paloma'
 
 gem 'devise'
+gem 'devise-i18n'
 
 gem 'cancancan'
 
