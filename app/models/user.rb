@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
          :confirmable, :lockable, :timeoutable
 
   enum role: [:seller, :assistant, :admin]
+  enum seller_model: [:A, :B, :C, :D]
 
   has_many :transactions, dependent: :restrict_with_exception
 
