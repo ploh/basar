@@ -1,4 +1,14 @@
 de:
+  activerecord:
+    attributes:
+      user:
+        name: Name
+        old_seller_code: Alte Verkäufernummer
+        seller_model: Verkaufsmodell
+    models:
+      user:
+        one: Benutzer
+        other: Benutzer
   unauthorized:
     manage:
       all: Sie sind nicht berechtigt, auf diese Seite zuzugreifen.
