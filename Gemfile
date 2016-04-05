@@ -42,8 +42,8 @@ gem 'bcrypt-ruby'
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
-gem 'haml'
-gem 'haml-rails'
+gem 'hamlit'
+gem 'hamlit-rails'
 
 gem 'paloma'
 
