@@ -54,8 +54,8 @@ gem 'cancancan'
 
 gem 'yaml_db'
 
+gem 'sqlite3'
 group :development, :test do
-  gem 'sqlite3'
   gem 'byebug'
   gem 'database_cleaner', '<= 1.0.1'
   gem 'capybara'
@@ -84,8 +84,10 @@ group :cucumber do
   gem 'headless'
 end
 
-group :production do
-  gem 'unicorn'
-  gem 'pg'
-  gem 'rails_12factor'
-end
+
+# heroku deployment
+# group :production do
+#  gem 'unicorn'
+#  gem 'pg'
+#  gem 'rails_12factor'
+# end
