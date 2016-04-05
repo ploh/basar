@@ -40,7 +40,7 @@ set :rbenv_type, :system
 set :rbenv_ruby, '2.1.2'
 
 set :bundle_path, nil
-set :bundle_flags, "#{fetch(:bundle_flags)} --system"
+set :bundle_flags, "--quiet --system"
 
 namespace :deploy do
   after :restart, :clear_cache do
