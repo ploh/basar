@@ -36,5 +36,8 @@ module Basar
         %(#{html_tag}<div class="validation_error">#{error_message}</div>).html_safe
       end
     end
+
+    config.action_mailer.delivery_method = :sendmail
+    config.action_mailer.default_options = { from: "info@kids-basar.de" }
   end
 end
