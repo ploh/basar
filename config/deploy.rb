@@ -42,6 +42,8 @@ set :rbenv_ruby, '2.1.2'
 set :bundle_path, nil
 set :bundle_flags, "--quiet --system"
 
+set :passenger_restart_with_touch, true
+
 namespace :deploy do
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
