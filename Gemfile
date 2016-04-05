@@ -55,6 +55,7 @@ gem 'cancancan'
 gem 'yaml_db'
 
 gem 'sqlite3'
+
 group :development, :test do
   gem 'byebug'
   gem 'database_cleaner', '<= 1.0.1'
@@ -71,7 +72,12 @@ group :development, :test do
 end
 
 group :development do
-  gem "rails-erd"
+  gem 'rails-erd'
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-passenger', '>= 0.1.1'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
 end
 
 group :test do
