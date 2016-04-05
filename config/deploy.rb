@@ -39,6 +39,8 @@ set :keep_releases, 50
 set :rbenv_type, :system
 set :rbenv_ruby, '2.1.2'
 
+set :bundle_path, nil
+set :bundle_flags, "#{fetch(:bundle_flags)} --system"
 
 namespace :deploy do
   after :restart, :clear_cache do
