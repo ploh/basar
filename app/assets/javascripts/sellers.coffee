@@ -12,9 +12,11 @@ SellersController = Paloma.controller "Sellers"
 SellersController.prototype.new =
 SellersController.prototype.edit = ->
   jQuery ->
-    $(".field input").each ->
-      $(this).focus(-> $(this).select())
-    $("#seller_activities_attributes_0_actual_count").focus()
+    if $("#seller_list").length
+      $(".field input").each ->
+        $(this).focus(-> $(this).select())
+      $("#seller_activities_attributes_0_actual_count").focus()
 
 jQuery ->
-  window.seller_list = $("#seller_list").data("list")
+  if $("#seller_list").length
+    window.seller_list = $("#seller_list").data("list")

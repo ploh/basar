@@ -7,7 +7,11 @@
     = csrf_meta_tags
 
   %body
-    #seller_list{data: {list: ( hash = {}; Seller.all.each {|seller| hash[seller.number] = [seller.id, seller.initials]}; hash.to_json)}}
+    - if can? :manage, Seller
+      #seller_list{data: {list: ( hash = {}; Seller.all.each {|seller| hash[seller.number] = [seller.id, seller.initials]}; hash.to_json)}}
+    - if can? :read, Transaction
+      #shortcuts_available
+
     %table#menu
       %tr
         - if user_signed_in?

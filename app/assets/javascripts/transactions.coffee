@@ -120,69 +120,71 @@ register_cash_given_hotkey = ->
 TransactionsController = Paloma.controller "Transactions"
 TransactionsController.prototype.show = ->
   jQuery ->
-    init_summary_overlay_values()
-    register_cash_given_hotkey()
+    if $("#shortcuts_available").length
+      init_summary_overlay_values()
+      register_cash_given_hotkey()
 
 TransactionsController.prototype.new =
 TransactionsController.prototype.edit = ->
   jQuery ->
-    init_summary_overlay_values()
-    register_cash_given_hotkey()
-    $(document).keydown (event) ->
-      target = $(event.target)
-      if target.is "input"
-        switch event.which
-          when 38  # up arrow key
-            event.stopPropagation()
-            set_last_value target
-          when 9, 13  # tab key, enter key
-            match = /\[([^\]]*)\]$/.exec( target.attr('name') )
-            if match
-              field_name = match[1]
-              error_msg = "error"
-              correct = switch field_name
-                when "price"
-                  if /^-?\d*[.,]?\d+$/.test target.val().trim()
-                    target.val target.val().trim().replace(",", ".")
-                    if 0 <= target.val() && target.val() < 30
-                      true
+    if $("#shortcuts_available").length
+      init_summary_overlay_values()
+      register_cash_given_hotkey()
+      $(document).keydown (event) ->
+        target = $(event.target)
+        if target.is "input"
+          switch event.which
+            when 38  # up arrow key
+              event.stopPropagation()
+              set_last_value target
+            when 9, 13  # tab key, enter key
+              match = /\[([^\]]*)\]$/.exec( target.attr('name') )
+              if match
+                field_name = match[1]
+                error_msg = "error"
+                correct = switch field_name
+                  when "price"
+                    if /^-?\d*[.,]?\d+$/.test target.val().trim()
+                      target.val target.val().trim().replace(",", ".")
+                      if 0 <= target.val() && target.val() < 30
+                        true
+                      else
+                        play_error_sound()
+                        confirm("Really?") || "abort"
                     else
-                      play_error_sound()
-                      confirm("Really?") || "abort"
-                  else
-                    error_msg = "is not a number"
-                    false
-                when "seller_code"
-                  match = /^([a-zA-Z]*)\s*(\d+)$/.exec target.val().trim()
-                  if match
-                    initials = match[1].toUpperCase()
-                    number = parseInt match[2]
-                    if window.seller_list[number]? && ( !initials || initials == window.seller_list[number][1] )
-                      target.val(window.seller_list[number][1] + number)
-                      true
-                    else
-                      error_msg = "does not exist"
+                      error_msg = "is not a number"
                       false
-                  else
-                    error_msg = "invalid format"
-                    !target.val().trim()
+                  when "seller_code"
+                    match = /^([a-zA-Z]*)\s*(\d+)$/.exec target.val().trim()
+                    if match
+                      initials = match[1].toUpperCase()
+                      number = parseInt match[2]
+                      if window.seller_list[number]? && ( !initials || initials == window.seller_list[number][1] )
+                        target.val(window.seller_list[number][1] + number)
+                        true
+                      else
+                        error_msg = "does not exist"
+                        false
+                    else
+                      error_msg = "invalid format"
+                      !target.val().trim()
 
-              if correct
-                if correct == "abort"
-                  event.preventDefault()
-                unmark_error target
-              else
-                if event.which != 13
-                  event.preventDefault()
-                  mark_error target, error_msg
+                if correct
+                  if correct == "abort"
+                    event.preventDefault()
+                  unmark_error target
+                else
+                  if event.which != 13
+                    event.preventDefault()
+                    mark_error target, error_msg
 
-    $(".field input").each ->
-      activate_general_focus_handlers $(this)
-    $(".field input", $("#items_table > tbody > tr").filter(":last")).each ->
-      $(this).focus expand_table
-    if $(".validation_error").length
-      $(".validation_error:first").siblings("input").focus()
-      play_error_sound()
-    else
-      $(".field input").filter(-> $(this).val() == "").first().focus()
-    # bind_overlay_hotkeys()
+      $(".field input").each ->
+        activate_general_focus_handlers $(this)
+      $(".field input", $("#items_table > tbody > tr").filter(":last")).each ->
+        $(this).focus expand_table
+      if $(".validation_error").length
+        $(".validation_error:first").siblings("input").focus()
+        play_error_sound()
+      else
+        $(".field input").filter(-> $(this).val() == "").first().focus()
+      # bind_overlay_hotkeys()
