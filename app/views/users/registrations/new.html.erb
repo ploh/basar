@@ -15,10 +15,19 @@
   <div><%= f.label :name %><br />
   <%= f.text_field :name %></div>
 
-  <div><%= f.label :seller_model %><br />
-  <%= f.select :seller_model, options_for_select(User.seller_models.keys, ""), include_blank: true %></div>
+  <div style="margin-top: 2ex"><%= f.label :seller_model %><br />
+  <% models = { :A => [20, "keine Mithilfe"],
+                :B => [15, "2 Std. Aufbauhilfe ODER ein Kuchen"],
+                :C => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und ein Kuchen"],
+                :D => [5,  "3 Std. Abbauhilfe"] } %>
+  <% User.seller_models.keys.each do |seller_model| %>
+    <% model = models[seller_model.to_sym] %>
+    <%= f.radio_button :seller_model, seller_model %>
+    <%= f.label :seller_model, "Model #{seller_model}: #{model[0]}% Kommission, #{model[1]}", value: seller_model %><br />
+  <% end %>
+  </div>
 
-  <div><%= f.label :old_seller_code %> <em>(leer lassen, wenn nicht vorhanden)</em><br />
+  <div style="margin-top: 2ex"><%= f.label :old_seller_code %> <em>(leer lassen, wenn nicht vorhanden)</em><br />
   <%= f.text_field :old_seller_code %></div>
 
   <div style="margin-top: 2ex"><%= f.submit t('.sign_up', :default => "Sign up") %></div>
