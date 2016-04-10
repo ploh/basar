@@ -16,9 +16,9 @@
   <%= f.text_field :name %></div>
 
   <div><%= f.label :seller_model %><br />
-  <%= f.select :seller_model, options_for_select(User.seller_models.keys) %></div>
+  <%= f.select :seller_model, options_for_select(User.seller_models.keys, ""), include_blank: true %></div>
 
-  <div><%= f.label :old_seller_code %><br />
+  <div><%= f.label :old_seller_code %> <em>(leer lassen, wenn nicht vorhanden)</em><br />
   <%= f.text_field :old_seller_code %></div>
 
   <div style="margin-top: 2ex"><%= f.submit t('.sign_up', :default => "Sign up") %></div>

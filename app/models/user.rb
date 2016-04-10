@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
 
   after_initialize :set_default_role, :if => :new_record?
 
+  validates :seller_model, presence: true
+  validates :role, presence: true
+  validates :name, presence: true
+
   def set_default_role
     self.role ||= :seller
   end
