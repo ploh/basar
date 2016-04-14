@@ -17,31 +17,28 @@
         = image_tag 'logo.png', size: '130x20'
       %ul
         - if user_signed_in?
-          %li
-            = current_user.email
-          %li{style: "margin-left: 10px"}
-            = link_to "(#{t ".logout"})", destroy_user_session_path, :method => :delete
-          %li= link_to t(".profile"), edit_user_registration_path
+          %li{style: "padding-left: 10px; text-indent: -10px; word-break: break-all"}= current_user.email
+          %li.indented{style: "margin-bottom: 2ex"}= link_to "(#{t ".logout"})", destroy_user_session_path, :method => :delete
+          %li.topic= link_to t(".profile"), edit_user_registration_path
         - else
-          %li= link_to t(".login"), new_user_session_path
+          %li.topic= link_to t(".login"), new_user_session_path
 
-        %li= link_to t(".home"), root_path
+        %li.topic= link_to t(".home"), root_path
 
         - if can? :read, User
-          %li= link_to User.model_name.human(count: 2), users_path
+          %li.topic= link_to User.model_name.human(count: 2), users_path
 
         - if can? :read, Seller
-          %li= link_to t(".sellers"), sellers_path
-          %li= link_to t(".revenue"), sellers_revenue_path
+          %li.topic= link_to t(".sellers"), sellers_path
+          %li.topic= link_to t(".revenue"), sellers_revenue_path
 
         - if can? :read, Task
-          %li= link_to t(".tasks"), tasks_path
+          %li.topic= link_to t(".tasks"), tasks_path
 
         - if can? :read, Transaction
-          %li
-            = link_to t(".transactions.title"), transactions_path
-            = link_to "(#{t ".transactions.all"})", all_transactions_path
-          %li= t(".transactions.client") + ": #@client_key"
+          %li.topic= link_to t(".transactions.title"), transactions_path
+          %li.indented= link_to "(#{t ".transactions.all"})", all_transactions_path
+          %li{style: "margin-top: 2ex"}= t(".transactions.client") + ": #@client_key"
 
     #content
       - if flash[:alert]
