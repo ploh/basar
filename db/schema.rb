@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160401145134) do
+ActiveRecord::Schema.define(version: 20160414085626) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "seller_id",                   null: false
@@ -85,6 +85,8 @@ ActiveRecord::Schema.define(version: 20160401145134) do
     t.string   "old_seller_code"
     t.string   "name",                               default: "", null: false
     t.integer  "seller_model"
+    t.string   "first_name",                         default: "", null: false
+    t.string   "last_name",                          default: "", null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
