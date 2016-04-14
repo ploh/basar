@@ -17,7 +17,8 @@ class User < ActiveRecord::Base
 
   after_initialize :set_default_role, :if => :new_record?
 
-  validates :seller_model, presence: true
+  validates :seller_model, presence: true, if: :seller?
+  validates :seller_model, absence: true, unless: :seller?
   validates :role, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
