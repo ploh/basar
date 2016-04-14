@@ -21,7 +21,11 @@ class User < ActiveRecord::Base
     self.role ||= :seller
   end
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   def description
-    self.email
+    "#{name} (#{email})"
   end
 end
