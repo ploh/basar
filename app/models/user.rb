@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+  @@max_sellers = 100
+  @@max_model_a = 25
+  @@reserved_model_d = 20
+  @@max_model_d = @@reserved_model_d
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -17,6 +22,10 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
 
+  validate :seller_model_available
+  validate :seller_available
+
+
   def set_default_role
     self.role ||= :seller
   end
@@ -27,5 +36,30 @@ class User < ActiveRecord::Base
 
   def description
     "#{name} (#{email})"
+  end
+
+  private
+
+  def seller_available
+    if seller? && @@max_sellers <= User.seller.count
+      errors.clear
+      errors[:base] << "Anmeldung nicht mehr möglich"
+    end
+  end
+
+  def seller_model_available
+    if seller?
+      if D?
+        if @@max_model_d <= User.seller.D.count
+          errors.add :seller_model, "D nicht mehr verfügbar"
+        end
+      else
+        if @@max_sellers - @@reserved_model_d <= User.seller.where.not(seller_model: User.seller_models[:D]).count
+          errors.add :seller_model, "#{seller_model} nicht mehr verfügbar (nur noch D verfügbar)"
+        elsif A? && @@max_model_a <= User.seller.A.count
+          errors.add :seller_model, "A nicht mehr verfügbar"
+        end
+      end
+    end
   end
 end
