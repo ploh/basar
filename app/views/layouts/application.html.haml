@@ -12,41 +12,43 @@
     - if can? :read, Transaction
       #shortcuts_available
 
-    %table#menu
-      %tr
+    #menu
+      %ul
         - if user_signed_in?
-          %td
+          %li
             = current_user.email
+          %li{style: "margin-left: 10px"}
             = link_to "(#{t ".logout"})", destroy_user_session_path, :method => :delete
-          %td= link_to t(".profile"), edit_user_registration_path
+          %li= link_to t(".profile"), edit_user_registration_path
         - else
-          %td= link_to t(".login"), new_user_session_path
+          %li= link_to t(".login"), new_user_session_path
 
-        %td= link_to t(".home"), root_path
+        %li= link_to t(".home"), root_path
 
         - if can? :read, User
-          %td= link_to User.model_name.human(count: 2), users_path
+          %li= link_to User.model_name.human(count: 2), users_path
 
         - if can? :read, Seller
-          %td= link_to t(".sellers"), sellers_path
-          %td= link_to t(".revenue"), sellers_revenue_path
+          %li= link_to t(".sellers"), sellers_path
+          %li= link_to t(".revenue"), sellers_revenue_path
 
         - if can? :read, Task
-          %td= link_to t(".tasks"), tasks_path
+          %li= link_to t(".tasks"), tasks_path
 
         - if can? :read, Transaction
-          %td
+          %li
             = link_to t(".transactions.title"), transactions_path
             = link_to "(#{t ".transactions.all"})", all_transactions_path
-          %td= t(".transactions.client") + ": #@client_key"
+          %li= t(".transactions.client") + ": #@client_key"
 
-    - if flash[:alert]
-      #alert.message= flash[:alert]
-    - if flash[:error]
-      #error.message= flash[:error]
-    - if flash[:warning]
-      #warning.message= flash[:warning]
-    - if flash[:notice]
-      #notice.message= flash[:notice]
+    #content
+      - if flash[:alert]
+        #alert.message= flash[:alert]
+      - if flash[:error]
+        #error.message= flash[:error]
+      - if flash[:warning]
+        #warning.message= flash[:warning]
+      - if flash[:notice]
+        #notice.message= flash[:notice]
 
-    = yield
+      = yield
