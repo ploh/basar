@@ -4,13 +4,17 @@
   = devise_error_messages!
 
   .field
-    = f.label :name
+    = f.label :first_name
     %br
-    = f.text_field :name, autocomplete: :off
+    = f.text_field :first_name
+  .field
+    = f.label :last_name
+    %br
+    = f.text_field :last_name
   .field
     = f.label :email
     %br
-    = f.text_field :email, autocomplete: :off
+    = f.text_field :email
 
   .field
     = f.label :password

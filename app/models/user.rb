@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
 
   validates :seller_model, presence: true
   validates :role, presence: true
-  validates :name, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
 
   def set_default_role
     self.role ||= :seller
