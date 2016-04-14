@@ -13,6 +13,8 @@
       #shortcuts_available
 
     #menu
+      %div{style: "display: block; margin: 10px"}
+        = image_tag 'logo.png', size: '130x20'
       %ul
         - if user_signed_in?
           %li
