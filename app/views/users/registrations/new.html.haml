@@ -41,7 +41,7 @@
     - User.seller_models.keys.each do |seller_model|
       - model = models[seller_model.to_sym]
       = f.radio_button :seller_model, seller_model
-      = f.label :seller_model, "Model #{seller_model}: #{model[0]}% Kommission, #{model[1]}".html_safe, value: seller_model
+      = f.label :seller_model, "Modell #{seller_model}: #{model[0]}% Kommission, #{model[1]}".html_safe, value: seller_model
       %br
 
   .actions
