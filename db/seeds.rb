@@ -54,4 +54,6 @@ end
 
 load_initial_sellers 'initial_sellers.csv'
 
-User.create!(email: "ichthys@test.host", password: "testpasswort", role: :admin, confirmed_at: Time.now)
+user = User.new(email: "admin@admin", first_name: "admin", last_name: "admin", password: "testpasswort", role: :admin)
+user.skip_confirmation!
+user.save!
