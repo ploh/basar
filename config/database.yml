@@ -23,6 +23,7 @@ production:
   database: db/production.sqlite3
   pool: 5
   timeout: 10000
+  options: "PRAGMA synchronous = off"
 
 cucumber:
   <<: *test
