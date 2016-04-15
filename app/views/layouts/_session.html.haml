@@ -1,0 +1,16 @@
+- if user_signed_in?
+  %li{style: "padding-left: 10px; text-indent: -10px; word-break: break-all"}= current_user.email
+  %li.indented= link_to "(#{t ".logout"})", destroy_user_session_path, :method => :delete, style: "text-decoration: none"
+- else
+  = form_for(User.new, :url => session_path(:user)) do |f|
+    %li= f.email_field :email, size: 12, placeholder: User.human_attribute_name(:email)
+    %li= f.password_field :password, size: 12, placeholder: User.human_attribute_name(:password)
+
+    %li
+      = f.label :remember_me, t('devise.sessions.new.remember_me_short')
+      = f.check_box :remember_me
+
+    %li{style: "margin-top: 1ex"}
+      = f.submit t('devise.sessions.new.sign_in', :default => "Sign in")
+
+    %li=  link_to t("users.registrations.new.sign_up"), new_user_registration_path

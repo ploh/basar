@@ -17,7 +17,6 @@ de:
     application:
       home: Home
       login: Einloggen
-      logout: ausloggen
       account: Konto
       sellers: Verkäufer
       revenue: Erlös
@@ -26,3 +25,5 @@ de:
         title: Transaktionen
         all: alle
         client: client
+    session:
+      logout: ausloggen

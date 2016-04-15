@@ -72,6 +72,7 @@ de:
       already_signed_out: Erfolgreich abgemeldet.
       new:
         sign_in: Anmelden
+        remember_me_short: Merken
       signed_in: Erfolgreich angemeldet.
       signed_out: Erfolgreich abgemeldet.
     shared:
