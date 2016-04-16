@@ -40,6 +40,10 @@
           %li.topic= link_to t(".transactions.title"), transactions_path
           %li.indented= link_to "(#{t ".transactions.all"})", all_transactions_path
           %li{style: "margin-top: 2ex"}= t(".transactions.client") + ": #@client_key"
+      #menu_footer
+        %ul
+          %li= link_to t('.privacy'), controller: 'pages', action: 'privacy'
+          %li= link_to t('.about'), controller: 'pages', action: 'about'
 
     #content
       - if flash[:alert]

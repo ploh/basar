@@ -21,6 +21,8 @@ de:
   layouts:
     application:
       home: Home
+      privacy: Datenschutz
+      about: Impressum
       login: Einloggen
       account: Konto
       sellers: Verkäufer

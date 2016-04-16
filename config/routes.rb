@@ -2,6 +2,9 @@ Basar::Application.routes.draw do
 
   root 'pages#home'
 
+  get 'pages/privacy' => 'pages#privacy'
+  get 'pages/about' => 'pages#about'
+
   devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :users
 
