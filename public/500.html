@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>We're sorry, but something went wrong (500)</title>
+  <title>Es ist etwas schiefgegangen (500)</title>
   <style>
   body {
     background-color: #EFEFEF;
@@ -32,26 +32,33 @@
 
   body > p {
     width: 33em;
-    margin: 0 auto 1em;
+    margin: 0 auto 0 auto;
     padding: 1em 0;
     background-color: #F7F7F7;
     border: 1px solid #CCC;
     border-right-color: #999;
     border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
     border-top-color: #DADADA;
-    color: #666;
+    color: #333;
     box-shadow:0 3px 8px rgba(50, 50, 50, 0.17);
+  }
+
+  p.link {
+    border-bottom-left-radius: 9px;
+    border-bottom-right-radius: 9px;
+  }
+
+  a {
+    color: #003;
   }
   </style>
 </head>
 
 <body>
-  <!-- This file lives in public/500.html -->
   <div class="dialog">
-    <h1>We're sorry, but something went wrong.</h1>
+    <h1>Es ist etwas schiefgegangen</h1>
   </div>
-  <p>If you are the application owner check the logs for more information.</p>
+  <p>Wenn das Problem bestehen bleibt, wenden Sie sich bitte an den Administrator</p>
+  <p class="link"><a href="/">Zur&uuml;ck zur Startseite</a></p>
 </body>
 </html>
