@@ -52,7 +52,7 @@ def build_seller_from_line(line)
   seller
 end
 
-load_initial_sellers 'initial_sellers.csv'
+# load_initial_sellers 'initial_sellers.csv'
 
 user = User.new(email: "admin@admin", first_name: "admin", last_name: "admin", password: "testpasswort", role: :admin)
 user.skip_confirmation!
