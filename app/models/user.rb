@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-  @@max_sellers = 100
+  @@max_sellers = 105
   @@max_model_a = 25
-  @@reserved_model_d = 20
+  @@reserved_model_d = 23
   @@max_model_d = @@reserved_model_d
 
   # Include default devise modules. Others available are:
