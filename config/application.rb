@@ -41,3 +41,23 @@ module Basar
     config.action_mailer.default_options = { from: "info@kids-basar.de" }
   end
 end
+
+# monkey patch new connection creation to execute an arbitrary sql statement
+# in the new connection, e.g. to set pragmas
+module ActiveRecord
+  module ConnectionAdapters
+    class ConnectionPool
+      alias :new_connection_orig :new_connection
+      def new_connection *args
+        connection = new_connection_orig *args
+        if statements = spec.config[:statements]
+          statements = [statements] unless statements.kind_of?(Enumerable)
+          statements.each do |stmt|
+            connection.raw_connection.execute stmt
+          end
+        end
+        connection
+      end
+    end
+  end
+end

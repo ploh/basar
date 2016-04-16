@@ -1,3 +1,11 @@
+sqlite_pragmas: &sqlite_pragmas
+  statements:
+  - pragma page_size = 4096
+  - pragma cache_size = 10000
+  - pragma temp_store = memory
+  - pragma synchronous = normal
+  - pragma journal_mode = wal
+
 # SQLite version 3.x
 #   gem install sqlite3
 #
@@ -8,6 +16,7 @@ development:
   database: db/development.sqlite3
   pool: 5
   timeout: 5000
+  <<: *sqlite_pragmas
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -23,7 +32,7 @@ production:
   database: db/production.sqlite3
   pool: 5
   timeout: 10000
-  options: "PRAGMA synchronous = off"
+  <<: *sqlite_pragmas
 
 cucumber:
   <<: *test
