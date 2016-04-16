@@ -1,51 +1,5 @@
 %h2= t('.sign_up', :default => "Sign up")
 
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-  = devise_error_messages!
-
-  .field
-    = f.label :first_name
-    %br
-    = f.text_field :first_name
-  .field
-    = f.label :last_name
-    %br
-    = f.text_field :last_name
-  .field
-    = f.label :email
-    %br
-    = f.email_field :email
-
-  .field
-    = f.label :password
-    %em= "(mind. #{@minimum_password_length} Zeichen)"
-    %br
-    = f.password_field :password
-  .field
-    = f.label :password_confirmation
-    %br
-    = f.password_field :password_confirmation
-
-  .field
-    = f.label :old_seller_code
-    %em (leer lassen, wenn nicht vorhanden)
-    %br
-    = f.text_field :old_seller_code
-
-  .field
-    = f.label :seller_model
-    %br
-    - models = { :A => [20, "keine Mithilfe"],
-                 :B => [15, "2 Std. Aufbauhilfe ODER ein Kuchen"],
-                 :C => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und ein Kuchen"],
-                 :D => [5,  "3 Std. <em>Abbau</em>hilfe"] }
-    - User.seller_models.keys.each do |seller_model|
-      - model = models[seller_model.to_sym]
-      = f.radio_button :seller_model, seller_model
-      = f.label :seller_model, "Modell #{seller_model}: #{model[0]}% Kommission, #{model[1]}".html_safe, value: seller_model
-      %br
-
-  .actions
-    = f.submit t('.sign_up', :default => "Sign up")
+= render 'form'
 
 = render "devise/shared/links"

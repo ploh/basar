@@ -1,67 +1,6 @@
 %h2= t '.title'
 
-= form_for(@user, :url => registration_path(:user), :html => { :method => :put }) do |f|
-  = devise_error_messages!
-
-  - unless @user.seller?
-    .field
-      = f.label :role
-      %br
-      = f.text_field :role, disabled: true
-
-  .field
-    = f.label :first_name
-    %br
-    = f.text_field :first_name, disabled: true
-  .field
-    = f.label :last_name
-    %br
-    = f.text_field :last_name, disabled: true
-  .field
-    = f.label :email
-    %br
-    = f.email_field :email
-    - if @user.pending_reconfirmation?
-      %p= t('.currently_waiting_confirmation_for_email', :email => @user.unconfirmed_email)
-
-  .field
-    = f.label :password
-    - if @minimum_password_length
-      %em= "(mind. #{@minimum_password_length} Zeichen)"
-    %em= "(" + t('.leave_blank_if_you_don_t_want_to_change_it') + ")"
-    %br
-    = f.password_field :password, autocomplete: :off
-  .field
-    = f.label :password_confirmation
-    %br
-    = f.password_field :password_confirmation, autocomplete: :off
-  .field
-    = f.label :current_password
-    %em= "(" + t('.we_need_your_current_password_to_confirm_your_changes') + ")"
-    %br
-    = f.password_field :current_password, autocomplete: :off
-
-  .field
-    = f.label :old_seller_code
-    %em (leer lassen, wenn nicht vorhanden)
-    %br
-    = f.text_field :old_seller_code
-
-  .field
-    = f.label :seller_model
-    %br
-    - models = { :A => [20, "keine Mithilfe"],
-                 :B => [15, "2 Std. Aufbauhilfe ODER ein Kuchen"],
-                 :C => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und ein Kuchen"],
-                 :D => [5,  "3 Std. <em>Abbau</em>hilfe"] }
-    - User.seller_models.keys.each do |seller_model|
-      - model = models[seller_model.to_sym]
-      = f.radio_button :seller_model, seller_model
-      = f.label :seller_model, "Modell #{seller_model}: #{model[0]}% Kommission, #{model[1]}".html_safe, value: seller_model
-      %br
-
-  .actions
-    = f.submit t '.save'
+= render 'form'
 
 %h3= t '.cancel_my_account'
 

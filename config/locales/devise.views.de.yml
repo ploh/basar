@@ -111,6 +111,7 @@ de:
         we_need_your_current_password_to_confirm_your_changes: wir benötigen Ihr aktuelles Passwort, um das neue zu bestätigen
       new:
         sign_up: Registrieren
+        save: Registrieren
   errors:
     messages:
       already_confirmed: wurde bereits bestätigt, bitte versuchen Sie, sich anzumelden
