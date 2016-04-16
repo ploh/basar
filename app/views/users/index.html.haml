@@ -4,17 +4,29 @@
   %thead
     %tr
       %th Me
-      %th Email
-      %th Role
+      %th= User.human_attribute_name(:first_name)
+      %th= User.human_attribute_name(:last_name)
+      %th= User.human_attribute_name(:old_seller_code)
+      %th= User.human_attribute_name(:email)
+      %th= User.human_attribute_name(:seller_model)
+      %th= User.human_attribute_name(:role)
+      %th Anmeldung
+      %th Letzter Login
       %th
       %th
 
   %tbody
     - @users.each do |user|
       %tr
-        %td= user == current_user ? "x" : ""
+        %td.centered= user == current_user ? "x" : ""
+        %td= user.first_name
+        %td= user.last_name
+        %td.centered= user.old_seller_code
         %td= user.email
+        %td.centered= user.seller_model
         %td= user.role
+        %td= user.created_at
+        %td= user.current_sign_in_at
         %td= link_to 'Edit', edit_user_path(user)
         - if can? :destroy, user
           %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }

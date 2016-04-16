@@ -1,7 +1,6 @@
+# This controls the admin interface to edit all users
 class UsersController < ApplicationController
   load_and_authorize_resource
-
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   def index
@@ -14,6 +13,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
+    @user.skip_confirmation!
     if @user.update(user_params)
       redirect_to users_url, notice: 'User was successfully updated.'
     else
@@ -28,13 +28,8 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
-
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:email, :role)
+      params.require(:user).permit(:email, :role, :first_name, :last_name, :seller_model, :old_seller_code)
     end
 end
