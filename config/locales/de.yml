@@ -1,7 +1,12 @@
 de:
+  user_role:
+    seller: Verkäufer
+    assistant: Kassierer
+    admin: Admin
   activerecord:
     attributes:
       user:
+        role: Rolle
         first_name: Vorname
         last_name: Nachname
         old_seller_code: Alte Verkäufernummer

@@ -101,14 +101,14 @@ de:
   users:
     registrations:
       edit:
+        title: Konto bearbeiten
         are_you_sure: Sind Sie sicher?
         cancel_my_account: Konto löschen
         currently_waiting_confirmation_for_email: Warte auf Bestätigung von %{email}.
         leave_blank_if_you_don_t_want_to_change_it: freilassen, wenn Sie das nicht ändern wollen
-        title: "%{resource} bearbeiten"
         unhappy: Unglücklich
-        update: Aktualisieren
-        we_need_your_current_password_to_confirm_your_changes: wir benötigen Ihr aktuelles Passwort, um die Änderung zu bestätigen
+        save: Speichern
+        we_need_your_current_password_to_confirm_your_changes: wir benötigen Ihr aktuelles Passwort, um das neue zu bestätigen
       new:
         sign_up: Registrieren
   errors:

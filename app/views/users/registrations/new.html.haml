@@ -14,10 +14,11 @@
   .field
     = f.label :email
     %br
-    = f.text_field :email
+    = f.email_field :email
 
   .field
     = f.label :password
+    %em= "(mind. #{@minimum_password_length} Zeichen)"
     %br
     = f.password_field :password
   .field
