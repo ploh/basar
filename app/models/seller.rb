@@ -152,7 +152,7 @@ class Seller < ActiveRecord::Base
       code, name, email, rate_category, color =
         fields[0].delete(" ").gsub(/\(.*?\)/, ""), #.gsub(/[^[:alnum:]]+/, "")
         fields[1].strip,
-        fields[2].delete(" "),
+        fields[2].delete(" ").downcase,
         fields[3].strip.upcase,
         fields[6].strip
       initials, number = nil, nil
@@ -162,7 +162,7 @@ class Seller < ActiveRecord::Base
       end
       if email.include?("@") &&
           initials &&
-          (2..3).include?(initials.length) &&
+          initials =~ /^[[:alpha:]]{2,3}$/ &&
           (1..9999).include?(number)
         result[email] = [initials, number, name, rate_category, color]
         Rails.logger.info "old seller: #{email}, #{initials}, #{number}, #{name}, #{rate_category}, #{color}"

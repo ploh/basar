@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
 
   after_initialize :set_default_role, :if => :new_record?
 
+  before_validation :auto_set_seller_code
+
   with_options if: :seller? do |seller|
     seller.validates :seller_model, presence: true
     seller.validates :initials, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]+\z/, message: "erlaubt nur Buchstaben" }, allow_blank: true
@@ -52,7 +54,7 @@ class User < ActiveRecord::Base
   end
 
   def initials= string
-    super( string.strip.upcase )
+    super( string && string.strip.upcase )
   end
 
   def seller_code
@@ -72,6 +74,34 @@ class User < ActiveRecord::Base
         :black
       end
     end
+  end
+
+  def auto_set_seller_code
+    if !seller_number && initials.blank? && email
+      lookup = Seller.old_list[email.downcase]
+      if lookup && !lookup[0].blank? && lookup[1]
+        match = true
+        unless old_seller_code.blank?
+          match &&=
+            if input = Seller.split_code(old_seller_code)
+              lookup[0] == input[0] &&
+                lookup[1] == input[1].to_i
+            end
+        end
+
+        if match
+          self.initials = lookup[0]
+          self.seller_number = lookup[1]
+          Rails.logger.info "Auto set for #{email}: #{initials}, #{seller_number}"
+          unless valid?
+            errors.clear
+            self.initials = nil
+            self.seller_number = nil
+          end
+        end
+      end
+    end
+    true
   end
 
   private
