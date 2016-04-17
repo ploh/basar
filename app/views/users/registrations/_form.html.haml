@@ -23,14 +23,14 @@
     = f.email_field :email
     - if @user.pending_reconfirmation?
       %br
-      = t_main('.currently_waiting_confirmation_for_email', :email => @user.unconfirmed_email)
+      = t('.currently_waiting_confirmation_for_email', :email => @user.unconfirmed_email)
 
   .field
     = f.label :password
     - if @minimum_password_length
       %em= "(mind. #{@minimum_password_length} Zeichen)"
     - if update
-      %em= "(" + t_main('.leave_blank_if_you_don_t_want_to_change_it') + ")"
+      %em= "(" + t('.leave_blank_if_you_don_t_want_to_change_it') + ")"
     %br
     = f.password_field :password, autocomplete: ( update ? :off : false )
   .field
@@ -40,7 +40,7 @@
   - if update
     .field
       = f.label :current_password
-      %em= "(" + t_main('.we_need_your_current_password_to_confirm_your_changes') + ")"
+      %em= "(" + t('.we_need_your_current_password_to_confirm_your_changes') + ")"
       %br
       = f.password_field :current_password, autocomplete: :off
 
@@ -64,4 +64,4 @@
       %br
 
   .actions
-    = f.submit t_main '.save'
+    = f.submit t (update ? '.save' : '.sign_up')

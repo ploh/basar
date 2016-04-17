@@ -100,18 +100,19 @@ de:
       updated: Ihre Daten wurden aktualisiert.
   users:
     registrations:
+      form:
+        save: Speichern
+        sign_up: Registrieren
+        currently_waiting_confirmation_for_email: Warte auf Bestätigung von %{email}.
+        leave_blank_if_you_don_t_want_to_change_it: leer lassen, wenn Sie das nicht ändern wollen
+        we_need_your_current_password_to_confirm_your_changes: wir benötigen Ihr aktuelles Passwort, um das neue zu bestätigen
       edit:
         title: Konto bearbeiten
         are_you_sure: Sind Sie sicher?
         cancel_my_account: Konto löschen
-        currently_waiting_confirmation_for_email: Warte auf Bestätigung von %{email}.
-        leave_blank_if_you_don_t_want_to_change_it: freilassen, wenn Sie das nicht ändern wollen
         unhappy: Unglücklich
-        save: Speichern
-        we_need_your_current_password_to_confirm_your_changes: wir benötigen Ihr aktuelles Passwort, um das neue zu bestätigen
       new:
-        sign_up: Registrieren
-        save: Registrieren
+        title: Registrieren
   errors:
     messages:
       already_confirmed: wurde bereits bestätigt, bitte versuchen Sie, sich anzumelden

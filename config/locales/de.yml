@@ -34,3 +34,4 @@ de:
         client: client
     session:
       logout: ausloggen
+      sign_up: Registrieren
