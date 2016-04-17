@@ -13,7 +13,6 @@ de:
         role: Rolle
         first_name: Vorname
         last_name: Nachname
-        old_seller_code: Alte Verkäufernummer
         seller_model: Verkaufsmodell
         seller_number: Nummer
         initials: Initialen

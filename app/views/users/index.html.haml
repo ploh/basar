@@ -8,7 +8,6 @@
       %th Farbe
       %th= User.human_attribute_name(:first_name)
       %th= User.human_attribute_name(:last_name)
-      %th Alte Nr.
       %th= User.human_attribute_name(:email)
       %th Modell
       %th= User.human_attribute_name(:role)
@@ -25,7 +24,6 @@
         %td{class: user.color}= user.color && t(user.color)
         %td= user.first_name
         %td= user.last_name
-        %td.centered= user.old_seller_code
         %td= user.email
         %td.centered= user.seller_model
         %td= user.role

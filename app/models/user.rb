@@ -23,14 +23,12 @@ class User < ActiveRecord::Base
     seller.validates :seller_model, presence: true
     seller.validates :initials, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]+\z/, message: "erlaubt nur Buchstaben" }, allow_blank: true
     seller.validates :seller_number, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }, allow_nil: true
-    seller.validates :old_seller_code, length: { in: 4..6 }, allow_blank: true
   end
 
   with_options unless: :seller? do |assistant|
     assistant.validates :seller_model, absence: true
     assistant.validates :initials, absence: true
     assistant.validates :seller_number, absence: true
-    assistant.validates :old_seller_code, absence: true
   end
 
   validates :role, presence: true
@@ -80,24 +78,14 @@ class User < ActiveRecord::Base
     if !seller_number && initials.blank? && email
       lookup = Seller.old_list[email.downcase]
       if lookup && !lookup[0].blank? && lookup[1]
-        match = true
-        unless old_seller_code.blank?
-          match &&=
-            if input = Seller.split_code(old_seller_code)
-              lookup[0] == input[0] &&
-                lookup[1] == input[1].to_i
-            end
-        end
-
-        if match
-          self.initials = lookup[0]
-          self.seller_number = lookup[1]
-          Rails.logger.info "Auto set for #{email}: #{initials}, #{seller_number}"
-          unless valid?
-            errors.clear
-            self.initials = nil
-            self.seller_number = nil
-          end
+        self.initials = lookup[0]
+        self.seller_number = lookup[1]
+        Rails.logger.info "Auto set for #{email}: #{initials}, #{seller_number}"
+        unless valid?
+          Rails.logger.warn "Auto set reverted for #{email}: #{initials}, #{seller_number}, #{errors.full_messages.join("; ")}"
+          errors.clear
+          self.initials = nil
+          self.seller_number = nil
         end
       end
     end

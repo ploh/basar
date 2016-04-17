@@ -55,12 +55,6 @@
       = f.password_field :current_password, autocomplete: :off
 
   .field
-    = f.label :old_seller_code
-    %em (leer lassen, wenn nicht vorhanden)
-    %br
-    = f.text_field :old_seller_code
-
-  .field
     = f.label :seller_model
     %br
     - models = { :A => [20, "keine Mithilfe"],

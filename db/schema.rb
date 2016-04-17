@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417172129) do
+ActiveRecord::Schema.define(version: 20160417205604) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "seller_id",                   null: false
@@ -82,7 +82,6 @@ ActiveRecord::Schema.define(version: 20160417172129) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role"
-    t.string   "old_seller_code"
     t.integer  "seller_model"
     t.string   "first_name",                         default: "", null: false
     t.string   "last_name",                          default: "", null: false
