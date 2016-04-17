@@ -149,11 +149,12 @@ class Seller < ActiveRecord::Base
 
     lines.each do |line|
       fields = line.split(";", -1)
-      code, name, email, rate_category =
+      code, name, email, rate_category, color =
         fields[0].delete(" ").gsub(/\(.*?\)/, ""), #.gsub(/[^[:alnum:]]+/, "")
         fields[1].strip,
         fields[2].delete(" "),
-        fields[3].strip.upcase
+        fields[3].strip.upcase,
+        fields[6].strip
       initials, number = nil, nil
       if pair = Seller.split_code(code)
         initials, number = pair
@@ -163,10 +164,10 @@ class Seller < ActiveRecord::Base
           initials &&
           (2..3).include?(initials.length) &&
           (1..9999).include?(number)
-        result[email] = [initials, number, name, rate_category]
-        Rails.logger.info "old seller: #{email}, #{initials}, #{number}, #{name}, #{rate_category}"
+        result[email] = [initials, number, name, rate_category, color]
+        Rails.logger.info "old seller: #{email}, #{initials}, #{number}, #{name}, #{rate_category}, #{color}"
       else
-        Rails.logger.info "ERROR: no old seller: #{email}, #{code}, #{name}, #{rate_category}"
+        Rails.logger.info "ERROR: no old seller: #{email}, #{code}, #{name}, #{rate_category}, #{color}"
       end
     end
 
