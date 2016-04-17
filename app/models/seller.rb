@@ -164,9 +164,9 @@ class Seller < ActiveRecord::Base
           (2..3).include?(initials.length) &&
           (1..9999).include?(number)
         result[email] = [initials, number, name, rate_category]
-        Rails.logger.info "old_seller: #{email}, #{initials}, #{number}, #{name}, #{rate_category}"
+        Rails.logger.info "old seller: #{email}, #{initials}, #{number}, #{name}, #{rate_category}"
       else
-        Rails.logger.info "no old_seller: #{email}, #{code}, #{name}, #{rate_category}"
+        Rails.logger.info "ERROR: no old seller: #{email}, #{code}, #{name}, #{rate_category}"
       end
     end
 
