@@ -22,7 +22,11 @@ class Seller < ActiveRecord::Base
   end
 
   def code
-    "#{self.initials}#{"%02d" % self.number}"
+    Seller.seller_code self.initials, self.number
+  end
+
+  def self.seller_code initials, number
+    "#{initials}#{"%02d" % number}"
   end
 
   def self.find_by_code(code)
@@ -132,16 +136,47 @@ class Seller < ActiveRecord::Base
     counts
   end
 
-
-  private
-
   def self.split_code(code)
     if code.strip.upcase =~ /^(?<initials>[[:alpha:]]*)\s*(?<number>\d*)$/
       [ $~[:initials], $~[:number] ]
     end
   end
-end
 
+  # CSV has to be saved in RAILS_ROOT/data with ';' as field delimiter and without any text delimiter
+  def self.load_old_sellers(csv_file)
+    result = {}
+    lines = File.readlines(File.join(Rails.root, 'data', csv_file)).map {|line| line.chomp}
+
+    lines.each do |line|
+      fields = line.split(";", -1)
+      code, name, email, rate_category =
+        fields[0].delete(" ").gsub(/\(.*?\)/, ""), #.gsub(/[^[:alnum:]]+/, "")
+        fields[1].strip,
+        fields[2].delete(" "),
+        fields[3].strip.upcase
+      initials, number = nil, nil
+      if pair = Seller.split_code(code)
+        initials, number = pair
+        number = number.to_i
+      end
+      if email.include?("@") &&
+          initials &&
+          (2..3).include?(initials.length) &&
+          (1..9999).include?(number)
+        result[email] = [initials, number, name, rate_category]
+        Rails.logger.info "old_seller: #{email}, #{initials}, #{number}, #{name}, #{rate_category}"
+      else
+        Rails.logger.info "no old_seller: #{email}, #{code}, #{name}, #{rate_category}"
+      end
+    end
+
+    result
+  end
+
+  def self.old_list
+    @@old_list ||= load_old_sellers 'sellers.csv'
+  end
+end
 
 class DummySeller
   attr_accessor :initials, :name, :number, :rate
