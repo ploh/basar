@@ -16,6 +16,7 @@ Basar::Application.configure do
   config.action_controller.action_on_unpermitted_parameters = :raise
 
   config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = { from: "root@localhost" }
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # Print deprecation notices to the Rails logger.
