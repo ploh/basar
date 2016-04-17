@@ -11,6 +11,9 @@ de:
         last_name: Nachname
         old_seller_code: Alte Verkäufernummer
         seller_model: Verkaufsmodell
+        seller_number: Nummer
+        initials: Initialen
+        seller_code: Verkäufernummer
     models:
       user:
         one: Benutzer

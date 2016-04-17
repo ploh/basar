@@ -9,6 +9,13 @@
       %br
       = f.text_field :role, disabled: true
 
+  - if update
+    .field
+      = User.human_attribute_name(:seller_code) + ":"
+      %br
+      %strong
+        = @user.seller_code
+
   .field
     = f.label :first_name
     %br

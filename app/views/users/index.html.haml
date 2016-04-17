@@ -4,9 +4,10 @@
   %thead
     %tr
       %th Me
+      %th Verk.nr.
       %th= User.human_attribute_name(:first_name)
       %th= User.human_attribute_name(:last_name)
-      %th= User.human_attribute_name(:old_seller_code)
+      %th Alte Verk.nr.
       %th= User.human_attribute_name(:email)
       %th= User.human_attribute_name(:seller_model)
       %th= User.human_attribute_name(:role)
@@ -19,6 +20,7 @@
     - @users.each do |user|
       %tr
         %td.centered= user == current_user ? "x" : ""
+        %td= user.seller_code
         %td= user.first_name
         %td= user.last_name
         %td.centered= user.old_seller_code

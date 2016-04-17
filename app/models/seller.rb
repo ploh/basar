@@ -26,7 +26,7 @@ class Seller < ActiveRecord::Base
   end
 
   def self.seller_code initials, number
-    "#{initials}#{"%02d" % number}"
+    "#{initials}#{number && ("%02d" % number)}"
   end
 
   def self.find_by_code(code)

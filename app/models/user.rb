@@ -17,8 +17,20 @@ class User < ActiveRecord::Base
 
   after_initialize :set_default_role, :if => :new_record?
 
-  validates :seller_model, presence: true, if: :seller?
-  validates :seller_model, absence: true, unless: :seller?
+  with_options if: :seller? do |seller|
+    seller.validates :seller_model, presence: true
+    seller.validates :initials, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]+\z/, message: "erlaubt nur Buchstaben" }, allow_blank: true
+    seller.validates :seller_number, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }, allow_nil: true
+    seller.validates :old_seller_code, length: { in: 4..6 }, allow_blank: true
+  end
+
+  with_options unless: :seller? do |assistant|
+    assistant.validates :seller_model, absence: true
+    assistant.validates :initials, absence: true
+    assistant.validates :seller_number, absence: true
+    assistant.validates :old_seller_code, absence: true
+  end
+
   validates :role, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -37,6 +49,14 @@ class User < ActiveRecord::Base
 
   def description
     "#{name} (#{email})"
+  end
+
+  def initials= string
+    super( string.strip.upcase )
+  end
+
+  def seller_code
+    Seller.seller_code initials, seller_number
   end
 
   private
