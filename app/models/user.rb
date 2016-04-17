@@ -59,6 +59,21 @@ class User < ActiveRecord::Base
     Seller.seller_code initials, seller_number
   end
 
+  def color
+    if seller_number
+      case seller_number % 4
+      when 0
+        :blue
+      when 1
+        :red
+      when 2
+        :green
+      when 3
+        :black
+      end
+    end
+  end
+
   private
 
   def seller_available

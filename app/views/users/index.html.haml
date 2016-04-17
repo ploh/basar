@@ -3,13 +3,14 @@
 %table.element_list
   %thead
     %tr
-      %th Me
-      %th Verk.nr.
+      %th Ich
+      %th Nr.
+      %th Farbe
       %th= User.human_attribute_name(:first_name)
       %th= User.human_attribute_name(:last_name)
-      %th Alte Verk.nr.
+      %th Alte Nr.
       %th= User.human_attribute_name(:email)
-      %th= User.human_attribute_name(:seller_model)
+      %th Modell
       %th= User.human_attribute_name(:role)
       %th Anmeldung
       %th Letzter Login
@@ -21,6 +22,7 @@
       %tr
         %td.centered= user == current_user ? "x" : ""
         %td= user.seller_code
+        %td{class: user.color}= user.color && t(user.color)
         %td= user.first_name
         %td= user.last_name
         %td.centered= user.old_seller_code
