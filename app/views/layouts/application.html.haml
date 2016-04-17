@@ -42,8 +42,8 @@
           %li{style: "margin-top: 2ex"}= t(".transactions.client") + ": #@client_key"
       #menu_footer
         %ul
-          %li= link_to t('.privacy'), controller: 'pages', action: 'privacy'
-          %li= link_to t('.about'), controller: 'pages', action: 'about'
+          %li= link_to t('.privacy'), pages_privacy_path
+          %li= link_to t('.about'), pages_about_path
 
     #content
       - if flash[:alert]
