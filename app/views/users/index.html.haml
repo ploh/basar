@@ -1,5 +1,12 @@
 %h1 Listing users
 
+- model_counts = User.seller.group(:seller_model).count
+- model_counts.default = 0
+%ul
+  - User.seller_models.each do |model, model_id|
+    %li= "Modell #{model}: #{model_counts[model_id]} Verkäufer"
+  %li= "Gesamt: #{model_counts.values.inject(:+)} Verkäufer"
+
 %table.element_list
   %thead
     %tr
