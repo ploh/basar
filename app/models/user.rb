@@ -35,8 +35,7 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  validate :seller_model_available
-  validate :seller_available
+  validate :seller_and_model_available
 
 
   def set_default_role
@@ -95,23 +94,27 @@ class User < ActiveRecord::Base
   private
 
   def seller_available
-    if seller? && @@max_sellers <= User.seller.count
-      errors.clear
-      errors[:base] << "Anmeldung nicht mehr möglich"
-    end
   end
 
-  def seller_model_available
+  def seller_and_model_available
     if seller?
-      if D?
-        if @@max_model_d <= User.seller.D.count
-          errors.add :seller_model, "D nicht mehr verfügbar"
-        end
+      model_counts = User.seller.where.not(id: id).group(:seller_model).count
+      model_counts.default = 0
+      sellers_count = model_counts.values.inject(:+)
+      if new_record? && sellers_count >= @@max_sellers
+        errors.clear
+        errors[:base] << "Anmeldung nicht mehr möglich"
       else
-        if @@max_sellers - @@reserved_model_d <= User.seller.where.not(seller_model: User.seller_models[:D]).count
-          errors.add :seller_model, "#{seller_model} nicht mehr verfügbar (nur noch D verfügbar)"
-        elsif A? && @@max_model_a <= User.seller.A.count
-          errors.add :seller_model, "A nicht mehr verfügbar"
+        if D?
+          if model_counts[User.seller_models[:D]] >= @@max_model_d
+            errors.add :seller_model, "D nicht mehr verfügbar"
+          end
+        else
+          if sellers_count - model_counts[User.seller_models[:D]] >= @@max_sellers - @@reserved_model_d
+            errors.add :seller_model, "#{seller_model} nicht mehr verfügbar (nur noch D verfügbar)"
+          elsif A? && model_counts[User.seller_models[:A]] >= @@max_model_a
+            errors.add :seller_model, "A nicht mehr verfügbar"
+          end
         end
       end
     end
