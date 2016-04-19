@@ -46,7 +46,7 @@ Basar::Application.configure do
   config.log_level = :info
   log_level_file = File.join(Rails.root, "config", "log_level")
   if File.file? log_level_file
-    config.log_level = Logger.const_get(File.read(log_level_file).strip.upcase)
+    config.log_level = File.read(log_level_file).strip.downcase.to_sym
   end
 
   # Prepend all log lines with the following tags.
