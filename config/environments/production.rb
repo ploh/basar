@@ -44,6 +44,10 @@ Basar::Application.configure do
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
+  log_level_file = File.join(Rails.root, "config", "log_level")
+  if File.file? log_level_file
+    config.log_level = Logger.const_get(File.read(log_level_file).strip.upcase)
+  end
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
