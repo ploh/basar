@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   @@max_sellers = 105
-  @@max_model_a = 25
+  @@max_model_a = 27
   @@reserved_model_d = 23
   @@max_model_d = @@reserved_model_d
 
