@@ -12,5 +12,19 @@
   .field
     = f.label :description
     = f.text_field :description
+
+  .field
+    = f.label :weight
+    = f.number_field :weight, step: 'any'
+  .field
+    = f.label :limit
+    = f.number_field :limit
+  .field
+    = f.label :only_d
+    = f.check_box :only_d
+  .field
+    = f.label :kind
+    = f.select :kind, options_for_select(Task.kinds.keys, @task.kind), include_blank: true
+
   .actions
     = f.submit 'Save'

@@ -7,7 +7,10 @@
     %tr
       %th Sort Number
       %th Description
-      %th
+      %th Weight
+      %th Limit
+      %th Only D
+      %th Kind
       %th
       %th
 
@@ -16,5 +19,9 @@
       %tr
         %td= task.sort_key
         %td= task.description
+        %td= task.weight
+        %td= task.limit
+        %td= task.only_d
+        %td= task.kind
         %td= link_to 'Edit', edit_task_path(task)
         %td= link_to 'Destroy', task, :method => :delete, :data => { :confirm => 'Are you sure?' }
