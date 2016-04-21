@@ -2,10 +2,12 @@ class Seller < ActiveRecord::Base
   has_many :items, dependent: :restrict_with_exception
 
   has_many :activities, dependent: :destroy
-  has_many :tasks, through: :activities
+  has_many :tasks, through: :activities, inverse_of: :sellers
   accepts_nested_attributes_for :activities
 
-  validates :initials, presence: true, length: { in: 2..3 }
+  belongs_to :user, touch: true
+
+  validates :initials, presence: true, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }
   validates :number, presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   validates :rate_in_percent, presence: true, numericality: true, inclusion: { in: [10, 15, 20], message: "has to be 10, 15 or 20%" }
 

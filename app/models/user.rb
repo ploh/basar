@@ -14,14 +14,16 @@ class User < ActiveRecord::Base
   enum seller_model: [:A, :B, :C, :D]
 
   has_many :transactions, dependent: :restrict_with_exception
+  has_one :seller, dependent: :destroy
 
   after_initialize :set_default_role, :if => :new_record?
 
   before_validation :auto_set_seller_code
+  before_validation :update_seller
 
   with_options if: :seller? do |seller|
     seller.validates :seller_model, presence: true
-    seller.validates :initials, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]+\z/, message: "erlaubt nur Buchstaben" }, allow_blank: true
+    seller.validates :initials, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }, allow_blank: true
     seller.validates :seller_number, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }, allow_nil: true
   end
 
@@ -55,7 +57,41 @@ class User < ActiveRecord::Base
   end
 
   def seller_code
-    Seller.seller_code initials, seller_number
+    if seller
+      seller.code
+    else
+      Seller.seller_code initials, seller_number
+    end
+  end
+
+  def update_seller
+    logger.info "update_seller begin: #{inspect}, #{seller.try(:inspect)}"
+    result = true
+    if seller_number || !initials.blank?
+      build_seller(rate_in_percent: 20) unless seller
+      if seller_number != seller.number || initials != seller.initials
+        seller.initials = initials
+        seller.number = seller_number
+        if seller.valid?
+          result = seller.save unless new_record?
+        else
+          seller.errors.each do |attribute, message|
+            case attribute
+            when :number
+              errors.add :seller_number, message
+            when :initials
+               errors.add :initials, message
+            else
+              errors[:base] << "#{attribute.capitalize} #{message}"
+            end
+          end
+        end
+      end
+    else
+      result = self.seller.destroy
+    end
+    logger.info "update_seller end: #{inspect}, #{seller.try(:inspect)}"
+    result
   end
 
   def color
@@ -79,9 +115,9 @@ class User < ActiveRecord::Base
       if lookup && !lookup[0].blank? && lookup[1]
         self.initials = lookup[0]
         self.seller_number = lookup[1]
-        Rails.logger.info "Auto set for #{email}: #{initials}, #{seller_number}"
+        logger.info "Auto set for #{email}: #{initials}, #{seller_number}"
         unless valid?
-          Rails.logger.warn "Auto set reverted for #{email}: #{initials}, #{seller_number}, #{errors.full_messages.join("; ")}"
+          logger.warn "Auto set reverted for #{email}: #{initials}, #{seller_number}, #{errors.full_messages.join("; ")}"
           errors.clear
           self.initials = nil
           self.seller_number = nil
