@@ -23,6 +23,8 @@
 
         - if user_signed_in?
           %li.topic= link_to t(".account"), edit_user_registration_path
+          - if current_user.seller
+            %li.topic= link_to "Abgabe / Hilfe", edit_seller_path(current_user.seller)
 
         %li.topic= link_to t(".home"), root_path
 

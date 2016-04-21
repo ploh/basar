@@ -109,7 +109,7 @@ class SellersController < ApplicationController
                                       #:number,
                                       #:initials,
                                       #:rate_in_percent,
-                                      activities_attributes: [:task_id, :id] )
+                                      activities_attributes: [:planned_count, :task_id, :id] )
     else
       params.require(:seller).permit( #:name,
                                       #:number,
