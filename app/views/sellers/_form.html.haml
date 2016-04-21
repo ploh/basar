@@ -1,25 +1,25 @@
 = form_for @seller do |f|
   - if @seller.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@seller.errors.count, "error")} prohibited this seller from being saved:"
+      %h2= "#{pluralize(@seller.errors.count, "Fehler")} haben das Speichern verhindert:"
       %ul
         - @seller.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :name
-    = f.text_field :name, autocomplete: :off
+  -# .field
+  -#   = f.label :name
+  -#   = f.text_field :name, autocomplete: :off
   .field
     = f.label :number
-    = f.number_field :number, autocomplete: :off
+    = f.number_field :number, autocomplete: :off, disabled: true
   .field
     = f.label :initials
-    = f.text_field :initials, autocomplete: :off
+    = f.text_field :initials, autocomplete: :off, disabled: true
   %table.element_list
     %tr
       %th
-      %th Actual
-      %th Planned
+      %th helfe
+      %th bringe noch einen Helfer mit
     - @seller.activities.each do |activity|
       = f.fields_for :activities, activity do |a|
         %tr
@@ -29,13 +29,13 @@
             = a.hidden_field :id, value: activity.id
           %td
             .field
-              = a.text_field :actual_count, size: 5, maxlength: 5, autocomplete: :off
+              = a.check_box :me # actual
           %td
             .field
-              = a.text_field :planned_count, size: 5, maxlength: 5, autocomplete: :off
-  .field
-    = f.label :rate_in_percent, "Rate"
-    = f.number_field :rate_in_percent, autocomplete: :off
-    \%
-  .actions
-    = f.submit 'Save'
+              = a.check_box :helper #planned
+  -# .field
+  -#   = f.label :rate_in_percent, "Rate"
+  -#   = f.number_field :rate_in_percent, autocomplete: :off
+  -#   \%
+  .actions{style: "margin-top: 2ex"}
+    = f.submit 'Speichern'

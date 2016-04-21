@@ -17,10 +17,10 @@ class SellersController < ApplicationController
   end
 
   # GET /sellers/new
-  def new
-    @seller = Seller.new
-    fill_activities
-  end
+#  def new
+#    @seller = Seller.new
+#    fill_activities
+#  end
 
   # GET /sellers/1/edit
   def edit
@@ -28,20 +28,22 @@ class SellersController < ApplicationController
   end
 
   # POST /sellers
-  def create
-    @seller = Seller.new(seller_params)
+#  def create
+#    @seller = Seller.new(seller_params)
 
-    if @seller.save
-      redirect_to sellers_path, notice: 'Seller was successfully created.'
-    else
-      js :new
-      render action: 'new'
-    end
-  end
+#    if @seller.save
+#      redirect_to sellers_path, notice: 'Seller was successfully created.'
+#    else
+#      js :new
+#      render action: 'new'
+#    end
+#  end
 
   # PATCH/PUT /sellers/1
   def update
     if @seller.update(seller_params)
+#      puts @seller.to_yaml
+#      puts @seller.activities.to_yaml
       redirect_to edit_seller_path(@seller), notice: 'Seller was successfully updated.'
     else
       js :edit
@@ -50,10 +52,10 @@ class SellersController < ApplicationController
   end
 
   # DELETE /sellers/1
-  def destroy
-    @seller.destroy
-    redirect_to sellers_url, notice: 'Seller was successfully destroyed.'
-  end
+#  def destroy
+#    @seller.destroy
+#    redirect_to sellers_url, notice: 'Seller was successfully destroyed.'
+#  end
 
 #   # for AJAX validation requests
 #   def validate_code
@@ -89,10 +91,23 @@ class SellersController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def seller_params
-    params.require(:seller).permit( :name,
-                                    :number,
-                                    :initials,
-                                    :rate_in_percent,
-                                    activities_attributes: [:planned_count, :actual_count, :task_id, :id] )
+    params["seller"]["activities_attributes"].each do |num, attr|
+      attr["planned_count"] = (attr["me"] == "1" ? 1 : 0) + (attr["helper"] == "1" ? 1 : 0)
+      attr.delete "me"
+      attr.delete "helper"
+    end
+    if current_user.seller?
+      params.require(:seller).permit( #:name,
+                                      #:number,
+                                      #:initials,
+                                      #:rate_in_percent,
+                                      activities_attributes: [:planned_count, :task_id, :id] )
+    else
+      params.require(:seller).permit( #:name,
+                                      #:number,
+                                      #:initials,
+                                      #:rate_in_percent,
+                                      activities_attributes: [:actual_count, :planned_count, :task_id, :id] )
+    end
   end
 end

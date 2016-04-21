@@ -1,36 +1,36 @@
-%h1 Editing seller
+%h1 Termine bearbeiten
 
 = render 'form'
 
-%p
-  Computed rate:
-  = "#{@seller.computed_rate_in_percent} %"
+-#%p
+-#  Computed rate:
+-#  = "#{@seller.computed_rate_in_percent} %"
 
-= link_to 'Destroy', @seller, :method => :delete, :data => { :confirm => 'Are you sure?' }
-\|
-= link_to 'New', new_seller_path
-\|
-= link_to 'List', sellers_path
+-#= link_to 'Destroy', @seller, :method => :delete, :data => { :confirm => 'Are you sure?' }
+-#\|
+-#= link_to 'New', new_seller_path
+-#\|
+-#= link_to 'List', sellers_path
 
 
-%h2 Revenue
+%h2 Verkaufsübersicht
 
 %table
   %tr
-    %td # Sold items
+    %td Anzahl Artikel:
     %td.number= @seller.number_of_items
   %tr
-    %td Revenue
+    %td Erlös
     %td.money= money_string @seller.total_revenue
   %tr
-    %td Commission
+    %td Kommission
     %td.money= money_string @seller.total_commission
   %tr
-    %td Payout
+    %td Auszahlung
     %td.money= money_string @seller.total_payout
 
 
-%h3 Sold items
+%h3 Verkaufte Artikel
 
 - @seller.items.order("created_at asc").each do |item|
   %div= money_string item.price

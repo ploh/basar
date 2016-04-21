@@ -18,10 +18,16 @@ de:
         initials: Initialen
         seller_code: Verkäufernummer
         color: Farbe
+      seller:
+        number: Nummer
+        initials: Initialen
     models:
       user:
         one: Benutzer
         other: Benutzer
+      seller:
+        one: Verkäufer
+        other: Verkäufer
   unauthorized:
     manage:
       all: Sie sind nicht berechtigt, auf diese Seite zuzugreifen.
