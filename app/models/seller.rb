@@ -11,6 +11,21 @@ class Seller < ActiveRecord::Base
   validates :number, presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   validates :rate_in_percent, presence: true, numericality: true, inclusion: { in: [10, 15, 20], message: "has to be 10, 15 or 20%" }
 
+  validate :only_one_delivery
+  validate :check_only_d_helps
+
+  def only_one_delivery
+    if activities.find_all {|act| act.me && act.task.deliver? }.size > 1
+      errors[:base] << "Es darf nur ein Abgabetermin ausgewählt werden"
+    end
+  end
+
+  def check_only_d_helps # actually it is: no A deliver
+    if user.A? && activities.any? {|act| act.me && act.task.deliver? && act.task.only_d}
+      errors[:base] << "Dieser Abgabetermin ist für Verkäufer mit Modell A nicht erlaubt"
+    end
+  end
+
   def rate_in_percent
     self.rate && (self.rate * 100).round
   end

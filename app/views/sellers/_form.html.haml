@@ -1,7 +1,7 @@
 = form_for @seller do |f|
   - if @seller.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@seller.errors.count, "Fehler")} haben das Speichern verhindert:"
+      %h2= "Fehler haben das Speichern verhindert:"
       %ul
         - @seller.errors.full_messages.each do |msg|
           %li= msg
@@ -10,29 +10,63 @@
   -#   = f.label :name
   -#   = f.text_field :name, autocomplete: :off
   .field
-    = f.label :number
-    = f.number_field :number, autocomplete: :off, disabled: true
-  .field
-    = f.label :initials
-    = f.text_field :initials, autocomplete: :off, disabled: true
+    Verkäufernummer:
+    = @seller.code
+
+  %h3 Abgabetermin
+  %table.element_list
+    %tr
+      %th
+      %th
+    - @seller.activities.each do |activity|
+      - if activity.task.deliver?
+        = f.fields_for :activities, activity do |a|
+          %tr
+            %td
+              = activity.task_description
+              = a.hidden_field :task_id, value: activity.task_id
+              = a.hidden_field :id, value: activity.id
+            %td.check
+              .field
+                = a.check_box :me # actual
+
+  %h3 Hilfstermin(e)
+  %table.element_list
+    %tr
+      %th
+      %th
+    - @seller.activities.each do |activity|
+      - if activity.task.bring?
+        = f.fields_for :activities, activity do |a|
+          %tr
+            %td
+              = activity.task_description
+              = a.hidden_field :task_id, value: activity.task_id
+              = a.hidden_field :id, value: activity.id
+            %td.check
+              .field
+                = a.check_box :me # actual
+
   %table.element_list
     %tr
       %th
       %th helfe
       %th bringe noch einen Helfer mit
     - @seller.activities.each do |activity|
-      = f.fields_for :activities, activity do |a|
-        %tr
-          %td
-            = activity.task_description
-            = a.hidden_field :task_id, value: activity.task_id
-            = a.hidden_field :id, value: activity.id
-          %td
-            .field
-              = a.check_box :me # actual
-          %td
-            .field
-              = a.check_box :helper #planned
+      - if activity.task.help?
+        = f.fields_for :activities, activity do |a|
+          %tr
+            %td
+              = activity.task_description
+              = a.hidden_field :task_id, value: activity.task_id
+              = a.hidden_field :id, value: activity.id
+            %td.check
+              .field
+                = a.check_box :me
+            %td.check
+              .field
+                = a.check_box :helper
+
   -# .field
   -#   = f.label :rate_in_percent, "Rate"
   -#   = f.number_field :rate_in_percent, autocomplete: :off
