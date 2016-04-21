@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
         end
       end
     else
-      result = self.seller.destroy
+      result = self.seller.try :destroy
     end
     logger.info "update_seller end: #{inspect}, #{seller.try(:inspect)}"
     result
