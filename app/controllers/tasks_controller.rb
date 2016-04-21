@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @tasks = Task.order(:sort_key)
+    @tasks = Task.order(:kind, :sort_key, :created_at)
   end
 
   # GET /tasks/new

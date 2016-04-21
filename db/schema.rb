@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421195145) do
+ActiveRecord::Schema.define(version: 20160421201726) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "seller_id",                   null: false
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20160421195145) do
     t.boolean  "only_d"
   end
 
-  add_index "tasks", ["sort_key"], name: "index_tasks_on_sort_key", unique: true
+  add_index "tasks", ["sort_key"], name: "index_tasks_on_sort_key"
 
   create_table "transactions", force: :cascade do |t|
     t.datetime "created_at"
