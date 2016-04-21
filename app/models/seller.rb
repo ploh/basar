@@ -5,7 +5,7 @@ class Seller < ActiveRecord::Base
   has_many :tasks, through: :activities, inverse_of: :sellers
   accepts_nested_attributes_for :activities
 
-  belongs_to :user, touch: true
+  belongs_to :user
 
   validates :initials, presence: true, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }
   validates :number, presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
