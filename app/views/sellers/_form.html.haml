@@ -66,6 +66,7 @@
       %th
       %th helfe
       %th bringe noch einen Helfer mit
+      %th
     - @seller.activities.each do |activity|
       - if activity.task.help?
         = f.fields_for :activities, activity do |a|
@@ -80,6 +81,10 @@
             %td.check
               .field
                 = a.check_box :helper
+            %td
+              - notes = []
+              - notes << "limitiert auf #{activity.task.limit} Personen" if activity.task.limit && activity.task.limit > 0 && activity.task.limit < 99
+              = notes.join(", ")
 
   -# .field
   -#   = f.label :rate_in_percent, "Rate"
