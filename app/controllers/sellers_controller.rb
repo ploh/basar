@@ -42,9 +42,17 @@ class SellersController < ApplicationController
   # PATCH/PUT /sellers/1
   def update
     if @seller.update(seller_params)
+      unless @seller.warnings.empty?
+        if flash[:warning]
+          flash[:warning] << "\n"
+        else
+          flash[:warning] = ""
+        end
+        flash[:warning] << @seller.warnings.join("\n")
+      end
 #      puts @seller.to_yaml
 #      puts @seller.activities.to_yaml
-      redirect_to edit_seller_path(@seller), notice: 'Seller was successfully updated.'
+      redirect_to edit_seller_path(@seller), notice: 'Erfolgreich gespeichert'
     else
       js :edit
       render action: 'edit'
@@ -101,7 +109,7 @@ class SellersController < ApplicationController
                                       #:number,
                                       #:initials,
                                       #:rate_in_percent,
-                                      activities_attributes: [:planned_count, :task_id, :id] )
+                                      activities_attributes: [:task_id, :id] )
     else
       params.require(:seller).permit( #:name,
                                       #:number,

@@ -1,4 +1,6 @@
 class Seller < ActiveRecord::Base
+  attr_accessor :warnings
+
   has_many :items, dependent: :restrict_with_exception
 
   has_many :activities, dependent: :destroy
@@ -14,6 +16,8 @@ class Seller < ActiveRecord::Base
   validate :only_one_delivery
   validate :check_only_d_helps
   validate :check_activity_limits
+
+  validate :enough_help
 
   def only_one_delivery
     if activities.find_all {|act| act.me && act.task.deliver?}.size > 1
@@ -41,6 +45,27 @@ class Seller < ActiveRecord::Base
           end
         errors[:base] << kind_text + act.task.description + " nicht mehr verfügbar"
       end
+    end
+  end
+
+  def warnings
+    @warnings ||= []
+  end
+
+  def enough_help
+    planned_help = activities.find_all {|act| act.task.bring? || act.task.help?}.map {|act| act.planned_count}.inject(:+)
+    needed_help = case user.seller_model
+    when "A"
+      0
+    when "B"
+      1
+    when "C"
+      2
+    when "D"
+      0
+    end
+    if planned_help < needed_help
+      warnings << "Achtung: Noch nicht genug Hilfstermine ausgewählt"
     end
   end
 
