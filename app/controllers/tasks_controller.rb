@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @tasks = Task.all
+    @tasks = Task.order(:sort_key)
   end
 
   # GET /tasks/new
@@ -44,6 +44,6 @@ class TasksController < ApplicationController
   private
     # Only allow a trusted parameter "white list" through.
     def task_params
-      params.require(:task).permit(:description)
+      params.require(:task).permit(:sort_key, :description)
     end
 end

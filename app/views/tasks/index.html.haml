@@ -5,6 +5,7 @@
 %table#tasks.element_list
   %thead
     %tr
+      %th Sort Number
       %th Description
       %th
       %th
@@ -13,6 +14,7 @@
   %tbody
     - @tasks.each do |task|
       %tr
+        %td= task.sort_key
         %td= task.description
         %td= link_to 'Edit', edit_task_path(task)
         %td= link_to 'Destroy', task, :method => :delete, :data => { :confirm => 'Are you sure?' }

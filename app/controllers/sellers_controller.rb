@@ -78,7 +78,7 @@ class SellersController < ApplicationController
   private
 
   def load_tasks
-    @tasks = Task.all.to_a
+    @tasks = Task.order(:sort_key).to_a
   end
 
   def fill_activities

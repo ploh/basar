@@ -7,6 +7,9 @@
           %li= msg
 
   .field
+    = f.label :sort_key
+    = f.number_field :sort_key, step: 'any'
+  .field
     = f.label :description
     = f.text_field :description
   .actions

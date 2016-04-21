@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421084502) do
+ActiveRecord::Schema.define(version: 20160421174333) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "seller_id",                   null: false
@@ -53,7 +53,10 @@ ActiveRecord::Schema.define(version: 20160421084502) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.float    "sort_key"
   end
+
+  add_index "tasks", ["sort_key"], name: "index_tasks_on_sort_key", unique: true
 
   create_table "transactions", force: :cascade do |t|
     t.datetime "created_at"
