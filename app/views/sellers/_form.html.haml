@@ -14,6 +14,9 @@
     = @seller.code
 
   %h3 Abgabetermin
+
+  %p Bitte geben Sie hier ein, wann Sie Ihre Sachen bringen möchten.
+
   %table.element_list
     %tr
       %th
@@ -36,7 +39,12 @@
               - notes << "limitiert auf #{activity.task.limit} Personen" if activity.task.limit && activity.task.limit > 0 && activity.task.limit < 99
               = notes.join(", ")
 
-  %h3 Hilfstermin(e)
+  %h3{style: "margin-top: 3ex"} Hilfstermin(e)
+
+  %p Bitte geben Sie hier an, wann Sie helfen möchten. Es können mehrere Zeitfenster ausgewählt werden.
+
+  %p Sie dürfen sich selbstverständlich freiwillig für mehr Termine melden, als Sie laut Ihrem Modell müssten - Sie bekommen dann automatisch entsprechend weniger Kommission abgezogen.
+
   %table.element_list
     %tr
       %th
