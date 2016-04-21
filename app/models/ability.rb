@@ -35,7 +35,6 @@ class Ability
       when 'assistant'
         can :manage, Transaction
         can :read, :all
-        cannot :read, User
       end
 
       cannot :destroy, User, id: user.id
