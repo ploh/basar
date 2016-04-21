@@ -13,9 +13,10 @@ class Seller < ActiveRecord::Base
 
   validate :only_one_delivery
   validate :check_only_d_helps
+  validate :check_activity_limits
 
   def only_one_delivery
-    if activities.find_all {|act| act.me && act.task.deliver? }.size > 1
+    if activities.find_all {|act| act.me && act.task.deliver?}.size > 1
       errors[:base] << "Es darf nur ein Abgabetermin ausgewählt werden"
     end
   end
@@ -23,6 +24,23 @@ class Seller < ActiveRecord::Base
   def check_only_d_helps # actually it is: no A deliver
     if user.A? && activities.any? {|act| act.me && act.task.deliver? && act.task.only_d}
       errors[:base] << "Dieser Abgabetermin ist für Verkäufer mit Modell A nicht erlaubt"
+    end
+  end
+
+  def check_activity_limits
+    activities.each do |act|
+      planned_other = Activity.where.not(seller: self).where(task: act.task).sum(:planned_count)
+      if planned_other + act.planned_count > act.task.limit
+        kind_text = case act.task.kind
+          when "help"
+            "Hilfstermin: "
+          when "deliver"
+            "Abgabetermin: "
+          else
+            ""
+          end
+        errors[:base] << kind_text + act.task.description + " nicht mehr verfügbar"
+      end
     end
   end
 

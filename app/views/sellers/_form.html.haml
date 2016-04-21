@@ -18,6 +18,7 @@
     %tr
       %th
       %th
+      %th
     - @seller.activities.each do |activity|
       - if activity.task.deliver?
         = f.fields_for :activities, activity do |a|
@@ -29,6 +30,8 @@
             %td.check
               .field
                 = a.check_box :me # actual
+            %td
+              = activity.task.only_d ? " (nicht bei Verkaufsmodell A)" : ""
 
   %h3 Hilfstermin(e)
   %table.element_list
