@@ -31,7 +31,10 @@
               .field
                 = a.check_box :me # actual
             %td
-              = activity.task.only_d ? " (nicht bei Verkaufsmodell A)" : ""
+              - notes = []
+              - notes << "nicht bei Verkaufsmodell A" if activity.task.only_d
+              - notes << "limitiert auf #{activity.task.limit} Personen" if activity.task.limit && activity.task.limit > 0 && activity.task.limit < 99
+              = notes.join(", ")
 
   %h3 Hilfstermin(e)
   %table.element_list
