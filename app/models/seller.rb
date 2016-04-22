@@ -53,7 +53,7 @@ class Seller < ActiveRecord::Base
   end
 
   def enough_help
-    planned_help = activities.find_all {|act| act.task.bring? || act.task.help?}.map {|act| act.planned_count}.inject(:+)
+    planned_help = activities.find_all {|act| act.task.bring? || act.task.help?}.map {|act| act.planned_count}.inject(0, :+)
     needed_help = case user.seller_model
     when "A"
       0
