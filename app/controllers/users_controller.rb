@@ -17,6 +17,7 @@ class UsersController < ApplicationController
       @user.skip_confirmation!
       @user.skip_reconfirmation!
     end
+    @user.current_user = current_user
     if @user.update(user_params)
       redirect_to users_url, notice: 'User was successfully updated.'
     else

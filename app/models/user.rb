@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  attr_accessor :current_user
+
   @@max_sellers = 105
   @@max_model_a = 27
   @@reserved_model_d = 23
@@ -133,7 +135,9 @@ class User < ActiveRecord::Base
   end
 
   def seller_and_model_available
-    if seller?
+    if seller? &&
+        (!current_user || !current_user.admin?) &&
+        (new_record? || seller_model_changed?)
       model_counts = User.seller.where.not(id: id).group(:seller_model).count
       model_counts.default = 0
       sellers_count = model_counts.values.inject(:+)
