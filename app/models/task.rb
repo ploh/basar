@@ -5,4 +5,8 @@ class Task < ActiveRecord::Base
   enum kind: [:bring, :help, :deliver]
 
   validates :sort_key, presence: true
+
+  def self.list
+    Task.order(:kind, :sort_key, :created_at).to_a
+  end
 end
