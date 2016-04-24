@@ -8,7 +8,7 @@
     = csrf_meta_tags
 
   %body
-    - if can? :manage, User
+    - if can? :read, User
       #seller_list{data: {list: ( hash = {}; Seller.all.each {|seller| hash[seller.number] = [seller.id, seller.initials]}; hash.to_json)}}
     - if can? :read, Transaction
       #shortcuts_available
