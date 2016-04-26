@@ -5,11 +5,11 @@ class SellersController < ApplicationController
 
   # GET /sellers
   def index
-    @sellers = Seller.order("number")
+    @sellers = Seller.list
   end
 
   def revenue
-    @sellers = Seller.order("number")
+    @sellers = Seller.list
     respond_to do |format|
       format.html
       format.csv { render text: view_context.revenues_csv( @sellers ) }
@@ -88,7 +88,7 @@ class SellersController < ApplicationController
   private
 
   def load_tasks
-    @tasks = Task.order(:kind, :sort_key, :created_at).to_a
+    @tasks = Task.list
   end
 
   def fill_activities

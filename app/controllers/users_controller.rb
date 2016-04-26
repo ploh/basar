@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.order("seller_number, created_at")
+    @users = User.includes(:seller).order("seller_number, created_at")
   end
 
   # GET /users/1/edit

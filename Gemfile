@@ -52,6 +52,8 @@ gem 'devise-i18n'
 
 gem 'cancancan'
 
+gem 'request_store'
+
 gem 'yaml_db'
 
 gem 'sqlite3'

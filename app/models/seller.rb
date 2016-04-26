@@ -19,6 +19,12 @@ class Seller < ActiveRecord::Base
 
   validate :enough_help
 
+  def write_attribute *args
+    @activity_counts = nil
+    @activities_counts = nil
+    super *args
+  end
+
   def only_one_delivery
     if activities.find_all {|act| act.me && act.task.deliver?}.size > 1
       errors[:base] << "Es darf nur ein Abgabetermin ausgewählt werden"
@@ -150,13 +156,22 @@ class Seller < ActiveRecord::Base
     end
   end
 
+  def self.list(with_activities = true)
+    if with_activities
+      Seller.includes(activities: :task).order("number").to_a
+    else
+      Seller.order("number").to_a
+    end
+  end
+
   def computed_rate_in_percent
     self.computed_rate && (self.computed_rate * 100).round
   end
 
   def self.activities_summary
     counts = [0, 0]
-    Seller.all.each do |seller|
+    sellers = RequestStore.fetch(:sellers) { Seller.list }
+    sellers.each do |seller|
       seller_counts = seller.activities_counts
       counts[0] += seller_counts[0]
       counts[1] += seller_counts[1]
@@ -164,9 +179,10 @@ class Seller < ActiveRecord::Base
     "#{counts[0]} / #{counts[1]}"
   end
 
-  def self.activity_summary(task)
+  def self.activity_summary task
     counts = [0, 0]
-    Seller.all.each do |seller|
+    sellers = RequestStore.fetch(:sellers) { Seller.list }
+    sellers.each do |seller|
       seller_counts = seller.activity_counts(task)
       counts[0] += seller_counts[0]
       counts[1] += seller_counts[1]
@@ -175,25 +191,33 @@ class Seller < ActiveRecord::Base
   end
 
   def activity_counts(task)
-    activity = activities.find_by(task: task)
-    if activity
-      [activity.actual_count, activity.planned_count].map do |float|
-        int = float.round
-        int == float ? int : float.round(2)
-      end
-    else
-      [0, 0]
+    @activity_counts ||= {}
+    unless @activity_counts[task]
+      activity = activities.select {|act| act.task_id == task.id}.first
+      @activity_counts[task] =
+        if activity
+          [activity.actual_count, activity.planned_count].map do |float|
+            int = float.round
+            int == float ? int : float.round(2)
+          end
+        else
+          [0, 0]
+        end
     end
+    @activity_counts[task]
   end
 
   def activities_counts
-    counts = [0, 0]
-    Task.all.each do |task|
-      task_counts = activity_counts(task)
-      counts[0] += task_counts[0]
-      counts[1] += task_counts[1]
+    unless @activities_counts
+      @activities_counts = [0, 0]
+      tasks = RequestStore.fetch(:tasks) { Task.list }
+      tasks.each do |task|
+        task_counts = activity_counts(task)
+        @activities_counts[0] += task_counts[0]
+        @activities_counts[1] += task_counts[1]
+      end
     end
-    counts
+    @activities_counts
   end
 
   def self.split_code(code)
