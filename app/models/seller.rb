@@ -156,9 +156,9 @@ class Seller < ActiveRecord::Base
     end
   end
 
-  def self.list(with_activities = true)
-    if with_activities
-      Seller.includes(activities: :task).order("number").to_a
+  def self.list(includes = true)
+    if includes
+      Seller.includes(:user, activities: :task).order("number").to_a
     else
       Seller.order("number").to_a
     end
