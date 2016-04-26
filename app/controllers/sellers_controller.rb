@@ -99,11 +99,19 @@ class SellersController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def seller_params
+    # @@@ avoid this mean hack and properly use virtual attributes (me() and helper()) in seller model
+    #     problem: the model does not recognize that it has to be updated
+    #     if you force it to with attribute_will_change!, it still uses the old value
+    # s. http://stackoverflow.com/questions/23958170/understanding-attribute-will-change-method
+    #    http://api.rubyonrails.org/v4.0.1/classes/ActiveRecord/NestedAttributes/ClassMethods.html
+    #    http://railscasts.com/episodes/167-more-on-virtual-attributes?view=asciicast
+    #    http://stackoverflow.com/questions/30914780/virtual-attribute-in-rails-4
     params["seller"]["activities_attributes"].each do |num, attr|
       attr["planned_count"] = (attr["me"] == "1" ? 1 : 0) + (attr["helper"] == "1" ? 1 : 0)
       attr.delete "me"
       attr.delete "helper"
     end
+    # @@@ should be: can? :edit, ActualActivities (s. https://gist.github.com/alindeman/1903397)
     if current_user.seller?
       params.require(:seller).permit( #:name,
                                       #:number,

@@ -1,3 +1,8 @@
+4/2016:
+- more speed: https://www.nateberkopec.com/2015/05/27/100-ms-to-glass-with-rails-and-turbolinks.html
+              https://www.nateberkopec.com/2015/07/15/the-complete-guide-to-rails-caching.html
+
+pre 2016:
 - seller form: rate as selection list
 - stats page: per seller, per transaction etc
 - revenue page mit erb statt haml wegen performance
