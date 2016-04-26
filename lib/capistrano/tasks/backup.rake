@@ -34,6 +34,7 @@ namespace :backup do
       end
       latest_yml_backup = backup_files.split("\n").find_all {|filename| filename.end_with? "data.yml"}.last
 
+      info "Downloading #{latest_yml_backup}..."
       download! backup_path.join(latest_yml_backup), "db/data.yml"
     end
   end

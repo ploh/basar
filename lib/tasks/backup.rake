@@ -13,6 +13,7 @@ namespace :backup do
       User.all.each do |user|
         user.password = "asdfasdf"
         user.save!
+        Rails.logger.info "Saved #{user.description}"
       end
     end
   end
