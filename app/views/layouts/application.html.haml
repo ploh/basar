@@ -9,7 +9,7 @@
 
   %body
     - if can? :read, User # @@@ should be: AllSellers (custom object in ability.rb, s. https://gist.github.com/alindeman/1903397)
-      #seller_list{data: {list: ( hash = {}; Seller.list.each {|seller| hash[seller.number] = [seller.id, seller.initials]}; hash.to_json)}}
+      #seller_list{data: {list: ( hash = {}; Seller.list(false).each {|seller| hash[seller.number] = [seller.id, seller.initials]}; hash.to_json)}}
     - if can? :read, Transaction
       #shortcuts_available
 
