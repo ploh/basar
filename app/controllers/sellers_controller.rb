@@ -19,12 +19,12 @@ class SellersController < ApplicationController
   # GET /sellers/new
 #  def new
 #    @seller = Seller.new
-#    fill_activities
+#    prepare_activities
 #  end
 
   # GET /sellers/1/edit
   def edit
-    fill_activities
+    prepare_activities
   end
 
   # POST /sellers
@@ -41,7 +41,7 @@ class SellersController < ApplicationController
 
   # PATCH/PUT /sellers/1
   def update
-    fill_activities
+    prepare_activities
     if @seller.update(seller_params)
       unless @seller.warnings.empty?
         if flash[:warning]
@@ -88,21 +88,13 @@ class SellersController < ApplicationController
 
   private
 
-  def load_tasks
-    @tasks = Task.list
+  def prepare_activities
+    @seller.fill_activities
+    @seller.correct_must_d_activities
   end
 
-  def fill_activities
-    activities = @seller.activities
-    @tasks.each do |task|
-      activity = activities.find {|act| act.task_id == task.id}
-      unless activity
-        activity = activities.build(task: task)
-      end
-      if task.must_d
-        activity.planned_count = @seller.user.D? ? 1 : 0
-      end
-    end
+  def load_tasks
+    @tasks = Task.list
   end
 
   # Only allow a trusted parameter "white list" through.

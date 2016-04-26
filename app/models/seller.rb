@@ -19,11 +19,41 @@ class Seller < ActiveRecord::Base
 
   validate :enough_help
 
+  before_validation :fill_activities
+  before_validation :correct_must_d_activities
+
   def write_attribute *args
     @activity_counts = nil
     @activities_counts = nil
     super *args
   end
+
+  def fill_activities
+    for_each_task_with_activity do |task, activity|
+      activities.build(task: task) unless activity
+    end
+  end
+
+  def correct_must_d_activities
+    for_each_task_with_activity do |task, activity|
+      if task.must_d
+        activity.planned_count = user && user.D? ? 1 : 0
+        activity.actual_count = 0 unless user && user.D?
+      end
+    end
+  end
+
+  private
+
+  def for_each_task_with_activity
+    tasks = RequestStore.fetch(:tasks) { Task.list }
+    tasks.each do |task|
+      activity = activities.find {|act| act.task_id == task.id}
+      yield task, activity
+    end
+  end
+
+  public
 
   def only_one_delivery
     if activities.find_all {|act| act.me && act.task.deliver?}.size > 1
