@@ -77,13 +77,15 @@
               = a.hidden_field :id, value: activity.id
             %td.check
               .field
-                = a.check_box :me
+                = a.check_box :me, disabled: activity.task.must_d
             %td.check
-              .field
-                = a.check_box :helper
+              - unless activity.task.must_d
+                .field
+                  = a.check_box :helper
             %td
               - notes = []
               - notes << "limitiert auf #{activity.task.limit} Personen" if activity.task.limit && activity.task.limit > 0 && activity.task.limit < 99
+              - notes << "nur bei Verkaufsmodell D" if activity.task.must_d
               = notes.join(", ")
 
   -# .field

@@ -41,6 +41,7 @@ class SellersController < ApplicationController
 
   # PATCH/PUT /sellers/1
   def update
+    fill_activities
     if @seller.update(seller_params)
       unless @seller.warnings.empty?
         if flash[:warning]
@@ -92,13 +93,27 @@ class SellersController < ApplicationController
   end
 
   def fill_activities
+    activities = @seller.activities
     @tasks.each do |task|
-      @seller.activities.build task: task unless @seller.activities.exists? task: task
+      activity = activities.find {|act| act.task_id == task.id}
+      unless activity
+        activity = activities.build(task: task)
+      end
+      if task.must_d
+        activity.planned_count = @seller.user.D? ? 1 : 0
+      end
     end
   end
 
   # Only allow a trusted parameter "white list" through.
   def seller_params
+    # @@@ can this be done in a cleaner way?
+    raise if params["seller"]["activities_attributes"].any? do |num, attr|
+      p num, attr, attr["me"], ""
+      (attr["me"] || attr["helper"]) &&
+        @tasks.any? {|task| task.id == attr["task_id"].to_i && task.must_d}
+    end
+
     # @@@ avoid this mean hack and properly use virtual attributes (me() and helper()) in seller model
     #     problem: the model does not recognize that it has to be updated
     #     if you force it to with attribute_will_change!, it still uses the old value

@@ -10,6 +10,7 @@
       %th Weight
       %th Limit
       %th Only D
+      %th Must for D
       %th Kind
       %th
       %th
@@ -22,6 +23,7 @@
         %td= task.weight
         %td= task.limit
         %td= task.only_d
+        %td= task.must_d
         %td= task.kind
         %td= link_to 'Edit', edit_task_path(task)
         %td= link_to 'Destroy', task, :method => :delete, :data => { :confirm => 'Are you sure?' }
