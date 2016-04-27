@@ -8,7 +8,7 @@ end
 namespace :backup do
   desc "Load data.yml into dev db and reset passwords"
   task load: [:environment, :verbose] do
-    Rake::Task["db:data:dump"].invoke
+    Rake::Task["db:data:load"].invoke
     User.transaction do
       User.all.each do |user|
         user.password = "asdfasdf"
