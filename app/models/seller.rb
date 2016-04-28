@@ -192,14 +192,31 @@ class Seller < ActiveRecord::Base
   end
 
   def computed_rate
-    actual_work = activities_counts[0]
-    if actual_work < 1.999
-      0.2
-    elsif actual_work < 3.999
-      0.15
+    if activities.any? {|act| act.task.must_d && act.actual_count > 0.99}
+      0.05
     else
-      0.1
+      actual_work = activities_counts[0]
+      if actual_work > 1.99
+        0.1
+      elsif actual_work > 0.99
+        0.15
+      else
+        0.2
+      end
     end
+  end
+
+  def final_rate
+    unless (rate == 0.05 && computed_rate > 0.05) ||
+           (rate < 0.2 && computed_rate == 0.2)
+      computed_rate
+    else
+      0.30
+    end
+  end
+
+  def final_rate_in_percent
+    self.final_rate && (self.final_rate * 100).round
   end
 
   def self.list(includes = true)

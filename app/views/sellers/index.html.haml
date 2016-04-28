@@ -17,6 +17,7 @@
       %td.number= seller.activities_summary
       %td.number= "#{seller.computed_rate_in_percent} %"
       %td.number= "#{seller.rate_in_percent} %"
+      %td.number= "#{seller.final_rate_in_percent} %"
       %td= link_to 'Edit', edit_seller_path(seller)
       %td= link_to 'Destroy', seller, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
