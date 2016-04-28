@@ -32,5 +32,5 @@
 
 %h3 Verkaufte Artikel
 
-- @seller.items.order("created_at asc").each do |item|
+- @seller.items.each do |item|
   %div= money_string item.price
