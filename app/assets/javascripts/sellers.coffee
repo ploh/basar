@@ -15,7 +15,7 @@ SellersController.prototype.edit = ->
     if $("#seller_list").length
       $(".field input").each ->
         $(this).focus(-> $(this).select())
-      $("#seller_activities_attributes_0_actual_count").focus()
+      $("#seller_activities_attributes_0_me").focus() # @@@ set to correct dynamic activity id with actual count, reorder tab key order
 
 jQuery ->
   if $("#seller_list").length

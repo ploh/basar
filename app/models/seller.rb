@@ -17,7 +17,7 @@ class Seller < ActiveRecord::Base
   validate :check_only_d_helps
   validate :check_activity_limits
 
-  validate :enough_help
+  validate :enough_help_planned
 
   before_validation :fill_activities
   before_validation :correct_must_d_activities
@@ -88,7 +88,7 @@ class Seller < ActiveRecord::Base
     @warnings ||= []
   end
 
-  def enough_help
+  def enough_help_planned
     planned_help = activities.find_all {|act| act.task.bring? || act.task.help?}.map {|act| act.planned_count}.inject(0, :+)
     needed_help = case user.seller_model
     when "A"

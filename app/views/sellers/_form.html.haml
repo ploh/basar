@@ -58,8 +58,10 @@
               = a.hidden_field :task_id, value: activity.task_id
               = a.hidden_field :id, value: activity.id
             %td.check
-              .field
-                = a.check_box :me # actual
+              .field= a.check_box :me
+            - unless current_user.seller?
+              %td{style: "padding-left: 40em;"}
+                .field= a.number_field :actual_count, step: :any
 
   %table.element_list
     %tr
@@ -87,6 +89,9 @@
               - notes << "limitiert auf #{activity.task.limit} Personen" if activity.task.limit && activity.task.limit > 0 && activity.task.limit < 99
               - notes << "nur bei Verkaufsmodell D" if activity.task.must_d
               = notes.join(", ")
+            - unless current_user.seller?
+              %td{style: "padding-left: 6em;"}
+                .field= a.number_field :actual_count, step: :any
 
   -# .field
   -#   = f.label :rate_in_percent, "Rate"
