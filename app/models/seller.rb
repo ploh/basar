@@ -11,7 +11,7 @@ class Seller < ActiveRecord::Base
 
   validates :initials, presence: true, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }
   validates :number, presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
-  validates :rate_in_percent, presence: true, numericality: true, inclusion: { in: [10, 15, 20], message: "has to be 10, 15 or 20%" }
+  validates :rate_in_percent, presence: true, numericality: true, inclusion: { in: [5, 10, 15, 20], message: "has to be 5, 10, 15 or 20%" }
 
   validate :only_one_delivery
   validate :check_only_d_helps
