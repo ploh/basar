@@ -58,7 +58,9 @@
               = a.hidden_field :task_id, value: activity.task_id
               = a.hidden_field :id, value: activity.id
             %td.check
-              .field= a.check_box :me
+              .field
+                = a.check_box :me
+                %span{style: "font-size: larger"}= activity.actual_count >= 0.99 ? "&#x2714;".html_safe : ""
             - unless current_user.seller?
               %td{style: "padding-left: 40em;"}
                 .field= a.number_field :actual_count, step: :any
@@ -80,10 +82,12 @@
             %td.check
               .field
                 = a.check_box :me, disabled: activity.task.must_d
+                %span{style: "font-size: larger"}= activity.actual_count >= 0.99 ? "&#x2714;".html_safe : ""
             %td.check
               - unless activity.task.must_d
                 .field
                   = a.check_box :helper
+                  %span{style: "font-size: larger"}= activity.actual_count >= 1.99 ? "&#x2714;".html_safe : ""
             %td
               - notes = []
               - notes << "limitiert auf #{activity.task.limit} Personen" if activity.task.limit && activity.task.limit > 0 && activity.task.limit < 99
