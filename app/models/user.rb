@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
     result = true
     if seller_number || !initials.blank?
       build_seller(rate_in_percent: 20) unless seller
-      if seller_number != seller.number || initials != seller.initials
+      if true # @@@ at the moment: seller must be kept in sync with user on every change (because of rate and must_d activities). better: seller_number != seller.number || initials != seller.initials
         seller.initials = initials
         seller.number = seller_number
         if seller.valid?

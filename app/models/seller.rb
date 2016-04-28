@@ -7,7 +7,7 @@ class Seller < ActiveRecord::Base
   has_many :tasks, through: :activities, inverse_of: :sellers
   accepts_nested_attributes_for :activities
 
-  belongs_to :user
+  belongs_to :user, touch: true
 
   validates :initials, presence: true, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }
   validates :number, presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
@@ -21,6 +21,7 @@ class Seller < ActiveRecord::Base
 
   before_validation :fill_activities
   before_validation :correct_must_d_activities
+  before_validation :correct_rate
 
   def write_attribute *args
     @activity_counts = nil
@@ -40,6 +41,21 @@ class Seller < ActiveRecord::Base
         activity.planned_count = user && user.D? ? 1 : 0
         activity.actual_count = 0 unless user && user.D?
       end
+    end
+  end
+
+  def correct_rate
+    if user
+      self.rate = case user.seller_model
+        when 'A'
+          0.2
+        when 'B'
+          0.15
+        when 'C'
+          0.1
+        when 'D'
+          0.05
+        end
     end
   end
 
