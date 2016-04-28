@@ -9,7 +9,7 @@ class SellersController < ApplicationController
   end
 
   def revenue
-    @sellers = Seller.list
+    @sellers = Seller.list true, true
     respond_to do |format|
       format.html
       format.csv { render text: view_context.revenues_csv( @sellers ) }

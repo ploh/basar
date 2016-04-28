@@ -26,6 +26,7 @@ class Seller < ActiveRecord::Base
   def write_attribute *args
     @activity_counts = nil
     @activities_counts = nil
+    @total_revenue = nil
     super *args
   end
 
@@ -162,11 +163,11 @@ class Seller < ActiveRecord::Base
   end
 
   def number_of_items
-    items.count
+    items.size
   end
 
   def total_revenue
-    items.map {|item| item.price || 0}.inject(0, :+)
+    @total_revenue ||= items.map {|item| item.price || 0}.inject(0, :+)
   end
 
   def total_commission(rate = self.final_rate)
@@ -219,9 +220,13 @@ class Seller < ActiveRecord::Base
     self.final_rate && (self.final_rate * 100).round
   end
 
-  def self.list(includes = true)
+  def self.list(includes = true, with_items = false)
     if includes
-      Seller.includes(:user, activities: :task).order("number").to_a
+      if with_items
+        Seller.includes(:user, :items, activities: :task).order("number").to_a
+      else
+        Seller.includes(:user, activities: :task).order("number").to_a
+      end
     else
       Seller.order("number").to_a
     end
