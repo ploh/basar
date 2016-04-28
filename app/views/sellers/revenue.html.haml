@@ -10,14 +10,12 @@
     - if (i+1) % 20 == 0 && @sellers.size - (i+1) > 5
       = render 'revenue_table_header'
     %tr{class: nothing_sold_class(seller)}
-      %td{class: inconsistency_class(seller)}= seller.name
+      %td{class: inconsistency_class(seller)}= seller.user.name
       %td.number= seller.number
       %td.initials= seller.initials
-      - @tasks.each do |task|
-        %td.number= seller.activity_summary(task)
-      %td.number= seller.activities_summary
       %td.number= "#{seller.computed_rate_in_percent} %"
       %td.number= "#{seller.rate_in_percent} %"
+      %td.number= "#{seller.final_rate_in_percent} %"
       %td.number= seller.number_of_items
       %td.money= money_string seller.total_revenue
       %td.money= money_string seller.total_commission

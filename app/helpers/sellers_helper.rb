@@ -6,7 +6,7 @@ module SellersHelper
           csv << [ seller.code,
                    seller.name,
                    money_string(seller.total_revenue),
-                   "#{seller.computed_rate_in_percent}%",
+                   "#{seller.final_rate_in_percent}%",
                    money_string(seller.total_payout) ]
         end
       end

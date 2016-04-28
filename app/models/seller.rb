@@ -169,11 +169,11 @@ class Seller < ActiveRecord::Base
     items.map {|item| item.price || 0}.inject(0, :+)
   end
 
-  def total_commission(rate = self.computed_rate)
+  def total_commission(rate = self.final_rate)
     total_revenue * rate
   end
 
-  def total_payout(rate = self.computed_rate)
+  def total_payout(rate = self.final_rate)
     total_revenue - total_commission(rate)
   end
 
