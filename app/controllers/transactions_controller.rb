@@ -3,14 +3,14 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   def index
-    filtered_list = Transaction
+    filtered_list = Transaction.includes(:items)
     filtered_list = filtered_list.where(user: current_user) if current_user
     filtered_list = filtered_list.where(client_key: @client_key) if @client_key
     @transactions = filtered_list.order("created_at desc").limit(20)
   end
 
   def index_all
-    @transactions = Transaction.order("created_at desc")
+    @transactions = Transaction.includes(:items).order("created_at desc")
     render "index"
   end
 

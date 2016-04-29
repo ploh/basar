@@ -16,7 +16,7 @@
     %tr
       %td= transaction.created_at
       %td= "#{transaction.user_description} / #{transaction.client_key}"
-      %td.number= transaction.items.count
+      %td.number= transaction.items.size
       %td.money= money_string transaction.total_price
       %td= link_to 'Show', transaction
       %td= link_to 'Edit', edit_transaction_path(transaction)
