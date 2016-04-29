@@ -4,6 +4,11 @@ class Transaction < ActiveRecord::Base
 
   accepts_nested_attributes_for :items
 
+  # @@@ only do this if something really changed
+  before_validation do
+    self.updated_at = Time.zone.now
+  end
+
   before_save do
     items.each {|item| item.destroy if item.price == 0.0}
   end
