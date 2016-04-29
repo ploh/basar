@@ -143,11 +143,10 @@ class Seller < ActiveRecord::Base
   end
 
   def self.find_by_code(code)
+    sellers = RequestStore.fetch(:sellers) { Seller.list false }
     if pair = split_code(code)
       initials, number = pair
-      conditions = {number: number}
-      conditions.merge!({initials: initials}) unless initials.blank?
-      self.where(conditions).first
+      sellers.find {|seller| seller.number == number.to_i && (initials.blank? || seller.initials == initials)}
     end
   end
 
