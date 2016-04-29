@@ -51,6 +51,8 @@ class User < ActiveRecord::Base
         Time.zone.now < Time.zone.local(2016, 4, 30, 9, 0, 0) ||
         Time.zone.local(2016, 4, 30, 13, 0, 0) < Time.zone.now )
   end
+  # @@@ def inactive_message, s. http://www.rubydoc.info/github/plataformatec/devise/master/Devise/Models/Authenticatable
+  # https://github.com/plataformatec/devise/wiki/How-To%3a-Customize-user-account-status-validation-when-logging-in
 
   def set_default_role
     self.role ||= :seller
