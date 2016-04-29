@@ -4,7 +4,7 @@ sqlite_pragmas: &sqlite_pragmas
   - pragma cache_size = 10000
   - pragma temp_store = memory
   - pragma synchronous = normal
-  - pragma journal_mode = wal
+  - pragma journal_mode = memory
 
 # SQLite version 3.x
 #   gem install sqlite3

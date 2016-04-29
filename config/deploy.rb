@@ -27,8 +27,8 @@ set :deploy_to, '/var/www/vhosts/kids-basar.de/app'
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
 set :linked_files, fetch(:linked_files, []).push('db/production.sqlite3',
-                                                 'db/production.sqlite3-shm',
-                                                 'db/production.sqlite3-wal',
+                                                 #'db/production.sqlite3-shm',
+                                                 #'db/production.sqlite3-wal', @@@ why does this get corrupt???
                                                  'config/log_level')
 
 # Default value for linked_dirs is []
