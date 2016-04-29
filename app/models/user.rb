@@ -42,6 +42,16 @@ class User < ActiveRecord::Base
   validate :seller_and_model_available
 
 
+ # s. http://stackoverflow.com/a/6004353
+ # this method is called by devise to check for "active" state of the model
+  def active_for_authentication?
+    super &&
+      ( assistant? ||
+        admin? ||
+        Time.zone.now < Time.zone.local(2016, 4, 30, 9, 0, 0) ||
+        Time.zone.local(2016, 4, 30, 13, 0, 0) < Time.zone.now )
+  end
+
   def set_default_role
     self.role ||= :seller
   end

@@ -20,7 +20,7 @@ de:
       send_paranoid_instructions: Falls Ihre E-Mail-Adresse in unserer Datenbank existiert, erhalten Sie in wenigen Minuten eine E-Mail, mit der Sie Ihre Registrierung bestätigen können.
     failure:
       already_authenticated: Sie sind bereits eingeloggt.
-      inactive: Ihr Account ist nicht aktiv.
+      inactive: Der Login ist bis 13.00 Uhr gesperrt.
       invalid: Ungültige Anmeldedaten.
       last_attempt: Sie haben noch einen Versuch, bis Ihr Account gesperrt wird.
       locked: Ihr Account ist gesperrt.
