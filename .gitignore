@@ -14,7 +14,7 @@
 /db/*.sqlite3-wal
 
 # Ignore database dumps
-/db/data.yml
+/db/*data.yml
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
