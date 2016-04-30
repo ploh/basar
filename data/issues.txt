@@ -1,4 +1,5 @@
 4/2016:
+- seller index/revenue sortable by column header click
 - for admins: login as user - with superpassword or similar
 - more speed: https://www.nateberkopec.com/2015/05/27/100-ms-to-glass-with-rails-and-turbolinks.html
               https://www.nateberkopec.com/2015/07/15/the-complete-guide-to-rails-caching.html
