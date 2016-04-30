@@ -9,6 +9,7 @@ class SellersController < ApplicationController
   end
 
   def revenue
+    # @@@ forbidden for assistants: they can only "read" sellers, not "revenue" them
     @sellers = Seller.list true, true
     respond_to do |format|
       format.html
