@@ -1,10 +1,11 @@
 == Basar
 Webapp for organising and executing a commission sale
+
 Copyright (C) 2016  Peter Lohmann
 
 
 === Deployment
-It is deployed on http://kids-basar.de
+It is deployed on https://kids-basar.de
 
 If you want to deploy it yourself, please contact peter@lohmann-online.info
 
