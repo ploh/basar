@@ -47,7 +47,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log',
 set :keep_releases, 40
 
 set :rbenv_type, :system
-set :rbenv_ruby, '2.1.2'
+set :rbenv_ruby, '2.3.1'
 
 set :bundle_path, nil
 set :bundle_flags, "--quiet --system"
