@@ -4,7 +4,7 @@
 # lock '3.4.0'
 
 set :application, 'basar'
-set :repo_url, 'peter@kids-basar.de:kids-basar.git'
+set :repo_url, 'git@github.com:ploh/basar.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
