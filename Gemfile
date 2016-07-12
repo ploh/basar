@@ -80,6 +80,7 @@ group :development do
   gem 'capistrano-passenger', '>= 0.1.1'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
+  gem 'faker'
 end
 
 group :test do
