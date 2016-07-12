@@ -5,7 +5,11 @@ Copyright (C) 2016  Peter Lohmann
 
 
 === Deployment
-It is deployed on https://kids-basar.de
+It is deployed on https://kids-basar.de - currently as demo version with anonymized data from the latest sale in May 2016.
+
+You can try it out with
+* email: admin@lohmann-online.info
+* password: asdfasdf
 
 If you want to deploy it yourself, please contact peter@lohmann-online.info
 
