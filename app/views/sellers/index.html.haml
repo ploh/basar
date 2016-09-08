@@ -1,6 +1,11 @@
 %h1 Listing sellers
 
-= link_to 'New Seller', new_seller_path
+- model_counts = Seller.group(:model).count
+- model_counts.default = 0
+%ul
+  - Seller.models.each do |model, model_id|
+    %li= "Modell #{model}: #{model_counts[model_id]} Verkäufer"
+  %li= "Gesamt: #{model_counts.values.inject(:+)} Verkäufer"
 
 %table#sellers.element_list
   = render 'table_header'
@@ -12,6 +17,7 @@
       %td{class: inconsistency_class(seller)}= seller.user.name
       %td.number= seller.number
       %td.initials= seller.initials
+      %td.centered= seller.model
       - @tasks.each do |task|
         %td.number= seller.activity_summary(task)
       %td.number= seller.activities_summary

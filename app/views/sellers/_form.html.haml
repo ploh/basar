@@ -6,6 +6,13 @@
         - @seller.errors.full_messages.each do |msg|
           %li= msg
 
+
+  - unless current_user.seller?
+    .field
+      Benutzer:
+      = @seller.user.name
+      = @seller.user.email
+
   .field
     Verkäufernummer:
     %strong= @seller.code
