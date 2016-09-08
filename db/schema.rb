@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908094150) do
+ActiveRecord::Schema.define(version: 20160908094742) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "seller_id",                   null: false
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20160908094150) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "model"
   end
 
   add_index "sellers", ["user_id"], name: "index_sellers_on_user_id"

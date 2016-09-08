@@ -1,6 +1,8 @@
 class Seller < ActiveRecord::Base
   attr_accessor :warnings
 
+  enum model: [:A, :B, :C, :D]
+
   has_many :items, dependent: :restrict_with_exception
 
   has_many :activities, dependent: :destroy
