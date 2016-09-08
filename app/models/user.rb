@@ -20,7 +20,6 @@ class User < ActiveRecord::Base
 
   after_initialize :set_default_role, :if => :new_record?
 
-  before_validation :auto_set_seller_code
   before_validation :update_seller
 
   with_options if: :seller? do |seller|
@@ -121,24 +120,6 @@ class User < ActiveRecord::Base
         :black
       end
     end
-  end
-
-  def auto_set_seller_code
-    if !seller_number && initials.blank? && email
-      lookup = Seller.old_list[email.downcase]
-      if lookup && !lookup[0].blank? && lookup[1]
-        self.initials = lookup[0]
-        self.seller_number = lookup[1]
-        logger.info "Auto set for #{email}: #{initials}, #{seller_number}"
-        unless valid?
-          logger.warn "Auto set reverted for #{email}: #{initials}, #{seller_number}, #{errors.full_messages.join("; ")}"
-          errors.clear
-          self.initials = nil
-          self.seller_number = nil
-        end
-      end
-    end
-    true
   end
 
   private

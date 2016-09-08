@@ -292,46 +292,4 @@ class Seller < ActiveRecord::Base
       [ $~[:initials], $~[:number] ]
     end
   end
-
-  # CSV has to be saved in RAILS_ROOT/data with ';' as field delimiter and without any text delimiter
-  def self.load_old_sellers(csv_file)
-    result = {}
-    if File.file? csv_file
-      lines = File.readlines(File.join(Rails.root, 'data', csv_file)).map {|line| line.chomp}
-
-      lines.each do |line|
-        fields = line.split(";", -1)
-        code, name, email, rate_category, color =
-          fields[0].delete(" ").gsub(/\(.*?\)/, ""), #.gsub(/[^[:alnum:]]+/, "")
-          fields[1].strip,
-          fields[2].delete(" ").downcase,
-          fields[3].strip.upcase,
-          fields[6].strip
-        initials, number = nil, nil
-        if pair = Seller.split_code(code)
-          initials, number = pair
-          number = number.to_i
-        end
-        if email.include?("@") &&
-            initials &&
-            initials =~ /^[[:alpha:]]{2,3}$/ &&
-            (1..9999).include?(number)
-          result[email] = [initials, number, name, rate_category, color]
-          Rails.logger.info "old seller: #{email}, #{initials}, #{number}, #{name}, #{rate_category}, #{color}"
-        else
-          Rails.logger.info "ERROR: no old seller: #{email}, #{code}, #{name}, #{rate_category}, #{color}"
-        end
-      end
-    end
-
-    result
-  end
-
-  def self.old_list
-    @@old_list ||= load_old_sellers 'sellers.csv'
-  end
-end
-
-class DummySeller
-  attr_accessor :initials, :name, :number, :rate
 end
