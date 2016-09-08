@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
          :confirmable, :lockable, :timeoutable
 
   enum role: [:seller, :assistant, :admin]
-  enum seller_model: [:A, :B, :C, :D]
 
   has_many :transactions, dependent: :restrict_with_exception
   has_one :seller, dependent: :destroy
@@ -23,13 +22,11 @@ class User < ActiveRecord::Base
   before_validation :update_seller
 
   with_options if: :seller? do |seller|
-    seller.validates :seller_model, presence: true
     seller.validates :initials, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }, allow_blank: true
     seller.validates :seller_number, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }, allow_nil: true
   end
 
   with_options unless: :seller? do |assistant|
-    assistant.validates :seller_model, absence: true
     assistant.validates :initials, absence: true
     assistant.validates :seller_number, absence: true
   end
@@ -118,37 +115,6 @@ class User < ActiveRecord::Base
         :green
       when 3
         :black
-      end
-    end
-  end
-
-  private
-
-  def seller_available
-  end
-
-  def seller_and_model_available
-    if seller? &&
-        (!current_user || !current_user.admin?) &&
-        (new_record? || seller_model_changed?)
-      model_counts = User.seller.where.not(id: id).group(:seller_model).count
-      model_counts.default = 0
-      sellers_count = model_counts.values.inject(:+)
-      if new_record? && sellers_count >= @@max_sellers
-        errors.clear
-        errors[:base] << "Anmeldung nicht mehr möglich"
-      else
-        if D?
-          if model_counts[User.seller_models[:D]] >= @@max_model_d
-            errors.add :seller_model, "D nicht mehr verfügbar"
-          end
-        else
-          if sellers_count - model_counts[User.seller_models[:D]] >= @@max_sellers - @@reserved_model_d
-            errors.add :seller_model, "#{seller_model} nicht mehr verfügbar (nur noch D verfügbar)"
-          elsif A? && model_counts[User.seller_models[:A]] >= @@max_model_a
-            errors.add :seller_model, "A nicht mehr verfügbar"
-          end
-        end
       end
     end
   end

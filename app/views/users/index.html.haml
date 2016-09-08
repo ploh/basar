@@ -1,12 +1,5 @@
 %h1 Listing users
 
-- model_counts = User.seller.group(:seller_model).count
-- model_counts.default = 0
-%ul
-  - User.seller_models.each do |model, model_id|
-    %li= "Modell #{model}: #{model_counts[model_id]} Verkäufer"
-  %li= "Gesamt: #{model_counts.values.inject(:+)} Verkäufer"
-
 %table.element_list
   %thead
     %tr
@@ -16,7 +9,6 @@
       %th= User.human_attribute_name(:first_name)
       %th= User.human_attribute_name(:last_name)
       %th= User.human_attribute_name(:email)
-      %th Modell
       %th= User.human_attribute_name(:role)
       %th Anmeldung
       %th Letzter Login
@@ -32,7 +24,6 @@
         %td= user.first_name
         %td= user.last_name
         %td= user.email
-        %td.centered= user.seller_model
         %td= user.role
         %td= user.created_at
         %td= user.current_sign_in_at

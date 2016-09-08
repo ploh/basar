@@ -13,6 +13,7 @@ class Seller < ActiveRecord::Base
 
   validates :initials, presence: true, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }
   validates :number, presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
+  validates :model, presence: true
 
   validate :only_one_delivery
   validate :check_only_d_helps
@@ -39,8 +40,8 @@ class Seller < ActiveRecord::Base
   def correct_must_d_activities
     for_each_task_with_activity do |task, activity|
       if task.must_d
-        activity.planned_count = user && user.D? ? 1 : 0
-        activity.actual_count = 0 unless user && user.D?
+        activity.planned_count = (model == 'D' ? 1 : 0)
+        activity.actual_count = 0 unless model == 'D'
       end
     end
   end
@@ -64,7 +65,7 @@ class Seller < ActiveRecord::Base
   end
 
   def check_only_d_helps # actually it is: no A deliver
-    if user.A? && activities.any? {|act| act.me && act.task.deliver? && act.task.only_d}
+    if model == 'A' && activities.any? {|act| act.me && act.task.deliver? && act.task.only_d}
       errors[:base] << "Dieser Abgabetermin ist für Verkäufer mit Modell A nicht erlaubt"
     end
   end
@@ -92,7 +93,7 @@ class Seller < ActiveRecord::Base
 
   def enough_help_planned
     planned_help = activities.find_all {|act| act.task.bring? || act.task.help?}.map {|act| act.planned_count}.inject(0, :+)
-    needed_help = case user.seller_model
+    needed_help = case model
     when "A"
       0
     when "B"

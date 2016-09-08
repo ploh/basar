@@ -54,18 +54,5 @@
       %br
       = f.password_field :current_password, autocomplete: :off
 
-  #seller_model_select.field
-    = f.label :seller_model
-    %br
-    - models = { :A => [20, "keine Mithilfe"],
-                 :B => [15, "2 Std. Aufbauhilfe ODER ein Kuchen"],
-                 :C => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und ein Kuchen"],
-                 :D => [5,  "3 Std. <em>Abbau</em>hilfe"] }
-    - User.seller_models.keys.each do |seller_model|
-      - model = models[seller_model.to_sym]
-      = f.radio_button :seller_model, seller_model
-      = f.label :seller_model, "Modell #{seller_model}: #{model[0]}% Kommission, #{model[1]}".html_safe, value: seller_model
-      %br
-
   .actions
     = f.submit t (update ? '.save' : '.sign_up')

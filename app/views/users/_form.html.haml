@@ -26,10 +26,6 @@
     %br
     = f.text_field :email
   .field
-    = f.label :seller_model
-    %br
-    = f.select :seller_model, options_for_select(User.seller_models.keys, @user.seller_model), include_blank: true
-  .field
     = f.label :role
     %br
     = f.select :role, options_for_select(User.roles.keys, @user.role)
