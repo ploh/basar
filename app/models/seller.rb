@@ -108,6 +108,21 @@ class Seller < ActiveRecord::Base
     end
   end
 
+  def color
+    if number
+      case number % 4
+      when 0
+        :blue
+      when 1
+        :red
+      when 2
+        :green
+      when 3
+        :black
+      end
+    end
+  end
+
   def rate
     case model
     when 'A'

@@ -131,6 +131,7 @@ class SellersController < ApplicationController
                                       #:number,
                                       #:initials,
                                       #:rate_in_percent,
+                                      :model,
                                       activities_attributes: [:actual_count, :planned_count, :task_id, :id] )
     end
   end

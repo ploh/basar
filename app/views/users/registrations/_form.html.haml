@@ -9,16 +9,6 @@
       %br
       = f.text_field :role, disabled: true
 
-  - if update
-    .field
-      = User.human_attribute_name(:seller_code) + ":"
-      %br
-      %strong= @user.seller_code
-    .field
-      = User.human_attribute_name(:color) + ":"
-      %br
-      %strong{class: @user.color}= @user.color && t(@user.color)
-
   .field
     = f.label :first_name
     %br

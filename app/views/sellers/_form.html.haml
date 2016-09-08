@@ -6,12 +6,22 @@
         - @seller.errors.full_messages.each do |msg|
           %li= msg
 
-  -# .field
-  -#   = f.label :name
-  -#   = f.text_field :name, autocomplete: :off
   .field
     Verkäufernummer:
-    = @seller.code
+    %strong= @seller.code
+
+  .field
+    Farbe:
+    %strong{class: @seller.color}= @seller.color && t(@seller.color)
+
+  - if current_user.seller?
+    .field
+      Verkaufsmodell:
+      %strong= @seller.model
+  - else
+    .field
+      = f.label :model
+      = f.select :model, options_for_select(Seller.models.keys, @seller.model)
 
   %h3 Abgabetermin
 
