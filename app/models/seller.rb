@@ -11,7 +11,6 @@ class Seller < ActiveRecord::Base
 
   validates :initials, presence: true, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }
   validates :number, presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
-  validates :rate_in_percent, presence: true, numericality: true, inclusion: { in: [5, 10, 15, 20], message: "has to be 5, 10, 15 or 20%" }
 
   validate :only_one_delivery
   validate :check_only_d_helps
@@ -21,7 +20,6 @@ class Seller < ActiveRecord::Base
 
   before_validation :fill_activities
   before_validation :correct_must_d_activities
-  before_validation :correct_rate
 
   def write_attribute *args
     @activity_counts = nil
@@ -42,21 +40,6 @@ class Seller < ActiveRecord::Base
         activity.planned_count = user && user.D? ? 1 : 0
         activity.actual_count = 0 unless user && user.D?
       end
-    end
-  end
-
-  def correct_rate
-    if user
-      self.rate = case user.seller_model
-        when 'A'
-          0.2
-        when 'B'
-          0.15
-        when 'C'
-          0.1
-        when 'D'
-          0.05
-        end
     end
   end
 
@@ -122,12 +105,21 @@ class Seller < ActiveRecord::Base
     end
   end
 
-  def rate_in_percent
-    self.rate && (self.rate * 100).round
+  def rate
+    case model
+    when 'A'
+      0.2
+    when 'B'
+      0.15
+    when 'C'
+      0.1
+    when 'D'
+      0.05
+    end
   end
 
-  def rate_in_percent=(percentage)
-    self.rate = percentage && percentage.to_i / 100.0
+  def rate_in_percent
+    rate && (rate * 100).round
   end
 
   def initials=(string)
@@ -207,6 +199,7 @@ class Seller < ActiveRecord::Base
   end
 
   def final_rate
+    # @@@ check model d erfüllt
     unless (rate == 0.05 && computed_rate > 0.05) ||
            (rate < 0.2 && computed_rate == 0.2)
       computed_rate
