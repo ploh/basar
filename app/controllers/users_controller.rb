@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.includes(:seller).order("seller_number, created_at")
+    @users = User.includes(:seller).order("last_name, created_at")
   end
 
   # GET /users/1/edit
@@ -34,6 +34,6 @@ class UsersController < ApplicationController
   private
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:email, :role, :first_name, :last_name, :seller_number, :initials)
+      params.require(:user).permit(:email, :role, :first_name, :last_name)
     end
 end

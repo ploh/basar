@@ -19,16 +19,8 @@ class User < ActiveRecord::Base
 
   after_initialize :set_default_role, :if => :new_record?
 
-  before_validation :update_seller
-
-  with_options if: :seller? do |seller|
-    seller.validates :initials, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }, allow_blank: true
-    seller.validates :seller_number, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }, allow_nil: true
-  end
-
   with_options unless: :seller? do |assistant|
-    assistant.validates :initials, absence: true
-    assistant.validates :seller_number, absence: true
+    assistant.validates :seller, absence: true
   end
 
   validates :role, presence: true
@@ -62,60 +54,7 @@ class User < ActiveRecord::Base
     "#{name} (#{email})"
   end
 
-  def initials= string
-    super( string && string.strip.upcase )
-  end
-
   def seller_code
-    if seller
-      seller.code
-    else
-      Seller.seller_code initials, seller_number
-    end
-  end
-
-  def update_seller
-    logger.info "update_seller begin: #{inspect}, #{seller.try(:inspect)}"
-    result = true
-    if seller_number || !initials.blank?
-      build_seller(rate_in_percent: 20) unless seller
-      if true # @@@ at the moment: seller must be kept in sync with user on every change (because of rate and must_d activities). better: seller_number != seller.number || initials != seller.initials
-        seller.initials = initials
-        seller.number = seller_number
-        if seller.valid?
-          result = seller.save unless new_record?
-        else
-          seller.errors.each do |attribute, message|
-            case attribute
-            when :number
-              errors.add :seller_number, message
-            when :initials
-               errors.add :initials, message
-            else
-              errors[:base] << "#{attribute.capitalize} #{message}"
-            end
-          end
-        end
-      end
-    else
-      result = self.seller.try :destroy
-    end
-    logger.info "update_seller end: #{inspect}, #{seller.try(:inspect)}"
-    result
-  end
-
-  def color
-    if seller_number
-      case seller_number % 4
-      when 0
-        :blue
-      when 1
-        :red
-      when 2
-        :green
-      when 3
-        :black
-      end
-    end
+    seller && seller.code
   end
 end

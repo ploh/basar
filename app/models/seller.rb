@@ -145,8 +145,8 @@ class Seller < ActiveRecord::Base
     rate && (rate * 100).round
   end
 
-  def initials=(string)
-    super( string.strip.upcase )
+  def initials= string
+    super( string && string.strip.upcase )
   end
 
   def code

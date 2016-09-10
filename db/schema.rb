@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160910090616) do
+ActiveRecord::Schema.define(version: 20160910093636) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "seller_id",                   null: false
@@ -94,14 +94,11 @@ ActiveRecord::Schema.define(version: 20160910090616) do
     t.integer  "role"
     t.string   "first_name",                         default: "", null: false
     t.string   "last_name",                          default: "", null: false
-    t.integer  "seller_number"
-    t.string   "initials"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["seller_number"], name: "index_users_on_seller_number"
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
 
 end
