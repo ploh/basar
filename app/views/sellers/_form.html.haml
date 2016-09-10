@@ -6,15 +6,20 @@
         - @seller.errors.full_messages.each do |msg|
           %li= msg
 
-
-  - unless current_user.seller?
+  - if current_user.seller?
+    .field
+      Verkäufernummer:
+      %strong= @seller.code
+  - else
     .field
       Benutzer:
       = @seller.user.description
-
-  .field
-    Verkäufernummer:
-    %strong= @seller.code
+    .field
+      = f.label :initials
+      = f.text_field :initials
+    .field
+      = f.label :number
+      = f.text_field :number
 
   .field
     Farbe:

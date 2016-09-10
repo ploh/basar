@@ -18,7 +18,7 @@ de:
         seller_code: Verkäufernummer
         color: Farbe
       seller:
-        number: Nummer
+        number: Verkäufernummer
         initials: Initialen
         model: Verkaufsmodell
     models:
