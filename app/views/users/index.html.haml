@@ -4,8 +4,7 @@
   %thead
     %tr
       %th Ich
-      %th Nr.
-      %th Farbe
+      %th Verk.
       %th= User.human_attribute_name(:first_name)
       %th= User.human_attribute_name(:last_name)
       %th= User.human_attribute_name(:email)
@@ -19,8 +18,7 @@
     - @users.each do |user|
       %tr
         %td.centered= user == current_user ? "x" : ""
-        %td= user.seller_code
-        %td{class: user.color}= user.color && t(user.color)
+        %td{class: user.seller_color}= user.seller_code
         %td= user.first_name
         %td= user.last_name
         %td= user.email

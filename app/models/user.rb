@@ -57,4 +57,12 @@ class User < ActiveRecord::Base
   def seller_code
     seller && seller.code
   end
+
+  def seller_color
+    seller && seller.color
+  end
+
+  def seller_number
+    seller && seller.number
+  end
 end

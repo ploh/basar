@@ -15,8 +15,7 @@
       = render 'table_header'
     %tr
       %td{class: inconsistency_class(seller)}= seller.name
-      %td.number= seller.number
-      %td.initials= seller.initials
+      %td{class: seller.color}= seller.code
       %td.centered= seller.model
       - @tasks.each do |task|
         %td.number= seller.activity_summary(task)
