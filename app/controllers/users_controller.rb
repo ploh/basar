@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.includes(:seller).order("last_name, created_at")
+    @users = User.includes(:seller).sort_by {|user| [-user.role, user.seller_number || 0, user.last_name]}
   end
 
   # GET /users/1/edit
