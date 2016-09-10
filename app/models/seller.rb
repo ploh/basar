@@ -14,6 +14,7 @@ class Seller < ActiveRecord::Base
   validates :initials, presence: true, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }
   validates :number, presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   validates :model, presence: true
+  validates :user, presence: true
 
   validate :only_one_delivery
   validate :check_only_d_helps
@@ -62,6 +63,10 @@ class Seller < ActiveRecord::Base
     if activities.find_all {|act| act.me && act.task.deliver?}.size > 1
       errors[:base] << "Es darf nur ein Abgabetermin ausgewählt werden"
     end
+  end
+
+  def name
+    user.name
   end
 
   def check_only_d_helps # actually it is: no A deliver

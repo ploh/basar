@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908101021) do
+ActiveRecord::Schema.define(version: 20160910090616) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "seller_id",                   null: false
@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(version: 20160908101021) do
   add_index "items", ["transaction_id"], name: "index_items_on_transaction_id"
 
   create_table "sellers", force: :cascade do |t|
-    t.string   "name",       limit: 255
     t.integer  "number"
     t.string   "initials",   limit: 255
     t.datetime "created_at"
