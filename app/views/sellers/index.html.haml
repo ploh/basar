@@ -1,5 +1,7 @@
 %h1 Listing sellers
 
+= link_to 'New Seller', new_seller_path
+
 - model_counts = Seller.group(:model).count
 - model_counts.default = 0
 %ul

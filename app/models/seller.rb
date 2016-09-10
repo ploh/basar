@@ -14,7 +14,7 @@ class Seller < ActiveRecord::Base
   validates :initials, presence: true, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }
   validates :number, presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   validates :model, presence: true
-  validates :user, presence: true
+  validates :user, presence: true, uniqueness: true
 
   validate :only_one_delivery
   validate :check_only_d_helps

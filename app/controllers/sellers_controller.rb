@@ -121,14 +121,11 @@ class SellersController < ApplicationController
     end
     # @@@ should be: can? :edit, ActualActivities (s. https://gist.github.com/alindeman/1903397)
     if current_user.seller?
-      params.require(:seller).permit( #:number,
-                                      #:initials,
-                                      #:rate_in_percent,
-                                      activities_attributes: [:planned_count, :task_id, :id] )
+      params.require(:seller).permit( activities_attributes: [:planned_count, :task_id, :id] )
     else
-      params.require(:seller).permit( #:number,
-                                      #:initials,
-                                      #:rate_in_percent,
+      params.require(:seller).permit( :number,
+                                      :initials,
+                                      :user_id,
                                       :model,
                                       activities_attributes: [:actual_count, :planned_count, :task_id, :id] )
     end

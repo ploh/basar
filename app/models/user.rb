@@ -27,8 +27,6 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  validate :seller_and_model_available
-
 
  # s. http://stackoverflow.com/a/6004353
  # this method is called by devise to check for "active" state of the model
@@ -64,5 +62,9 @@ class User < ActiveRecord::Base
 
   def seller_number
     seller && seller.number
+  end
+
+  def self.list
+    User.includes(:seller).sort_by {|user| [-user.role, user.seller_number || 0, user.last_name]}
   end
 end

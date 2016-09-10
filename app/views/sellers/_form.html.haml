@@ -12,8 +12,8 @@
       %strong= @seller.code
   - else
     .field
-      Benutzer:
-      = @seller.user.description
+      = f.label :user_id
+      = f.select :user_id, options_for_select(available_users(@seller).map {|u| [u.description, u.id]}, @seller.user_id)
     .field
       = f.label :initials
       = f.text_field :initials
