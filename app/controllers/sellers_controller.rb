@@ -18,10 +18,10 @@ class SellersController < ApplicationController
   end
 
   # GET /sellers/new
-#  def new
-#    @seller = Seller.new
-#    prepare_activities
-#  end
+  def new
+    @seller = Seller.new
+    prepare_activities
+  end
 
   # GET /sellers/1/edit
   def edit
@@ -29,16 +29,24 @@ class SellersController < ApplicationController
   end
 
   # POST /sellers
-#  def create
-#    @seller = Seller.new(seller_params)
+  def create
+    @seller = Seller.new(seller_params)
 
-#    if @seller.save
-#      redirect_to sellers_path, notice: 'Seller was successfully created.'
-#    else
-#      js :new
-#      render action: 'new'
-#    end
-#  end
+    if @seller.save
+      unless @seller.warnings.empty?
+        if flash[:warning]
+          flash[:warning] << "\n"
+        else
+          flash[:warning] = ""
+        end
+        flash[:warning] << @seller.warnings.join("\n")
+      end
+      redirect_to edit_seller_path(@seller), notice: 'Erfolgreich gespeichert'
+    else
+      js :new
+      render action: 'new'
+    end
+  end
 
   # PATCH/PUT /sellers/1
   def update
@@ -52,8 +60,6 @@ class SellersController < ApplicationController
         end
         flash[:warning] << @seller.warnings.join("\n")
       end
-#      puts @seller.to_yaml
-#      puts @seller.activities.to_yaml
       redirect_to edit_seller_path(@seller), notice: 'Erfolgreich gespeichert'
     else
       js :edit
@@ -100,34 +106,46 @@ class SellersController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def seller_params
-    # @@@ can this be done in a cleaner way?
-    raise if params["seller"]["activities_attributes"].any? do |num, attr|
-      p num, attr, attr["me"], ""
-      (attr["me"] || attr["helper"]) &&
-        @tasks.any? {|task| task.id == attr["task_id"].to_i && task.must_d}
-    end
-
-    # @@@ avoid this mean hack and properly use virtual attributes (me() and helper()) in seller model
-    #     problem: the model does not recognize that it has to be updated
-    #     if you force it to with attribute_will_change!, it still uses the old value
-    # s. http://stackoverflow.com/questions/23958170/understanding-attribute-will-change-method
-    #    http://api.rubyonrails.org/v4.0.1/classes/ActiveRecord/NestedAttributes/ClassMethods.html
-    #    http://railscasts.com/episodes/167-more-on-virtual-attributes?view=asciicast
-    #    http://stackoverflow.com/questions/30914780/virtual-attribute-in-rails-4
-    params["seller"]["activities_attributes"].each do |num, attr|
-      attr["planned_count"] = (attr["me"] == "1" ? 1 : 0) + (attr["helper"] == "1" ? 1 : 0)
-      attr.delete "me"
-      attr.delete "helper"
-    end
-    # @@@ should be: can? :edit, ActualActivities (s. https://gist.github.com/alindeman/1903397)
-    if current_user.seller?
-      params.require(:seller).permit( activities_attributes: [:planned_count, :task_id, :id] )
+    if action_name == 'create'
+      # @@@ should be: can? :edit, ActualActivities (s. https://gist.github.com/alindeman/1903397)
+      if current_user.seller?
+        params.require(:seller).permit()
+      else
+        params.require(:seller).permit( :number,
+                                        :initials,
+                                        :user_id,
+                                        :model )
+      end
     else
-      params.require(:seller).permit( :number,
-                                      :initials,
-                                      :user_id,
-                                      :model,
-                                      activities_attributes: [:actual_count, :planned_count, :task_id, :id] )
+      # @@@ can this be done in a cleaner way?
+      raise if params["seller"]["activities_attributes"].any? do |num, attr|
+        p num, attr, attr["me"], ""
+        (attr["me"] || attr["helper"]) &&
+          @tasks.any? {|task| task.id == attr["task_id"].to_i && task.must_d}
+      end
+
+      # @@@ avoid this mean hack and properly use virtual attributes (me() and helper()) in seller model
+      #     problem: the model does not recognize that it has to be updated
+      #     if you force it to with attribute_will_change!, it still uses the old value
+      # s. http://stackoverflow.com/questions/23958170/understanding-attribute-will-change-method
+      #    http://api.rubyonrails.org/v4.0.1/classes/ActiveRecord/NestedAttributes/ClassMethods.html
+      #    http://railscasts.com/episodes/167-more-on-virtual-attributes?view=asciicast
+      #    http://stackoverflow.com/questions/30914780/virtual-attribute-in-rails-4
+      params["seller"]["activities_attributes"].each do |num, attr|
+        attr["planned_count"] = (attr["me"] == "1" ? 1 : 0) + (attr["helper"] == "1" ? 1 : 0)
+        attr.delete "me"
+        attr.delete "helper"
+      end
+      # @@@ should be: can? :edit, ActualActivities (s. https://gist.github.com/alindeman/1903397)
+      if current_user.seller?
+        params.require(:seller).permit( activities_attributes: [:planned_count, :task_id, :id] )
+      else
+        params.require(:seller).permit( :number,
+                                        :initials,
+                                        :user_id,
+                                        :model,
+                                        activities_attributes: [:actual_count, :planned_count, :task_id, :id] )
+      end
     end
   end
 end
