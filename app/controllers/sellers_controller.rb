@@ -20,12 +20,10 @@ class SellersController < ApplicationController
   # GET /sellers/new
   def new
     @seller = Seller.new
-    prepare_activities
   end
 
   # GET /sellers/1/edit
   def edit
-    prepare_activities
   end
 
   # POST /sellers
@@ -50,7 +48,6 @@ class SellersController < ApplicationController
 
   # PATCH/PUT /sellers/1
   def update
-    prepare_activities
     if @seller.update(seller_params)
       unless @seller.warnings.empty?
         if flash[:warning]
@@ -94,11 +91,6 @@ class SellersController < ApplicationController
 #   end
 
   private
-
-  def prepare_activities
-    @seller.fill_activities
-    @seller.correct_must_d_activities
-  end
 
   def load_tasks
     @tasks = Task.list

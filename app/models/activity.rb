@@ -4,6 +4,8 @@ class Activity < ActiveRecord::Base
 
   validates :planned_count, inclusion: (0..12).to_a
   validates :actual_count, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :seller, presence: true
+  validates :task, presence: true
 
   def task_description
     task && task.description

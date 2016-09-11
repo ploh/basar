@@ -22,8 +22,11 @@ class Seller < ActiveRecord::Base
 
   validate :enough_help_planned
 
-  before_validation :fill_activities
+  after_initialize :fill_activities
+  after_initialize :correct_must_d_activities
+
   before_validation :correct_must_d_activities
+  before_validation :delete_null_activities
 
   def write_attribute *args
     @activity_counts = nil
@@ -35,6 +38,14 @@ class Seller < ActiveRecord::Base
   def fill_activities
     for_each_task_with_activity do |task, activity|
       activities.build(task: task) unless activity
+    end
+  end
+
+  def delete_null_activities
+    activities.each do |activity|
+      if activity.planned_count == 0 && activity.actual_count == 0
+        activities.delete activity
+      end
     end
   end
 
