@@ -65,10 +65,10 @@ class SellersController < ApplicationController
   end
 
   # DELETE /sellers/1
-#  def destroy
-#    @seller.destroy
-#    redirect_to sellers_url, notice: 'Seller was successfully destroyed.'
-#  end
+  def destroy
+    @seller.destroy
+    redirect_to sellers_url, notice: 'Seller was successfully destroyed.'
+  end
 
 #   # for AJAX validation requests
 #   def validate_code
