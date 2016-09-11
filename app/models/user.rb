@@ -1,6 +1,4 @@
 class User < ActiveRecord::Base
-  attr_accessor :current_user
-
   @@max_sellers = 105
   @@max_model_a = 27
   @@reserved_model_d = 23
