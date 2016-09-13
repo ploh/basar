@@ -67,6 +67,6 @@ class User < ActiveRecord::Base
   end
 
   def self.list
-    User.includes(:seller).sort_by {|user| [-user.role, user.seller_number || 0, user.last_name]}
+    User.includes(:seller).sort_by {|user| [-user.role, user.seller_number || 0, user.old_number || 0, user.last_name.downcase]}
   end
 end
