@@ -7,16 +7,36 @@ class UsersController < ApplicationController
     @users = User.list
   end
 
+  # GET /users/new
+  def new
+    @user = User.new
+  end
+
   # GET /users/1/edit
   def edit
   end
 
+
+  # POST /users
+  def create
+    @user = User.new(user_params)
+    @user.password = generated_password = Devise.friendly_token
+    p @user
+
+    if @user.save
+      redirect_to users_url, notice: 'User was successfully created.'
+    else
+      render :new
+    end
+    p @user
+  end
+
+
   # PATCH/PUT /users/1
   def update
-    if current_user.admin?
-      @user.skip_confirmation!
-      @user.skip_reconfirmation!
-    end
+    @user.skip_confirmation!
+    @user.skip_reconfirmation!
+
     if @user.update(user_params)
       redirect_to users_url, notice: 'User was successfully updated.'
     else
