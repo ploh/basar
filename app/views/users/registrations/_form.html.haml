@@ -44,5 +44,18 @@
       %br
       = f.password_field :current_password, autocomplete: :off
 
+  %h2 Verkäufernummer beantragen
+
+  - if @user.seller?
+    .field
+      = f.label :wish_a, "1. Wunsch"
+      = f.select :wish_a, options_for_select(models_with_descriptions, @user.wish_a)
+    .field
+      = f.label :wish_b, "2. Wunsch"
+      = f.select :wish_b, options_for_select(models_with_descriptions, @user.wish_b)
+    .field
+      = f.label :wish_c, "3. Wunsch"
+      = f.select :wish_c, options_for_select(models_with_descriptions, @user.wish_c)
+
   .actions
     = f.submit t (update ? '.save' : '.sign_up')

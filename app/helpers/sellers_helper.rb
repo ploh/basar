@@ -26,4 +26,23 @@ module SellersHelper
       'nothing_sold'
     end
   end
+
+  def models_with_descriptions
+    descriptions =
+      { 'A' => [20, "keine Mithilfe"],
+        'C' => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und ein Kuchen"],
+        'D' => [10, "ca. 3 Std. Abbauhilfe"] }
+
+    result = {}
+    result[nil] = ""
+    Seller.models.each do |model, model_id|
+      description = descriptions[model]
+      if description
+        rate_percentage, help_text = description
+        text = "#{model}, #{rate_percentage}% Kommission, #{help_text}"
+        result[text] = model_id
+      end
+    end
+    result
+  end
 end

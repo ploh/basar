@@ -17,6 +17,9 @@ de:
         initials: Initialen
         seller_code: Verkäufernummer
         color: Farbe
+        wish_a: Modellwunsch A
+        wish_b: Modellwunsch B
+        wish_c: Modellwunsch C
       seller:
         number: Verkäufernummer
         initials: Initialen

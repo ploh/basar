@@ -24,10 +24,11 @@ class User < ActiveRecord::Base
   validates :role, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
+  validate :wishes_are_consistent
 
 
- # s. http://stackoverflow.com/a/6004353
- # this method is called by devise to check for "active" state of the model
+  # s. http://stackoverflow.com/a/6004353
+  # this method is called by devise to check for "active" state of the model
   def active_for_authentication?
     super &&
       ( assistant? ||
@@ -66,7 +67,38 @@ class User < ActiveRecord::Base
     seller && seller.number
   end
 
+  def wishes
+    [:wish_a, :wish_b, :wish_c].map do |wish|
+      wish_val = send wish
+      wish_val && Seller.models.find {|k, v| v == wish_val}[0]
+    end
+  end
+
   def self.list
     User.includes(:seller).sort_by {|user| [-user.role, user.seller_number || 0, user.old_number || 0, user.last_name.downcase]}
+  end
+
+  private
+
+  def wishes_are_consistent
+    previous_vals = []
+    [:wish_a, :wish_b, :wish_c].each do |wish|
+      wish_val = send wish
+      if wish_val
+        if !previous_vals.empty? && !previous_vals.last
+          errors.add wish, "ungültig, da höherwertiger Wunsch nicht angegeben"
+        end
+
+        if previous_vals.include? wish_val
+          errors.add wish, "ungültig, da bereits bei höherwertigem Wunsch angegeben"
+        end
+
+        unless Seller.models.values.include? wish_val
+          errors.add wish, "ungültig"
+        end
+
+      end
+      previous_vals << wish_val
+    end
   end
 end

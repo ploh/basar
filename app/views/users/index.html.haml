@@ -8,6 +8,7 @@
       %th Ich
       %th Verk.
       %th alt
+      %th Wünsche
       %th= User.human_attribute_name(:first_name)
       %th= User.human_attribute_name(:last_name)
       %th= User.human_attribute_name(:email)
@@ -23,6 +24,7 @@
         %td.centered= user == current_user ? "x" : ""
         %td{class: user.seller_color}= user.seller_code
         %td{class: :smaller}= user.old_seller_code
+        %td= user.wishes.join ','
         %td= user.first_name
         %td= user.last_name
         %td= user.email

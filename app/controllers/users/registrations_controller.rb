@@ -44,7 +44,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def configure_account_update_params
-    devise_parameter_sanitizer.for(:account_update) << [:email, :password, :password_confirmation, :current_password]
+    devise_parameter_sanitizer.for(:account_update) << [:email, :password, :password_confirmation, :current_password, :wish_a, :wish_b, :wish_c]
   end
 
   def update_resource(resource, params)
@@ -54,6 +54,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       super
     end
+  end
+
+  def after_update_path_for(resource)
+     edit_user_registration_path
   end
 
   # The path used after sign up.
