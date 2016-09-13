@@ -54,6 +54,10 @@ class User < ActiveRecord::Base
     seller && seller.code
   end
 
+  def old_seller_code
+    Seller.seller_code old_initials, old_number
+  end
+
   def seller_color
     seller && seller.color
   end
