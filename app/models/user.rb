@@ -43,6 +43,10 @@ class User < ActiveRecord::Base
     self.role ||= :seller
   end
 
+  def weighting
+    super || 1.0
+  end
+
   def name
     "#{first_name} #{last_name}"
   end

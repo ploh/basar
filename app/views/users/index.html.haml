@@ -9,6 +9,7 @@
       %th Verk.
       %th alt
       %th Wünsche
+      %th Gewichtung
       %th= User.human_attribute_name(:first_name)
       %th= User.human_attribute_name(:last_name)
       %th= User.human_attribute_name(:email)
@@ -25,6 +26,7 @@
         %td{class: user.seller_color}= user.seller_code
         %td{class: :smaller}= user.old_seller_code
         %td= user.wishes.join ','
+        %td= sprintf "%.2e", user.weighting
         %td= user.first_name
         %td= user.last_name
         %td= user.email

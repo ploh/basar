@@ -32,6 +32,9 @@
     .field
       = f.label :wish_c, "3. Wunsch"
       = f.select :wish_c, options_for_select(models_with_descriptions, @user.wish_c)
+    .field
+      = f.label :weighting
+      = f.number_field :weighting, step: :any
 
   .actions
     = f.submit 'Save'
