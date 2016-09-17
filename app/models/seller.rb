@@ -1,7 +1,7 @@
 class Seller < ActiveRecord::Base
   attr_accessor :warnings
 
-  enum model: [:A, :B, :C, :D]
+  enum model: [:A, :C, :D]
 
   has_many :items, dependent: :restrict_with_exception
 
@@ -112,8 +112,6 @@ class Seller < ActiveRecord::Base
     needed_help = case model
     when "A"
       0
-    when "B"
-      1
     when "C"
       2
     when "D"
@@ -143,8 +141,6 @@ class Seller < ActiveRecord::Base
     case model
     when 'A'
       0.2
-    when 'B'
-      0.15
     when 'C'
       0.1
     when 'D'
@@ -219,13 +215,11 @@ class Seller < ActiveRecord::Base
 
   def computed_rate
     if activities.any? {|act| act.task.must_d && act.actual_count > 0.99}
-      0.05
+      0.1
     else
       actual_work = activities_counts[0]
       if actual_work > 1.99
         0.1
-      elsif actual_work > 0.99
-        0.15
       else
         0.2
       end
@@ -234,7 +228,7 @@ class Seller < ActiveRecord::Base
 
   def final_rate
     # @@@ check model d erfüllt
-    unless (rate == 0.05 && computed_rate > 0.05) ||
+    unless (rate == 0.1 && computed_rate > 0.1) ||
            (rate < 0.2 && computed_rate == 0.2)
       computed_rate
     else
