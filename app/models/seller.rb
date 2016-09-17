@@ -238,7 +238,7 @@ class Seller < ActiveRecord::Base
            (rate < 0.2 && computed_rate == 0.2)
       computed_rate
     else
-      0.30
+      0.40
     end
   end
 

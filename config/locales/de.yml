@@ -37,6 +37,7 @@ de:
   layouts:
     application:
       home: Home
+      terms: AGB
       privacy: Datenschutz
       about: Impressum
       login: Einloggen

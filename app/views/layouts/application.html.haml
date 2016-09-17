@@ -47,6 +47,7 @@
           %li{style: "margin-top: 2ex"}= t(".transactions.client") + ": #@client_key"
       #menu_footer
         %ul
+          %li= link_to t('.terms'), pages_terms_path
           %li= link_to t('.privacy'), pages_privacy_path
           %li= link_to t('.about'), pages_about_path
 
