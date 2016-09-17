@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   end
 
   def weighting
-    super || 1.0
+    super || 0.0
   end
 
   def name
