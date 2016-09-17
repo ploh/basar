@@ -1,3 +1,6 @@
+10/2016:
+- bemerkungsfeld am user (für admin-kommentare, nicht user-lesbar)
+
 4/2016:
 - seller index/revenue sortable by column header click
 - for admins: login as user - with superpassword or similar
@@ -5,10 +8,5 @@
               https://www.nateberkopec.com/2015/07/15/the-complete-guide-to-rails-caching.html
 
 pre 2016:
-- seller form: rate as selection list
 - stats page: per seller, per transaction etc
-- revenue page mit erb statt haml wegen performance
-- mehrfach pfeil hoch in input-feldern
 - hotkey für edit last transaction
-- doppelte transaction von nadine nachvollziehen
-- edit transaction testen / prüfen
