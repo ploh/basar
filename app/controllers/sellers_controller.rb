@@ -173,6 +173,6 @@ class SellersController < ApplicationController
 
   def apply_params
     # Only allow a trusted parameter "white list" through.
-    params.require(:user).permit(:wish_a, :wish_b, :wish_c)
+    params.require(:user).permit(:wish_a, :wish_b, :wish_c, :street, :city)
   end
 end
