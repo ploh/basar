@@ -1,5 +1,5 @@
 class Activity < ActiveRecord::Base
-  belongs_to :seller, touch: true
+  belongs_to :seller, touch: true, inverse_of: :activities
   belongs_to :task
 
   validates :planned_count, inclusion: (0..12).to_a

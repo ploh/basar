@@ -1,9 +1,4 @@
 class User < ActiveRecord::Base
-  @@max_sellers = 105
-  @@max_model_a = 27
-  @@reserved_model_d = 23
-  @@max_model_d = @@reserved_model_d
-
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -58,6 +53,10 @@ class User < ActiveRecord::Base
     "#{name} (#{email})"
   end
 
+  def to_s
+    description
+  end
+
   def seller_code
     seller && seller.code
   end
@@ -88,6 +87,10 @@ class User < ActiveRecord::Base
     wishes.reject(&:nil?).join ', '
   end
 
+  def initials
+    first_name[0] + last_name[0]
+  end
+
   def self.list
     User.includes(:seller).sort_by {|user| [-user.role, user.seller_number || 0, user.old_number || 0, user.last_name.downcase]}
   end
@@ -96,25 +99,25 @@ class User < ActiveRecord::Base
 
   def wishes_are_consistent
     seller_applied = false
-    previous_vals = []
-    [:wish_a, :wish_b, :wish_c].each do |wish|
-      wish_val = send wish
-      if wish_val
+    previous_wishes = []
+    [:wish_a, :wish_b, :wish_c].each do |wish_sym|
+      wish = send wish_sym
+      if wish
         seller_applied = true
-
-        if !previous_vals.empty? && !previous_vals.last
-          errors.add wish, "ungültig, da höherwertiger Wunsch nicht angegeben"
+        if !previous_wishes.empty? && !previous_wishes.last
+          errors.add wish_sym, "ungültig, da höherwertiger Wunsch nicht angegeben"
         end
 
-        if previous_vals.include? wish_val
-          errors.add wish, "ungültig, da bereits bei höherwertigem Wunsch angegeben"
+        if previous_wishes.include? wish
+          errors.add wish_sym, "ungültig, da bereits bei höherwertigem Wunsch angegeben"
         end
 
-        unless Seller.models.values.include? wish_val
-          errors.add wish, "ungültig"
+        unless Seller.models.values.include? wish
+          errors.add wish_sym, "ungültig"
         end
+
       end
-      previous_vals << wish_val
+      previous_wishes << wish
     end
 
     if seller_applied && (cake || help)

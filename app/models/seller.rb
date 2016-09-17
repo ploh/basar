@@ -1,11 +1,20 @@
 class Seller < ActiveRecord::Base
+  TOTAL_LIMIT = 100
+  MODEL_LIMITS = {'A' => [nil, 20],
+                  'C' => [nil, nil],
+                  'D' => [25, 25],
+                  'E' => [10, nil]}
+
   attr_accessor :warnings
 
   enum model: [:A, :C, :D, :E]
+  def self.models_by_id
+    @@models_by_id ||= models.invert
+  end
 
   has_many :items, dependent: :restrict_with_exception
 
-  has_many :activities, dependent: :destroy
+  has_many :activities, dependent: :destroy, inverse_of: :seller
   has_many :tasks, through: :activities, inverse_of: :sellers
   accepts_nested_attributes_for :activities
 
@@ -331,5 +340,31 @@ class Seller < ActiveRecord::Base
     [ User.all.order('old_number desc').limit(1).first.try(:old_number) || 0,
       Seller.all.order('number desc').limit(1).first.try(:number) || 0 ].
     max + 1
+  end
+
+  def self.available? model = nil
+    if model
+      counts = Seller.group(:model).count.map {|model_id, count| [models_by_id[model_id], count]}.to_h
+      counts.default = 0
+
+      total_count = counts.values.inject(0, :+)
+      if total_count < TOTAL_LIMIT
+        model_max = MODEL_LIMITS[model][1]
+
+        model_count = counts[model]
+        if !model_max || model_count < model_max
+          MODEL_LIMITS.reject {|other, limits| other == model}.none? do |reserved_model, reserved_limits|
+            reserved_min = reserved_limits[0]
+            if reserved_min
+              total_available = TOTAL_LIMIT - total_count
+              still_reserved = reserved_min - counts[reserved_model]
+              total_available <= still_reserved
+            end
+          end
+        end
+      end
+    else
+      Seller.all.size < TOTAL_LIMIT
+    end
   end
 end
