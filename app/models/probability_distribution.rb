@@ -4,67 +4,96 @@ class ProbabilityDistribution
   private
 
   class Node
-    attr_accessor :parent, :weighting
+    attr_accessor :children, :parent, :weighting, :content
 
-    def initialize
-      self.parent = nil
-      self.weighting = 0.0
-    end
-
-    def to_s
-      "#{weighting}"
-    end
-  end
-
-  class InnerNode < Node
-    attr_accessor :children
-
-    def initialize
-      super
+    def initialize content = nil, weighting = 0.0
       self.children = []
+      self.parent = nil
+      self.weighting = weighting
+      self.content = content
     end
 
-    def add_child child
-      children << child
-      add_to_weighting child.weighting
-      child.parent = self
+    def is_leaf?
+      !content.nil?
     end
 
-    def remove_child child
+    def add child
+      if is_leaf?
+        parent = self.parent
+        parent.remove self, false
+        new_inner = Node.new
+        new_inner.add self
+        new_inner.add child
+        parent.add new_inner
+      else
+        children << child
+        add_to_weighting child.weighting
+        child.parent = self
+      end
+    end
+
+    def remove child, cascade = true
       children.delete child
       add_to_weighting -child.weighting
       child.parent = nil
+      if cascade && children.empty? && parent
+        parent.remove self
+      end
+    end
+
+    def add_leaf node
+      arbitrary_leaf_position.add node
+    end
+
+    def draw_leaf
+      weight = rand * weighting
+      drawn = choose_leaf weight
+      drawn.parent.remove drawn if drawn
+      drawn
     end
 
     def to_s
-      super + "\n" + self.children.map {|child| "  " + child.to_s.gsub("\n", "\n  ")}.join("\n")
+      "#{content}: #{weighting}" + children.map {|child| "\n  " + child.to_s.gsub("\n", "\n  ")}.join
     end
 
     protected
 
     def add_to_weighting diff
       self.weighting += diff
-      parent.add_to_weighting diff if self.parent
-    end
-  end
-
-  class OuterNode < Node
-    attr_accessor :content
-
-    def initialize content, weighting
-      super()
-      self.weighting = weighting.to_f
-      self.content = content
+      parent.add_to_weighting diff if parent
     end
 
-    def to_s
-      "#{content}: #{super}"
+    def arbitrary_leaf_position
+      if children.size < 2
+        self
+      else
+        children[rand 2].arbitrary_leaf_position
+      end
+    end
+
+    def choose_leaf weight
+      if is_leaf?
+        self
+      elsif children.empty?
+        nil
+      else
+        threshold = children[0].weighting
+        chosen_child = nil
+        if children.size < 2 || weight < threshold
+          chosen_child = children[0]
+        else
+          chosen_child = children[1]
+          weight -= threshold
+        end
+        chosen_child.choose_leaf weight
+      end
     end
   end
 
 
   def initialize weighted_contents
     @size = 0
+    @root = Node.new
     weighted_contents.each do |content, weighting|
       add content, weighting
     end
@@ -73,68 +102,22 @@ class ProbabilityDistribution
   public
 
   def add content, weighting
+    new_node = Node.new content, weighting
+    @root.add_leaf new_node
     @size += 1
-    new_node = OuterNode.new content, weighting
-    if @root
-      last = current = @root
-      while current
-        parent = current.parent
-        if current.kind_of? OuterNode
-          new_inner = InnerNode.new
-          if parent
-            parent.remove_child current
-            parent.add_child new_inner
-          else
-            @root = new_inner
-          end
-          new_inner.add_child current
-          current = new_inner
-        end
-        last = current
-        children = current.children
-        current = children.size >= 2 && children[rand 2]
-      end
-      last.add_child new_node
-    else
-      @root = new_node
-    end
-    self
   end
 
   def draw
-    if @root && @root.weighting > 0
+    drawn = @root.draw_leaf
+    if drawn
       @size -= 1
-      remaining_weight = rand * @root.weighting
-      current = @root
-      while current.kind_of?(InnerNode) && !current.children.empty?
-        children = current.children
-        weighting_threshold = children[0].weighting
-        if children.size < 2 || remaining_weight < weighting_threshold
-          current = children[0]
-        else
-          current = children[1]
-          remaining_weight -= weighting_threshold
-        end
-      end
-
-      if parent = current.parent
-        parent.remove_child current
-      else
-        @root = nil
-        @size = 0
-      end
-
-      if current.kind_of?(OuterNode)
-        current.content
-      else
-        nil
-      end
+      drawn.content
     else
       nil
     end
   end
 
   def to_s
-    @root ? "#@root" : ""
+    "#@root"
   end
 end

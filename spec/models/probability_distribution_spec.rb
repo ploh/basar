@@ -46,9 +46,9 @@ RSpec.describe ProbabilityDistribution do
       expect(pd.draw).to be_nil
     end
 
-    it 'draws nil if all weightings are zero' do
+    it 'draws arbitrary if all weightings are zero' do
       pd = ProbabilityDistribution.new a: 0, b: 0, c: 0, d: 0, e: 0
-      expect(pd.draw).to be_nil
+      expect(pd.draw).to_not be_nil
     end
   end
 end
