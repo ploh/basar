@@ -13,6 +13,8 @@
       %th= User.human_attribute_name(:first_name)
       %th= User.human_attribute_name(:last_name)
       %th= User.human_attribute_name(:email)
+      %th= User.human_attribute_name(:street)
+      %th= User.human_attribute_name(:city)
       %th= User.human_attribute_name(:role)
       %th Anmeldung
       %th Letzter Login
@@ -30,6 +32,8 @@
         %td= user.first_name
         %td= user.last_name
         %td= user.email
+        %td= user.street
+        %td= user.city
         %td= user.role
         %td= user.created_at
         %td= user.current_sign_in_at

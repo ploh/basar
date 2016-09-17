@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   validates :role, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
+  validates :street, presence: true
+  validates :city, presence: true
   validate :wishes_are_consistent
 
 
@@ -33,8 +35,8 @@ class User < ActiveRecord::Base
     super &&
       ( assistant? ||
         admin? ||
-        Time.zone.now < Time.zone.local(2016, 4, 30, 9, 0, 0) ||
-        Time.zone.local(2016, 4, 30, 13, 0, 0) < Time.zone.now )
+        Time.zone.now < Time.zone.local(2016, 10, 29, 9, 0, 0) ||
+        Time.zone.local(2016, 10, 29, 13, 0, 0) < Time.zone.now )
   end
   # @@@ def inactive_message, s. http://www.rubydoc.info/github/plataformatec/devise/master/Devise/Models/Authenticatable
   # https://github.com/plataformatec/devise/wiki/How-To%3a-Customize-user-account-status-validation-when-logging-in

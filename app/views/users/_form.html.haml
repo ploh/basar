@@ -18,6 +18,14 @@
     %br
     = f.text_field :email
   .field
+    = f.label :street
+    %br
+    = f.text_field :street
+  .field
+    = f.label :city
+    %br
+    = f.text_field :city
+  .field
     = f.label :role
     %br
     = f.select :role, options_for_select(User.roles.keys, @user.role)
