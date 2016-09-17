@@ -80,6 +80,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def wishes_text
+    wishes.reject(&:nil?).join ', '
+  end
+
   def self.list
     User.includes(:seller).sort_by {|user| [-user.role, user.seller_number || 0, user.old_number || 0, user.last_name.downcase]}
   end
