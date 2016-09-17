@@ -44,7 +44,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def configure_account_update_params
-    devise_parameter_sanitizer.for(:account_update) << [:email, :password, :password_confirmation, :current_password, :wish_a, :wish_b, :wish_c]
+    devise_parameter_sanitizer.for(:account_update) << [:email, :password, :password_confirmation, :current_password]
   end
 
   def update_resource(resource, params)

@@ -21,12 +21,15 @@
 
         %div{style: "margin-top: 3ex"}
 
+        %li.topic= link_to t(".home"), root_path
+
         - if user_signed_in?
           %li.topic= link_to t(".account"), edit_user_registration_path
-          - if current_user.seller
-            %li.topic= link_to "Abgabe / Hilfe", edit_seller_path(current_user.seller)
-
-        %li.topic= link_to t(".home"), root_path
+          - if current_user.seller?
+            - if current_user.seller
+              %li.topic= link_to "Abgabe / Hilfe", edit_seller_path(current_user.seller)
+            - else
+              %li.topic= link_to "Verkaufen", sellers_apply_path
 
         - if can? :read, User
           %li.topic= link_to User.model_name.human(count: 2), users_path

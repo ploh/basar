@@ -37,6 +37,7 @@ class Ability
         can :read, :all
       when 'seller'
         can :manage, Seller, id: user.seller.id if user.seller
+        can [:apply, :apply_form], Seller
       end
 
       cannot :destroy, User, id: user.id

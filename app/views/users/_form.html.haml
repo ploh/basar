@@ -24,14 +24,14 @@
 
   - if @user.seller?
     .field
-      = f.label :wish_a, "1. Wunsch"
-      = f.select :wish_a, options_for_select(models_with_descriptions, @user.wish_a)
+      = f.label :wish_a
+      = f.select :wish_a, options_for_select(models_with_descriptions, @user.wish_a), include_blank: true
     .field
-      = f.label :wish_b, "2. Wunsch"
-      = f.select :wish_b, options_for_select(models_with_descriptions, @user.wish_b)
+      = f.label :wish_b
+      = f.select :wish_b, options_for_select(models_with_descriptions, @user.wish_b), include_blank: true
     .field
-      = f.label :wish_c, "3. Wunsch"
-      = f.select :wish_c, options_for_select(models_with_descriptions, @user.wish_c)
+      = f.label :wish_c
+      = f.select :wish_c, options_for_select(models_with_descriptions, @user.wish_c), include_blank: true
     .field
       = f.label :weighting
       = f.number_field :weighting, step: :any

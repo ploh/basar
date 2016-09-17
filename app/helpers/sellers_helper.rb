@@ -34,7 +34,6 @@ module SellersHelper
         'D' => [10, "ca. 3 Std. Abbauhilfe"] }
 
     result = {}
-    result[nil] = ""
     Seller.models.each do |model, model_id|
       description = descriptions[model]
       if description

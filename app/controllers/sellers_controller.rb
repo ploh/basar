@@ -17,6 +17,36 @@ class SellersController < ApplicationController
     end
   end
 
+  # GET /sellers/apply
+  def apply_form
+    @user = current_user
+  end
+
+  # PUT /sellers/apply
+  def apply
+    @user = current_user
+    @user.assign_attributes apply_params
+
+    success = true
+    unless params[:terms]
+      flash[:error] = 'Sie müssen die Verkaufsbedingungen akzeptieren'
+      success = false
+    end
+
+    if success
+      unless @user.save
+        success = false
+      end
+    end
+
+    if success
+      redirect_to sellers_apply_path, notice: 'Erfolgreich gespeichert'
+    else
+      js :apply
+      render action: 'apply_form'
+    end
+  end
+
   # GET /sellers/new
   def new
     @seller = Seller.new
@@ -139,5 +169,10 @@ class SellersController < ApplicationController
                                         activities_attributes: [:actual_count, :planned_count, :task_id, :id] )
       end
     end
+  end
+
+  def apply_params
+    # Only allow a trusted parameter "white list" through.
+    params.require(:user).permit(:wish_a, :wish_b, :wish_c)
   end
 end
