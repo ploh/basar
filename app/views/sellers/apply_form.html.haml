@@ -20,11 +20,10 @@
 
   .field
     = check_box_tag :terms
-    = label_tag :terms do
-      %em
-        Ich habe die
-        =link_to 'Verkaufsbedingungen (AGB)', pages_terms_path, target: '_blank'
-        gelesen und akzeptiere sie
+    %em
+      Ich habe die
+      =link_to 'Verkaufsbedingungen (AGB)', pages_terms_path, target: '_blank'
+      gelesen und akzeptiere sie
 
   .actions
     = f.submit 'Beantragen'
