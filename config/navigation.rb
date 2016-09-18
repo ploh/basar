@@ -6,6 +6,7 @@ SimpleNavigation::Configuration.run do |navigation|
     end
 
     primary.item :selling, t('layouts.application.selling'), pages_selling_path do |selling|
+      selling.item :faq, t('layouts.application.faq'), pages_faq_path
       selling.item :help, 'Helfen', pages_selling_help_path
       if current_user && current_user.seller
         selling.item :edit_seller, 'Abgabe / Hilfe', edit_seller_path(current_user.seller)
@@ -21,6 +22,5 @@ SimpleNavigation::Configuration.run do |navigation|
         presell_help.item :register, 'Anmelden', sellers_help_path
       end
     end
-    primary.item :faq, t('layouts.application.faq'), pages_faq_path
   end
 end
