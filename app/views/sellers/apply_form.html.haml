@@ -19,15 +19,6 @@
     = f.select :wish_c, options_for_select(models_with_descriptions, @user.wish_c), include_blank: true
 
   .field
-    = f.label :street
-    %br
-    = f.text_field :street
-  .field
-    = f.label :city
-    %br
-    = f.text_field :city
-
-  .field
     = check_box_tag :terms
     = label_tag :terms do
       %em

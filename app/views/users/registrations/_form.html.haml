@@ -24,14 +24,6 @@
     - if @user.pending_reconfirmation?
       %br
       = t('.currently_waiting_confirmation_for_email', :email => @user.unconfirmed_email)
-  .field
-    = f.label :street
-    %br
-    = f.text_field :street
-  .field
-    = f.label :city
-    %br
-    = f.text_field :city
 
   .field
     = f.label :password

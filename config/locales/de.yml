@@ -13,8 +13,6 @@ de:
         role: Rolle
         first_name: Vorname
         last_name: Nachname
-        street: Straße + Hausnr.
-        city: Wohnort
         seller_number: Nummer
         initials: Initialen
         seller_code: Verkäufernummer
