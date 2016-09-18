@@ -2,9 +2,18 @@ Basar::Application.routes.draw do
 
   root 'pages#home'
 
-  get 'pages/privacy' => 'pages#privacy'
-  get 'pages/about' => 'pages#about'
+  get 'pages/selling' => 'pages#selling'
+  get 'pages/selling/help' => 'pages#selling_help'
+  get 'pages/faq' => 'pages#faq'
+  get 'pages/presell' => 'pages#presell'
+  get 'pages/presell/cake' => 'pages#presell_cake'
+  get 'pages/presell/help' => 'pages#presell_help'
+
   get 'pages/terms' => 'pages#terms'
+  get 'pages/privacy' => 'pages#privacy'
+  get 'pages/contact' => 'pages#contact'
+  get 'pages/about' => 'pages#about'
+
 
   devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :users
