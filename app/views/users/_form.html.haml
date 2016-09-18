@@ -35,6 +35,12 @@
     .field
       = f.label :weighting
       = f.number_field :weighting, step: :any
+    .field
+      = f.label :cake
+      = f.check_box :cake
+    .field
+      = f.label :help
+      = f.check_box :help
 
   .actions
     = f.submit 'Save'

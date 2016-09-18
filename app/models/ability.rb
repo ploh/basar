@@ -38,6 +38,8 @@ class Ability
       when 'seller'
         can :manage, Seller, id: user.seller.id if user.seller
         can [:apply, :apply_form], Seller
+        can [:cake, :cake_form], Seller
+        can [:help, :help_form], Seller
       end
 
       cannot :destroy, User, id: user.id

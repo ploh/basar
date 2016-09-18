@@ -30,6 +30,8 @@
               %li.topic= link_to "Abgabe / Hilfe", edit_seller_path(current_user.seller)
             - else
               %li.topic= link_to "Verkaufen", sellers_apply_path
+              %li.topic= link_to "Kuchen", sellers_cake_path
+              %li.topic= link_to "Helfen", sellers_help_path
 
         - if can? :read, User
           %li.topic= link_to User.model_name.human(count: 2), users_path

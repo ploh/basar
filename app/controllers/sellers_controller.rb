@@ -17,6 +17,42 @@ class SellersController < ApplicationController
     end
   end
 
+  # GET /sellers/cake
+  def cake_form
+    @user = current_user
+  end
+
+  # PUT /sellers/cake
+  def cake
+    @user = current_user
+    @user.assign_attributes cake_params
+
+    if @user.save
+      redirect_to sellers_cake_path, notice: 'Erfolgreich gespeichert'
+    else
+      js :apply
+      render action: 'cake_form'
+    end
+  end
+
+  # GET /sellers/help
+  def help_form
+    @user = current_user
+  end
+
+  # PUT /sellers/help
+  def help
+    @user = current_user
+    @user.assign_attributes help_params
+
+    if @user.save
+      redirect_to sellers_help_path, notice: 'Erfolgreich gespeichert'
+    else
+      js :apply
+      render action: 'help_form'
+    end
+  end
+
   # GET /sellers/apply
   def apply_form
     @user = current_user
@@ -174,5 +210,15 @@ class SellersController < ApplicationController
   def apply_params
     # Only allow a trusted parameter "white list" through.
     params.require(:user).permit(:wish_a, :wish_b, :wish_c)
+  end
+
+  def cake_params
+    # Only allow a trusted parameter "white list" through.
+    params.require(:user).permit(:cake)
+  end
+
+  def help_params
+    # Only allow a trusted parameter "white list" through.
+    params.require(:user).permit(:help)
   end
 end

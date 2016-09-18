@@ -1,0 +1,16 @@
+%h2 Helfen für Vorkaufsrecht
+
+= form_for(@user, url: sellers_help_path, html: {method: :put}) do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2= "Fehler haben das Speichern verhindert:"
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :help
+    = f.check_box :help
+
+  .actions
+    = f.submit 'Speichern'

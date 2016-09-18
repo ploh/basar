@@ -17,6 +17,11 @@ Basar::Application.routes.draw do
 
   get 'sellers/apply' => 'sellers#apply_form'
   put 'sellers/apply' => 'sellers#apply'
+  get 'sellers/cake' => 'sellers#cake_form'
+  put 'sellers/cake' => 'sellers#cake'
+  get 'sellers/help' => 'sellers#help_form'
+  put 'sellers/help' => 'sellers#help'
+
   get 'sellers/revenue' => 'sellers#revenue', as: :sellers_revenue
 #   post 'sellers/validate_code' => 'sellers#validate_code', as: :validate_seller_code
   resources :sellers

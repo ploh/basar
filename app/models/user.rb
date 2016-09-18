@@ -72,10 +72,13 @@ class User < ActiveRecord::Base
   end
 
   def wishes
-    [:wish_a, :wish_b, :wish_c].map do |wish|
+    result = [:wish_a, :wish_b, :wish_c].map do |wish|
       wish_val = send wish
       wish_val && Seller.models.find {|k, v| v == wish_val}[0]
     end
+    result << 'K' if cake
+    result << 'H' if help
+    result
   end
 
   def wishes_text
@@ -89,10 +92,13 @@ class User < ActiveRecord::Base
   private
 
   def wishes_are_consistent
+    seller_applied = false
     previous_vals = []
     [:wish_a, :wish_b, :wish_c].each do |wish|
       wish_val = send wish
       if wish_val
+        seller_applied = true
+
         if !previous_vals.empty? && !previous_vals.last
           errors.add wish, "ungültig, da höherwertiger Wunsch nicht angegeben"
         end
@@ -104,9 +110,16 @@ class User < ActiveRecord::Base
         unless Seller.models.values.include? wish_val
           errors.add wish, "ungültig"
         end
-
       end
       previous_vals << wish_val
+    end
+
+    if seller_applied && (cake || help)
+      errors[:base] << "Verkäufernummer beantragen und Vorkaufsrecht für Kuchen/Hilfe nicht gleichzeitig möglich"
+    end
+
+    if cake && help
+      errors[:base] << "Vorkaufsrecht für Kuchen und Hilfe nicht gleichzeitig möglich"
     end
   end
 end

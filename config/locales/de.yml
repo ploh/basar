@@ -20,6 +20,8 @@ de:
         wish_a: 1. Wunsch
         wish_b: 2. Wunsch
         wish_c: 3. Wunsch
+        cake: Kuchen backen für Vorkaufsrecht
+        help: Helfen für Vorkaufsrecht
       seller:
         number: Verkäufernummer
         initials: Initialen
