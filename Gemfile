@@ -54,6 +54,8 @@ gem 'cancancan'
 
 gem 'request_store'
 
+gem 'simple-navigation'
+
 gem 'yaml_db'
 
 gem 'sqlite3'
