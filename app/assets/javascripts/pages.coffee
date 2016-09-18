@@ -34,6 +34,7 @@ jQuery ->
           window.location.href = action
         else
           action()
+  $("#accordion").accordion({ heightStyle: "content", collapsible: true })
 
 @activate_login_form = ->
   $("#login_form").removeClass 'hidden'

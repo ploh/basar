@@ -1,194 +1,196 @@
 %h1 Hinweise zum Verkauf
 
-%h2 Anmeldung
+#accordion
+  %h2 Anmeldung
 
-.collapsible
-  %ul
-    %li Vom 19.9.2016 bis 25.9.2016 können Sie sich für die Teilnahme anmelden.
-    %li
-      Für die erstmalige Beantragung einer Verkäufernummer ist hierzu zunächst eine
-      = link_to 'Registrierung', new_user_registration_path
-      nötig.
-    %li Die Vergabe der Verkaufsplätze erfolgt per Losverfahren.
-    %li Eine Zu- bzw. Absage, sowie ggf. Ihren Wartelistenplatz erhalten Sie per E-Mail bis Ende September.
-
-
-%h2 Kommissionsmodelle
-
-.collapsible
-  Es stehen folgende Kommissionsmodelle zur Wahl:
-  %dl
-    %dt
-      %strong Modell reine Abgabe
-    %dd
-      Wir behalten 20% Kommission ein. Keine weiteren Verpflichtungen für Sie. Es gibt
-      %em nur 20 Verkäufernummern
-      für dieses Modell.
-    %dt
-      %strong Modell Helfen
-    %dd
-      Wir behalten 10% Kommission ein. Sie
-      = link_to 'helfen', pages_selling_help_path
-      2 Std. beim Aufbau und spenden einen
-      = link_to 'Kuchen', pages_presell_cake_path
-      (Abgabe 29.10. ab 09:15 Uhr)
-      %strong oder
-      Sie helfen 2x zwei Stunden
-      %strong oder
-      Sie helfen zu zweit 2 Stunden.
-    %dt
-      %strong Modell Superhelfer
-    %dd
-      Wir behalten
-      %em keine Kommission
-      ein. Dafür kommen Sie am Freitag den 28.10. um 14 Uhr zum Aufbau und bleiben bis zum bitteren Ende.
-    %dt
-      %strong Modell Abbau
-    %dd
-      Wer beim Abbau hilft (29.10. ab 13:00 Uhr bis fertig), muss nur 10% Kommission abgeben
-
-  %p
-    Damit die Verrechnung der Kommission korrekt erfolgen kann, ist es wichtig, dass Sie Ihre Helferzeiten und ggf. Kuchenspende unter Angabe Ihrer Verkäufernummer registrieren. Ansonsten zahlen Sie automatisch 40% Kommission, s.
-    = link_to 'AGB', pages_terms_path
-
-  %p
-    %strong
-      WICHTIG! Verkäufer mit Modell Helfen, Superhelfer und Abbau genießen ein Vorkaufsrecht.
-
-  %p
-    Bei der Anmeldung können Sie bis zu drei Modellwünsche angeben. Die Plätze pro Modell sind begrenzt.
-
-
-%h2 Abgabezeiten
-
-.collapsible
-  %table
-    %tr
-      %td Mittwoch,
-      %td 26.10.
-      %td 16-18 Uhr
-    %tr
-      %td Donnerstag,
-      %td 27.10.
-      %td 9:30-11:30 Uhr
-    %tr
-      %td
-      %td
-      %td 15:30-17:30 Uhr
-    %tr
-      %td Freitag (nur für Helfer),&nbsp;
-      %td 28.10.&nbsp;&nbsp;
-      %td 14-15 Uhr
-
-  %em Bitte bringen Sie etwas Zeit zur Abgabe mit!
-
-
-%h2 Abholung
-
-.collapsible
-  Am Samstag, den 29.10. 17:00 - 18:00 Uhr holen Sie bitte Ihre nicht verkauften Artikel sowie Ihren Erlös wieder bei uns ab. Falls Sie zu diesem Termin verhindert sein sollten, bevollmächtigen Sie bitte per E-Mail einen Ersatzabholer.
-
-
-%h2 Kennzeichnung der Artikel
-
-.collapsible
-  %p
-    Alle Artikel sind leserlich mit
-    %strong Etiketten
-    (z.B. aus Tesakrepp) nach dem folgenden Modell zu versehen:
-
-  %p
-    %strong
-      ACHTUNG! Filzstift kann abfärben.
-
-  %p
-    Ihnen wird neben der Verkäufernummer auch eine
-    %em Farbe
-    zugewiesen. Sie haben folgende Optionen Ihre Artikel zu kennzeichnen:
+  .collapsible
     %ul
-      %li Etikett in der Farbe
-      %li Beschriftung des Etikettes in der Farbe
-      %li Umrandung des Etikettes in der Farbe
-
-  %p
-    Es gibt die Farben
-    %span.red rot,
-    %span.green grün,
-    %span.blue blau
-    und
-    %span.black schwarz.
-    Bitte stellen sie sicher, dass die Farbe, die Sie für Artikel und Kistenbeschriftung verwenden eindeutig zuordbar ist.
-
-  %p
-    Die  Artikel bitte in großen (!), mit der Verkäufernummer
-    %strong auf DinA4 Zettel mit ihrer Farbe
-    versehenen
-    %strong Kisten
-    (Wäschekörbe, Klappboxen, Umzugskartons o.Ä.) bei uns
-    %strong abgeben.
-    Keine Tüten, keine Windelkartons!
+      %li Vom 19.9.2016 bis 25.9.2016 können Sie sich für die Teilnahme anmelden.
+      %li
+        Für die erstmalige Beantragung einer Verkäufernummer ist hierzu zunächst eine
+        = link_to 'Registrierung', new_user_registration_path
+        nötig.
+      %li Die Vergabe der Verkaufsplätze erfolgt per Losverfahren.
+      %li Eine Zu- bzw. Absage, sowie ggf. Ihren Wartelistenplatz erhalten Sie per E-Mail bis Ende September.
 
 
-%h2 Wichtige Hinweise
+  %h2 Kommissionsmodelle
 
-.collapsible
-  %ul
-    %li
-      Bitte alle Kisten gut lesbar und haltbar mit Namen
-      %em und
-      Verkäufernummer
-      %em und Farbe
-      beschriften (auch die Deckel, bitte ohne Clips)
-    %li Kisten bitte tragbar und locker packen
-    %li In den Größen 62-74 ist die Anzahl der Kleidungsstücke beschränkt. Sie dürfen bis zu 100 Teile insgesamt in diesen Größen verkaufen. Bitte packen Sie diese separat.
-    %li Es dürfen nicht mehr als 5 Paar Schuhe verkauft werden (ausgenommen Crocs, Schwimmschuhe und Gummistiefel) Schuhe bitte zusammenbinden und das Etikett (mit Größenangabe) verlustsicher befestigen
-    %li Bei Spielzeug, welches aus mehreren Kleinteilen besteht, bitte alle Teile in eine durchsichtige Plastiktüte geben oder ggf. Einzelteile festkleben oder –binden
-    %li DVDs, CDs und Computerspiele bitte nicht zukleben, da wir deren Inhalt überprüfen müssen
-    %li Mehrteilige Kleidungssets bitte mit groben Stichen zusammennähen
-    %li Bei Mützen, Regenbekleidung oder anderen beschichteten Kleidungsstücken bitte das Etikett zusätzlich mit Sicherheitsnadeln befestigen
-    %li Preise bitte in 50ct Schritten
-    %li Keine Preiskorrekturen. Bitte beachten Sie, dass wir Artikel mit korrigierten Etiketten zu Ihrer eigenen Sicherheit nicht zum Verkauf anbieten können, da nachträglich nicht ersichtlich ist, wer die Korrektur vorgenommen hat.
-    %li Wir empfehlen bei wertvolleren Artikeln zwecks Betrugsverhinderung Pappetiketten mit Bindfaden oder Kabelbindern zu verwenden
-    %li Mitgebrachte Kleiderbügel können leider nicht an den Verkäufer zurückgegeben werden, da wir sie von unserem Bestand nicht unterscheiden können. Über Kleiderbügelspenden freuen wir uns jedoch immer.
-    %li Artikel, deren Funktion nicht auf den ersten Blick ersichtlich ist, bitte mit einer entsprechenden Bezeichnung versehen (z.B. Sonnensegel, Zubehör von XY)
-    %li Bitte alle Artikel mit Größenangaben versehen auch Mützen, Bettwäsche, Socken etc.
+  .collapsible
+    Es stehen folgende Kommissionsmodelle zur Wahl:
+    %dl
+      %dt
+        %strong Modell reine Abgabe
+      %dd
+        Wir behalten 20% Kommission ein. Keine weiteren Verpflichtungen für Sie. Es gibt
+        %em nur 20 Verkäufernummern
+        für dieses Modell.
+      %dt
+        %strong Modell Helfen
+      %dd
+        Wir behalten 10% Kommission ein. Sie
+        = link_to 'helfen', pages_selling_help_path
+        2 Std. beim Aufbau und spenden einen
+        = link_to 'Kuchen', pages_presell_cake_path
+        (Abgabe 29.10. ab 09:15 Uhr)
+        %strong oder
+        Sie helfen 2x zwei Stunden
+        %strong oder
+        Sie helfen zu zweit 2 Stunden.
+      %dt
+        %strong Modell Superhelfer
+      %dd
+        Wir behalten
+        %em keine Kommission
+        ein. Dafür kommen Sie am Freitag den 28.10. um 14 Uhr zum Aufbau und bleiben bis zum bitteren Ende.
+      %dt
+        %strong Modell Abbau
+      %dd
+        Wer beim Abbau hilft (29.10. ab 13:00 Uhr bis fertig), muss nur 10% Kommission abgeben
 
+    %p
+      Damit die Verrechnung der Kommission korrekt erfolgen kann, ist es wichtig, dass Sie Ihre Helferzeiten und ggf. Kuchenspende unter Angabe Ihrer Verkäufernummer registrieren. Ansonsten zahlen Sie automatisch 40% Kommission, s.
+      = link_to 'AGB', pages_terms_path
 
-%h2 Erlaubte Artikel
+    %p
+      %strong
+        WICHTIG! Verkäufer mit Modell Helfen, Superhelfer und Abbau genießen ein Vorkaufsrecht.
 
-.collapsible
-  %ul
-    %li gut erhaltene Herbst- und Winterbekleidung (auch T-Shirts)
-    %li Regenkleidung (gefüttert und ungefüttert)
-    %li Bademode
-    %li Kinderschuhe und Gummistiefel
-    %li Spielzeug
-    %li Kinderwagen und Buggies
-    %li Kinderfahrzeuge (Fahrräder, Bobbycars, Dreiräder, Roller, Laufräder, …)
-    %li Hochstühle
-    %li Reisebetten
-    %li Schlafsäcke und Kinderbettwäsche
-    %li Bademäntel
-    %li Autokindersitze die den aktuellen gesetzlichen Normen entsprechen
-    %li Plastikpuppen (z.B. Barbie, Baby Born u.Ä.)
-    %li
-      Kinderbücher mit einem Druckjahr
-      %em ab 2000
-    %li Schwangerschaftskleidung
+    %p
+      Bei der Anmeldung können Sie bis zu drei Modellwünsche angeben. Die Plätze pro Modell sind begrenzt.
 
 
-  %h3 Verbotene Artikel
+  %h2 Abgabezeiten
 
-  %ul
-    %li verwaschene oder ausgeleierte Kleidung
-    %li Kleidung mit Löchern oder Flecken
-    %li Kleidung mit defekten Reißverschlüssen oder fehlenden Knöpfen
-    %li Stofftiere, Stoffpuppen und Stoffgreiflinge
-    %li Gebrauchte Hygieneartikel (Brustpumpen, Wickelunterlagen, Flaschen, Töpfchen...)
-    %li Möbel (außer Hochstühle)
-    %li Gehfrei
-    %li Kriegsspielzeug
-    %li Eindeutige Sommerkleidung (keine kurzen Hosen, Sommerkleidchen oder Sandalen ABER Bademode sowie T-Shirts ab Größe 92)
-    %li abgestoßene, abgelaufene oder verdreckte Schuhe
-    %li Videokassetten (VHS)
-    %li Raubkopien
+  .collapsible
+    %table
+      %tr
+        %td Mittwoch,
+        %td 26.10.
+        %td 16-18 Uhr
+      %tr
+        %td Donnerstag,
+        %td 27.10.
+        %td 9:30-11:30 Uhr
+      %tr
+        %td
+        %td
+        %td 15:30-17:30 Uhr
+      %tr
+        %td Freitag (nur für Helfer),&nbsp;
+        %td 28.10.&nbsp;&nbsp;
+        %td 14-15 Uhr
+
+    %em Bitte bringen Sie etwas Zeit zur Abgabe mit!
+
+
+  %h2 Abholung
+
+  .collapsible
+    Am Samstag, den 29.10. 17:00 - 18:00 Uhr holen Sie bitte Ihre nicht verkauften Artikel sowie Ihren Erlös wieder bei uns ab. Falls Sie zu diesem Termin verhindert sein sollten, bevollmächtigen Sie bitte per E-Mail einen Ersatzabholer.
+
+
+  %h2 Kennzeichnung der Artikel
+
+  .collapsible
+    %p
+      Alle Artikel sind leserlich mit
+      %strong Etiketten
+      (z.B. aus Tesakrepp) nach dem folgenden Modell zu versehen:
+
+    %p
+      %strong
+        ACHTUNG! Filzstift kann abfärben.
+
+    %p
+      Ihnen wird neben der Verkäufernummer auch eine
+      %em Farbe
+      zugewiesen. Sie haben folgende Optionen Ihre Artikel zu kennzeichnen:
+      %ul
+        %li Etikett in der Farbe
+        %li Beschriftung des Etikettes in der Farbe
+        %li Umrandung des Etikettes in der Farbe
+
+    %p
+      Es gibt die Farben
+      %span.red rot,
+      %span.green grün,
+      %span.blue blau
+      und
+      %span.black schwarz.
+      Bitte stellen sie sicher, dass die Farbe, die Sie für Artikel und Kistenbeschriftung verwenden eindeutig zuordbar ist.
+
+    %p
+      Die  Artikel bitte in großen (!), mit der Verkäufernummer
+      %strong auf DinA4 Zettel mit ihrer Farbe
+      versehenen
+      %strong Kisten
+      (Wäschekörbe, Klappboxen, Umzugskartons o.Ä.) bei uns
+      %strong abgeben.
+      Keine Tüten, keine Windelkartons!
+
+
+  %h2 Wichtige Hinweise
+
+  .collapsible
+    %ul
+      %li
+        Bitte alle Kisten gut lesbar und haltbar mit Namen
+        %em und
+        Verkäufernummer
+        %em und Farbe
+        beschriften (auch die Deckel, bitte ohne Clips)
+      %li Kisten bitte tragbar und locker packen
+      %li In den Größen 62-74 ist die Anzahl der Kleidungsstücke beschränkt. Sie dürfen bis zu 100 Teile insgesamt in diesen Größen verkaufen. Bitte packen Sie diese separat.
+      %li Es dürfen nicht mehr als 5 Paar Schuhe verkauft werden (ausgenommen Crocs, Schwimmschuhe und Gummistiefel) Schuhe bitte zusammenbinden und das Etikett (mit Größenangabe) verlustsicher befestigen
+      %li Bei Spielzeug, welches aus mehreren Kleinteilen besteht, bitte alle Teile in eine durchsichtige Plastiktüte geben oder ggf. Einzelteile festkleben oder –binden
+      %li DVDs, CDs und Computerspiele bitte nicht zukleben, da wir deren Inhalt überprüfen müssen
+      %li Mehrteilige Kleidungssets bitte mit groben Stichen zusammennähen
+      %li Bei Mützen, Regenbekleidung oder anderen beschichteten Kleidungsstücken bitte das Etikett zusätzlich mit Sicherheitsnadeln befestigen
+      %li Preise bitte in 50ct Schritten
+      %li Keine Preiskorrekturen. Bitte beachten Sie, dass wir Artikel mit korrigierten Etiketten zu Ihrer eigenen Sicherheit nicht zum Verkauf anbieten können, da nachträglich nicht ersichtlich ist, wer die Korrektur vorgenommen hat.
+      %li Wir empfehlen bei wertvolleren Artikeln zwecks Betrugsverhinderung Pappetiketten mit Bindfaden oder Kabelbindern zu verwenden
+      %li Mitgebrachte Kleiderbügel können leider nicht an den Verkäufer zurückgegeben werden, da wir sie von unserem Bestand nicht unterscheiden können. Über Kleiderbügelspenden freuen wir uns jedoch immer.
+      %li Artikel, deren Funktion nicht auf den ersten Blick ersichtlich ist, bitte mit einer entsprechenden Bezeichnung versehen (z.B. Sonnensegel, Zubehör von XY)
+      %li Bitte alle Artikel mit Größenangaben versehen auch Mützen, Bettwäsche, Socken etc.
+
+
+  %h2 Erlaubte Artikel
+
+  .collapsible
+    %ul
+      %li gut erhaltene Herbst- und Winterbekleidung (auch T-Shirts)
+      %li Regenkleidung (gefüttert und ungefüttert)
+      %li Bademode
+      %li Kinderschuhe und Gummistiefel
+      %li Spielzeug
+      %li Kinderwagen und Buggies
+      %li Kinderfahrzeuge (Fahrräder, Bobbycars, Dreiräder, Roller, Laufräder, …)
+      %li Hochstühle
+      %li Reisebetten
+      %li Schlafsäcke und Kinderbettwäsche
+      %li Bademäntel
+      %li Autokindersitze die den aktuellen gesetzlichen Normen entsprechen
+      %li Plastikpuppen (z.B. Barbie, Baby Born u.Ä.)
+      %li
+        Kinderbücher mit einem Druckjahr
+        %em ab 2000
+      %li Schwangerschaftskleidung
+
+
+  %h2 Verbotene Artikel
+
+  .collapsible
+    %ul
+      %li verwaschene oder ausgeleierte Kleidung
+      %li Kleidung mit Löchern oder Flecken
+      %li Kleidung mit defekten Reißverschlüssen oder fehlenden Knöpfen
+      %li Stofftiere, Stoffpuppen und Stoffgreiflinge
+      %li Gebrauchte Hygieneartikel (Brustpumpen, Wickelunterlagen, Flaschen, Töpfchen...)
+      %li Möbel (außer Hochstühle)
+      %li Gehfrei
+      %li Kriegsspielzeug
+      %li Eindeutige Sommerkleidung (keine kurzen Hosen, Sommerkleidchen oder Sandalen ABER Bademode sowie T-Shirts ab Größe 92)
+      %li abgestoßene, abgelaufene oder verdreckte Schuhe
+      %li Videokassetten (VHS)
+      %li Raubkopien
