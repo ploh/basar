@@ -2,7 +2,8 @@
   %li{style: "padding-left: 10px; text-indent: -10px; word-break: break-all"}= current_user.email
   %li.indented= link_to "(#{t ".logout"})", destroy_user_session_path, :method => :delete, style: "text-decoration: none"
 - else
-  = form_for(User.new, :url => session_path(:user)) do |f|
+  %li= link_to t('.sign_in'), session_path(:user), onclick: 'activate_login_form(); return false;', id: :login_placeholder
+  = form_for :user, url: session_path(:user), html: {id: :login_form, class: :hidden} do |f|
     %li= f.email_field :email, placeholder: User.human_attribute_name(:email)
     %li= f.password_field :password, placeholder: User.human_attribute_name(:password)
 

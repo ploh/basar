@@ -34,3 +34,7 @@ jQuery ->
           window.location.href = action
         else
           action()
+
+@activate_login_form = ->
+  $("#login_form").removeClass 'hidden'
+  $("#login_placeholder").addClass 'hidden'

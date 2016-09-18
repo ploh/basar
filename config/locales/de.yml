@@ -54,3 +54,4 @@ de:
     session:
       logout: ausloggen
       sign_up: Registrieren
+      sign_in: Login
