@@ -3,6 +3,6 @@ module UsersHelper
     User.list.find_all do |user|
       (seller && user == seller.user) ||
       (user.seller? && !user.seller)
-    end
+    end.sort_by {|user| user.last_name.downcase}
   end
 end
