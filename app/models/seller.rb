@@ -1,7 +1,7 @@
 class Seller < ActiveRecord::Base
   attr_accessor :warnings
 
-  enum model: [:A, :C, :D]
+  enum model: [:A, :C, :D, :E]
 
   has_many :items, dependent: :restrict_with_exception
 
@@ -116,6 +116,8 @@ class Seller < ActiveRecord::Base
       2
     when "D"
       0
+    when "E"
+      1
     end
     if planned_help < needed_help
       warnings << "Achtung: Noch nicht genug Hilfstermine ausgewählt"
@@ -144,7 +146,9 @@ class Seller < ActiveRecord::Base
     when 'C'
       0.1
     when 'D'
-      0.05
+      0.1
+    when 'E'
+      0.0
     end
   end
 

@@ -31,7 +31,8 @@ module SellersHelper
     descriptions =
       { 'A' => [20, "keine Mithilfe"],
         'C' => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und ein Kuchen"],
-        'D' => [10, "ca. 3 Std. Abbauhilfe"] }
+        'D' => [10, "ca. 3 Std. Abbauhilfe"],
+        'E' => [0,  "Superhelfer am letzten Aufbautag"] }
 
     result = {}
     Seller.models.each do |model, model_id|
