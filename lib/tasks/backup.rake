@@ -12,6 +12,8 @@ namespace :backup do
     User.transaction do
       User.all.each do |user|
         user.password = "asdfasdf"
+        user.skip_confirmation!
+        user.skip_reconfirmation!
         user.save!
         Rails.logger.info "Saved #{user.description}"
       end
