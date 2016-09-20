@@ -84,7 +84,7 @@
                   = a.check_box :me
                   %span{style: "font-size: larger"}= activity.actual_count >= 0.99 ? "&#x2714;".html_safe : ""
               - unless current_user.seller?
-                %td{style: "padding-left: 40em;"}
+                %td{style: "padding-left: 30em;"}
                   .field= a.number_field :actual_count, step: :any
 
     %table.element_list
