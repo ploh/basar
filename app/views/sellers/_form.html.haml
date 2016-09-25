@@ -103,17 +103,15 @@
                 = a.hidden_field :id, value: activity.id
               %td.check
                 .field
-                  = a.check_box :me, disabled: activity.task.must_d || ( activity.task.must_e && @seller.E? )
+                  = a.check_box :me
                   %span{style: "font-size: larger"}= activity.actual_count >= 0.99 ? "&#x2714;".html_safe : ""
               %td.check
-                - unless activity.task.must_d
-                  .field
-                    = a.check_box :helper
-                    %span{style: "font-size: larger"}= activity.actual_count >= 1.99 ? "&#x2714;".html_safe : ""
+                .field
+                  = a.check_box :helper
+                  %span{style: "font-size: larger"}= activity.actual_count >= 1.99 ? "&#x2714;".html_safe : ""
               %td
                 - notes = []
                 - notes << "limitiert auf #{activity.task.limit} Personen" if activity.task.limit && activity.task.limit > 0 && activity.task.limit < 99
-                - notes << "nur bei Verkaufsmodell D" if activity.task.must_d
                 = notes.join(", ")
               - unless current_user.seller?
                 %td{style: "padding-left: 6em;"}

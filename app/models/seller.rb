@@ -20,13 +20,12 @@ class Seller < ActiveRecord::Base
   validate :check_only_d_helps
   validate :check_activity_limits
 
+  validate :check_mandatory_activities
   validate :enough_help_planned
 
   after_initialize :fill_activities
-  after_initialize :correct_mandatory_activities
 
-  before_validation :correct_mandatory_activities
-  before_validation :delete_null_activities
+  before_save :delete_null_activities
 
   def write_attribute *args
     @activity_counts = nil
@@ -37,7 +36,12 @@ class Seller < ActiveRecord::Base
 
   def fill_activities
     for_each_task_with_activity do |task, activity|
-      activities.build(task: task) unless activity
+      unless activity
+        activity = activities.build(task: task)
+        if mandatory? task
+          activity.planned_count = 1
+        end
+      end
     end
   end
 
@@ -49,18 +53,11 @@ class Seller < ActiveRecord::Base
     end
   end
 
-  def correct_mandatory_activities
-    for_each_task_with_activity do |task, activity|
-      if task.must_d
-        activity.planned_count = (model == 'D' ? 1 : 0)
-        activity.actual_count = 0 unless model == 'D'
-      elsif task.must_e
-        activity.planned_count = 1 if model == 'E' && activity.planned_count < 0.99
-      end
-    end
-  end
-
   private
+
+  def mandatory? task
+    (task.must_d && model == 'D') || (task.must_e && model == 'E')
+  end
 
   def for_each_task_with_activity
     tasks = RequestStore.fetch(:tasks) { Task.list }
@@ -109,18 +106,27 @@ class Seller < ActiveRecord::Base
     @warnings ||= []
   end
 
+  def check_mandatory_activities
+    for_each_task_with_activity do |task, activity|
+      if mandatory?(task) && activity.planned_count < 0.99
+        errors[:base] << "#{task} ist verpflichtend bei Modell #{model}"
+      end
+    end
+  end
+
   def enough_help_planned
     planned_help = activities.find_all {|act| act.task.bring? || act.task.help?}.map {|act| act.planned_count}.inject(0, :+)
-    needed_help = case model
-    when "A"
-      0
-    when "C"
-      2
-    when "D"
-      0
-    when "E"
-      1
-    end
+    needed_help =
+      case model
+      when "A"
+        0
+      when "C"
+        2
+      when "D"
+        0
+      when "E"
+        0
+      end
     if planned_help < needed_help
       warnings << "Achtung: Noch nicht genug Hilfstermine ausgewählt"
     end

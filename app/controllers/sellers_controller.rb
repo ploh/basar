@@ -175,13 +175,6 @@ class SellersController < ApplicationController
                                         :model )
       end
     else
-      # @@@ can this be done in a cleaner way?
-      raise if params["seller"]["activities_attributes"].any? do |num, attr|
-        p num, attr, attr["me"], ""
-        (attr["me"] || attr["helper"]) &&
-          @tasks.any? {|task| task.id == attr["task_id"].to_i && task.must_d}
-      end
-
       # @@@ avoid this mean hack and properly use virtual attributes (me() and helper()) in seller model
       #     problem: the model does not recognize that it has to be updated
       #     if you force it to with attribute_will_change!, it still uses the old value

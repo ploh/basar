@@ -9,4 +9,8 @@ class Task < ActiveRecord::Base
   def self.list
     Task.order(:kind, :sort_key, :created_at).to_a
   end
+
+  def to_s
+    "#{I18n.t "task_kind.#{kind}"} #{description}"
+  end
 end

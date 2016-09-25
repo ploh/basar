@@ -1,4 +1,8 @@
 de:
+  task_kind:
+    bring: Kuchen
+    help: Hilfe
+    deliver: Abgabe
   blue: blau
   red: rot
   green: grün
