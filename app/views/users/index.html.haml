@@ -10,11 +10,11 @@
       %th alt
       %th Wünsche
       %th Gewichtung
+      %th Bemerkung
       %th= User.human_attribute_name(:first_name)
       %th= User.human_attribute_name(:last_name)
       %th= User.human_attribute_name(:email)
       %th= User.human_attribute_name(:role)
-      %th Bemerkung
       %th Anmeldung
       %th Letzter Login
       %th
@@ -28,11 +28,11 @@
         %td{class: :smaller}= user.old_seller_code
         %td= user.wishes_text
         %td= user.weighting
+        %td{title: user.remark}= truncate user.remark, length: 20
         %td= user.first_name
         %td= user.last_name
         %td= user.email
         %td= user.role
-        %td{title: user.remark}= truncate user.remark, length: 20
         %td= user.created_at
         %td= user.current_sign_in_at
         %td= link_to 'Edit', edit_user_path(user)
