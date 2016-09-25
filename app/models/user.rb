@@ -26,6 +26,9 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
   validate :wishes_are_consistent
 
+  validates :old_initials, length: { in: 2..3 }, format: { with: /\A[[:alpha:]]*\z/, message: "erlaubt nur Buchstaben" }, allow_blank: true
+  validates :old_number, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }, allow_nil: true
+
 
   # s. http://stackoverflow.com/a/6004353
   # this method is called by devise to check for "active" state of the model
