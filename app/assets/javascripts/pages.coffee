@@ -7,7 +7,7 @@ jQuery ->
     if $("#shortcuts_available").length
       action = null
       target = $(event.target)
-      if target.is "input"
+      if target.is("input") || target.is("textarea")
         if event.which == 27  # Escape key
           action = ->
             target.blur()

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920153618) do
+ActiveRecord::Schema.define(version: 20160925161313) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "seller_id",                   null: false
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20160920153618) do
     t.float    "weighting"
     t.boolean  "cake"
     t.boolean  "help"
+    t.string   "remark"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

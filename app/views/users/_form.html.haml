@@ -22,6 +22,10 @@
     %br
     = f.select :role, options_for_select(User.roles.keys, @user.role)
   .field
+    = f.label :remark
+    %br
+    = f.text_area :remark
+  .field
     = f.label :old_initials
     = f.text_field :old_initials
   .field
