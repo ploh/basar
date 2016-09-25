@@ -26,6 +26,9 @@
     = f.label :must_d
     = f.check_box :must_d
   .field
+    = f.label :must_e
+    = f.check_box :must_e
+  .field
     = f.label :kind
     = f.select :kind, options_for_select(Task.kinds.keys, @task.kind), include_blank: true
 

@@ -23,9 +23,9 @@ class Seller < ActiveRecord::Base
   validate :enough_help_planned
 
   after_initialize :fill_activities
-  after_initialize :correct_must_d_activities
+  after_initialize :correct_mandatory_activities
 
-  before_validation :correct_must_d_activities
+  before_validation :correct_mandatory_activities
   before_validation :delete_null_activities
 
   def write_attribute *args
@@ -49,11 +49,13 @@ class Seller < ActiveRecord::Base
     end
   end
 
-  def correct_must_d_activities
+  def correct_mandatory_activities
     for_each_task_with_activity do |task, activity|
       if task.must_d
         activity.planned_count = (model == 'D' ? 1 : 0)
         activity.actual_count = 0 unless model == 'D'
+      elsif task.must_e
+        activity.planned_count = 1 if model == 'E' && activity.planned_count < 0.99
       end
     end
   end

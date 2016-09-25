@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918125734) do
+ActiveRecord::Schema.define(version: 20160920153618) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "seller_id",                   null: false
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20160918125734) do
     t.integer  "limit"
     t.boolean  "only_d"
     t.boolean  "must_d"
+    t.boolean  "must_e"
   end
 
   add_index "tasks", ["sort_key"], name: "index_tasks_on_sort_key"
