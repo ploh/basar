@@ -35,7 +35,7 @@ class Seller < ActiveRecord::Base
   end
 
   def fill_activities
-    for_each_task_with_activity do |task, activity|
+    each_task_with_activity do |task, activity|
       unless activity
         activity = activities.build(task: task)
         if mandatory? task
@@ -53,13 +53,8 @@ class Seller < ActiveRecord::Base
     end
   end
 
-  private
-
-  def mandatory? task
-    (task.must_d && model == 'D') || (task.must_e && model == 'E')
-  end
-
-  def for_each_task_with_activity
+  def each_task_with_activity
+    return enum_for(__method__) unless block_given?
     tasks = RequestStore.fetch(:tasks) { Task.list }
     tasks.each do |task|
       activity = activities.find {|act| act.task_id == task.id}
@@ -67,7 +62,13 @@ class Seller < ActiveRecord::Base
     end
   end
 
-  public
+  def sorted_activities
+    each_task_with_activity.map {|task, activity| activity}.reject(&:nil?)
+  end
+
+  def mandatory? task
+    (task.must_d && model == 'D') || (task.must_e && model == 'E')
+  end
 
   def only_one_delivery
     if activities.find_all {|act| act.me && act.task.deliver?}.size > 1
@@ -107,7 +108,7 @@ class Seller < ActiveRecord::Base
   end
 
   def check_mandatory_activities
-    for_each_task_with_activity do |task, activity|
+    each_task_with_activity do |task, activity|
       if mandatory?(task) && activity.planned_count < 0.99
         errors[:base] << "#{task} ist verpflichtend bei Modell #{model}"
       end

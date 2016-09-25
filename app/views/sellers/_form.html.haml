@@ -44,7 +44,7 @@
         %th
         %th
         %th
-      - @seller.activities.each do |activity|
+      - @seller.sorted_activities.each do |activity|
         - if activity.task.deliver?
           = f.fields_for :activities, activity do |a|
             %tr
@@ -71,7 +71,7 @@
       %tr
         %th
         %th
-      - @seller.activities.each do |activity|
+      - @seller.sorted_activities.each do |activity|
         - if activity.task.bring?
           = f.fields_for :activities, activity do |a|
             %tr
@@ -93,7 +93,7 @@
         %th helfe
         %th bringe noch einen Helfer mit
         %th
-      - @seller.activities.each do |activity|
+      - @seller.sorted_activities.each do |activity|
         - if activity.task.help?
           = f.fields_for :activities, activity do |a|
             %tr
