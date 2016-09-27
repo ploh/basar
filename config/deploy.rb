@@ -38,7 +38,8 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log',
                                                'tmp/sockets',
                                                'vendor/bundle',
                                                'public/system',
-                                               'public/uploads')
+                                               'public/uploads',
+                                               'public/stop')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

@@ -3,8 +3,12 @@ namespace :passenger do
   task :stop do
     on roles :app do
       within release_path do
-        execute :mkdir, '-p', release_path.join('tmp')
-        execute :touch, release_path.join('tmp/stop.txt')
+        execute :touch, release_path.join('public/stop/stop.txt')
+        put release_path.join('public/stop/stop.js') <<JAVA_SCRIPT
+document.write('\\
+  #{ENV["STOP_TEXT"] || "<p>Bitte versuchen Sie es später wieder</p>"}\\
+');
+JAVA_SCRIPT
       end
     end
   end
@@ -13,7 +17,7 @@ namespace :passenger do
   task :start do
     on roles :app do
       within release_path do
-        execute :rm, release_path.join('tmp/stop.txt')
+        execute :rm, release_path.join('public/stop/stop.txt')
       end
     end
   end
