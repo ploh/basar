@@ -36,10 +36,13 @@ class Ability
         can :manage, Transaction
         can :read, :all
       when 'seller'
-        can :manage, Seller, id: user.seller.id if user.seller
-        can [:apply, :apply_form], Seller
-        can [:cake, :cake_form], Seller
-        can [:help, :help_form], Seller
+        if user.seller
+          can [:show, :edit, :update, :destroy], Seller, id: user.seller.id
+        else
+          can [:apply, :apply_form], Seller
+          can [:cake, :cake_form], Seller
+          can [:help, :help_form], Seller
+        end
       end
 
       cannot :destroy, User, id: user.id

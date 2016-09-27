@@ -16,10 +16,14 @@ SimpleNavigation::Configuration.run do |navigation|
     end
     primary.item :presell, t('layouts.application.presell'), pages_presell_path do |presell|
       presell.item :cake, 'Kuchen', pages_presell_cake_path do |presell_cake|
-        presell_cake.item :register, 'Anmelden', sellers_cake_path
+        unless current_user && current_user.seller
+          presell_cake.item :register, 'Anmelden', sellers_cake_path
+        end
       end
       presell.item :help, 'Helfen', pages_presell_help_path do |presell_help|
-        presell_help.item :register, 'Anmelden', sellers_help_path
+        unless current_user && current_user.seller
+          presell_help.item :register, 'Anmelden', sellers_help_path
+        end
       end
     end
   end
