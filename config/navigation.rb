@@ -9,7 +9,7 @@ SimpleNavigation::Configuration.run do |navigation|
       selling.item :faq, t('layouts.application.faq'), pages_faq_path
       selling.item :help, 'Helfen', pages_selling_help_path
       if current_user && current_user.seller
-        selling.item :edit_seller, 'Abgabe / Hilfe', edit_seller_path(current_user.seller)
+        selling.item :edit_seller, 'Termine wählen', edit_seller_path(current_user.seller)
       else
         selling.item :register, 'Anmelden', sellers_apply_path
       end
