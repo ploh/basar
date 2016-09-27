@@ -1,5 +1,5 @@
 10/2016:
-- bemerkungsfeld am user (für admin-kommentare, nicht user-lesbar)
+- secrets.yml not in github!
 
 4/2016:
 - seller index/revenue sortable by column header click
