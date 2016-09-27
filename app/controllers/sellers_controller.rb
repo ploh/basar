@@ -70,13 +70,43 @@ class SellersController < ApplicationController
     end
 
     if success
-      unless @user.save
-        success = false
+      if Setting.drawn_applicants
+        ActiveRecord::Base.transaction do
+          unless @user.save
+            success = false
+            raise ActiveRecord::Rollback
+          end
+
+          @seller = Seller.new(user: @user, model: Seller.models_by_id[@user.wish_a])
+          @seller.number = @user.old_number || Seller.generate_number
+          @seller.initials = @user.old_initials || @user.initials
+          @seller.valid?
+          unless @seller.errors.empty?
+            Rails.logger.warn "Could not save seller #{@seller.inspect} because of errors: #{@seller.errors.full_messages}"
+            Rails.logger.info "Generating new number for #{@seller.inspect}..."
+            @seller.number = Seller.generate_number
+            @seller.initials = @user.initials
+          end
+          Rails.logger.info "Saving new seller #{@seller.inspect}..."
+          unless @seller.save
+            success = false
+            @user.seller = nil
+            raise ActiveRecord::Rollback
+          end
+        end
+      else
+        unless @user.save
+          success = false
+        end
       end
     end
 
     if success
-      redirect_to sellers_apply_path, notice: 'Erfolgreich gespeichert'
+      if Setting.drawn_applicants
+        redirect_to edit_seller_path(@seller), notice: 'Erfolgreich gespeichert'
+      else
+        redirect_to sellers_apply_path, notice: 'Erfolgreich gespeichert'
+      end
     else
       js :apply
       render action: 'apply_form'
@@ -95,6 +125,7 @@ class SellersController < ApplicationController
   # POST /sellers
   def create
     @seller = Seller.new(seller_params)
+    @seller.current_user = current_user
 
     if @seller.save
       unless @seller.warnings.empty?
@@ -114,6 +145,7 @@ class SellersController < ApplicationController
 
   # PATCH/PUT /sellers/1
   def update
+    @seller.current_user = current_user
     if @seller.update(seller_params)
       unless @seller.warnings.empty?
         if flash[:warning]
@@ -132,8 +164,13 @@ class SellersController < ApplicationController
 
   # DELETE /sellers/1
   def destroy
+    @seller.current_user = current_user
     @seller.destroy
-    redirect_to sellers_url, notice: 'Seller was successfully destroyed.'
+    if can? :read, User
+      redirect_to sellers_url, notice: 'Seller was successfully destroyed.'
+    else
+      redirect_to pages_selling_url, notice: 'Erfolgreich abgemeldet.'
+    end
   end
 
 #   # for AJAX validation requests

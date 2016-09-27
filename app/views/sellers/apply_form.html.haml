@@ -1,29 +1,59 @@
-%h2 Verkäufernummer beantragen
+- if Setting.drawn_applicants
+  %h2 Verkäufernummer erstellen
+  = form_for(@user, url: sellers_apply_path, html: {method: :put}) do |f|
+    - if @user.errors.any?
+      #error_explanation
+        %h2= "Fehler haben das Speichern verhindert:"
+        %ul
+          - @user.errors.full_messages.each do |msg|
+            %li= msg
+    - if @seller && @seller.errors.any?
+      #error_explanation
+        %h2= "Verkäufer-Fehler haben das Speichern verhindert:"
+        %ul
+          - @seller.errors.full_messages.each do |msg|
+            %li= msg
 
-= form_for(@user, url: sellers_apply_path, html: {method: :put}) do |f|
-  - if @user.errors.any?
-    #error_explanation
-      %h2= "Fehler haben das Speichern verhindert:"
-      %ul
-        - @user.errors.full_messages.each do |msg|
-          %li= msg
+    .field
+      = f.label :wish_a, 'Modell'
+      -# = select_tag :model, options_for_select(models_with_descriptions(Seller.available_models), @user.wish_a)
+      = f.select :wish_a, options_for_select(models_with_descriptions, @user.wish_a)
 
-  .field
-    = f.label :wish_a
-    = f.select :wish_a, options_for_select(models_with_descriptions, @user.wish_a), include_blank: true
-  .field
-    = f.label :wish_b
-    = f.select :wish_b, options_for_select(models_with_descriptions, @user.wish_b), include_blank: true
-  .field
-    = f.label :wish_c
-    = f.select :wish_c, options_for_select(models_with_descriptions, @user.wish_c), include_blank: true
+    .field
+      = check_box_tag :terms
+      %em
+        Ich habe die
+        =link_to 'Verkaufsbedingungen (AGB)', pages_terms_path, target: '_blank'
+        gelesen und akzeptiere sie
 
-  .field
-    = check_box_tag :terms
-    %em
-      Ich habe die
-      =link_to 'Verkaufsbedingungen (AGB)', pages_terms_path, target: '_blank'
-      gelesen und akzeptiere sie
+    .actions
+      = f.submit 'Beantragen'
+- else
+  %h2 Verkäufernummer beantragen
+  = form_for(@user, url: sellers_apply_path, html: {method: :put}) do |f|
+    - if @user.errors.any?
+      #error_explanation
+        %h2= "Fehler haben das Speichern verhindert:"
+        %ul
+          - @user.errors.full_messages.each do |msg|
+            %li= msg
 
-  .actions
-    = f.submit 'Beantragen'
+    .field
+      = f.label :wish_a
+      = f.select :wish_a, options_for_select(models_with_descriptions, @user.wish_a), include_blank: true
+    .field
+      = f.label :wish_b
+      = f.select :wish_b, options_for_select(models_with_descriptions, @user.wish_b), include_blank: true
+    .field
+      = f.label :wish_c
+      = f.select :wish_c, options_for_select(models_with_descriptions, @user.wish_c), include_blank: true
+
+    .field
+      = check_box_tag :terms
+      %em
+        Ich habe die
+        =link_to 'Verkaufsbedingungen (AGB)', pages_terms_path, target: '_blank'
+        gelesen und akzeptiere sie
+
+    .actions
+      = f.submit 'Beantragen'

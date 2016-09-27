@@ -27,7 +27,7 @@ module SellersHelper
     end
   end
 
-  def models_with_descriptions
+  def models_with_descriptions models = Seller.models.keys
     descriptions =
       { 'A' => [20, "keine Mithilfe"],
         'C' => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und ein Kuchen"],
@@ -36,11 +36,13 @@ module SellersHelper
 
     result = {}
     Seller.models.each do |model, model_id|
-      description = descriptions[model]
-      if description
-        rate_percentage, help_text = description
-        text = "#{model}, #{rate_percentage}% Kommission, #{help_text}"
-        result[text] = model_id
+      if models.include? model
+        description = descriptions[model]
+        if description
+          rate_percentage, help_text = description
+          text = "#{model}, #{rate_percentage}% Kommission, #{help_text}"
+          result[text] = model_id
+        end
       end
     end
     result

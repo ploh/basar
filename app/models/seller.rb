@@ -9,7 +9,7 @@ class Seller < ActiveRecord::Base
                    'D' => 2,
                    'E' => 2}
 
-  attr_accessor :warnings
+  attr_accessor :warnings, :current_user
 
   enum model: [:A, :C, :D, :E]
   def self.models_by_id
@@ -35,6 +35,8 @@ class Seller < ActiveRecord::Base
 
   validate :check_mandatory_activities
   validate :enough_help_planned
+
+  validate :check_model
 
   after_initialize :fill_activities
 
@@ -370,5 +372,19 @@ class Seller < ActiveRecord::Base
     else
       Seller.all.size < TOTAL_LIMIT
     end
+  end
+
+  # @@@ not correct if changing models: total_count should be ignored, reserved_min has to respect old model
+  def check_model
+    if  (!current_user || !current_user.admin?) &&
+        (new_record? || seller_model_changed?)
+      unless Seller.available? model
+        errors.add :model, "#{model} nicht mehr verfügbar"
+      end
+    end
+  end
+
+  def self.available_models
+    models.keys.find_all {|model| available? model}
   end
 end

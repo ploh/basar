@@ -2,6 +2,8 @@
 
 = render 'form'
 
+%p= link_to 'Abmelden', @seller, :method => :delete, :data => { :confirm => 'Sind Sie sicher?' }
+
 -#%p
 -#  Computed rate:
 -#  = "#{@seller.computed_rate_in_percent} %"
