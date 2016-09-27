@@ -13,20 +13,28 @@ task create_sellers: [:environment, :verbose] do
 
   srand 456438111
   Seller.transaction do
-    weighted_users = User.all.reject {|user| !user.seller? || user.seller}.map do |user|
-      weighting = 2.0 ** user.weighting
-      Rails.logger.info sprintf("Weighting for %-25s: %.2e", user.name, weighting)
-      [user, weighting]
-    end.to_h
+    remaining_users = User.all.reject {|user| !user.seller? || user.seller}
 
     [:wish_a, :wish_b, :wish_c].each do |wish_sym|
       Rails.logger.info "Drawing sellers for #{wish_sym}..."
 
-      pd = ProbabilityDistribution.new weighted_users
-      while user = pd.draw
-        wish = Seller.models_by_id[user.send wish_sym]
+      weighted_users =
+        remaining_users.map do |user|
+          wish = Seller.models_by_id[user.send wish_sym]
+          [user, wish]
+        end.find_all do |user, wish|
+          wish
+        end.map do |user, wish|
+          weighting = 2.0 ** (user.weighting + Seller::MODEL_WEIGHTS[wish])
+          Rails.logger.info sprintf("Weighting for %-25s, wish %s: %.2e", user.name, wish, weighting)
+          [[user, wish], weighting]
+        end
 
-        if wish && Seller.available?(wish)
+
+      pd = ProbabilityDistribution.new weighted_users
+      while pair = pd.draw
+        user, wish = *pair
+        if Seller.available?(wish)
           seller = Seller.new(user: user, model: wish)
           seller.number = user.old_number || Seller.generate_number
           seller.initials = user.old_initials || user.initials
@@ -39,9 +47,13 @@ task create_sellers: [:environment, :verbose] do
           end
           Rails.logger.info "Saving new seller #{seller.inspect}..."
           seller.save!
-          weighted_users.delete user
+          remaining_users.delete user
         end
       end
+    end
+
+    Seller.group(:model).count.each do |model_id, count|
+      Rails.logger.info sprintf "Sellers for model %s: %3d", Seller.models_by_id[model_id], count
     end
 
     if ENV["DRY_RUN"]

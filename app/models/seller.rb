@@ -4,6 +4,10 @@ class Seller < ActiveRecord::Base
                   'C' => [nil, nil],
                   'D' => [25, 25],
                   'E' => [10, nil]}
+  MODEL_WEIGHTS = {'A' => 0,
+                   'C' => 0,
+                   'D' => 2,
+                   'E' => 2}
 
   attr_accessor :warnings
 
