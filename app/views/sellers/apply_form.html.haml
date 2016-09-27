@@ -16,8 +16,7 @@
 
     .field
       = f.label :wish_a, 'Modell'
-      -# = select_tag :model, options_for_select(models_with_descriptions(Seller.available_models), @user.wish_a)
-      = f.select :wish_a, options_for_select(models_with_descriptions, @user.wish_a)
+      = select_tag :model, options_for_select(models_with_descriptions(Seller.available_models), @user.wish_a)
 
     .field
       = check_box_tag :terms
