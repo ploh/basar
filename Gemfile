@@ -61,6 +61,8 @@ gem 'yaml_db'
 
 gem 'sqlite3'
 
+gem 'rails-settings-cached'
+
 group :development, :test do
   gem 'byebug'
   gem 'database_cleaner', '<= 1.0.1'
