@@ -13,7 +13,7 @@ class Seller < ActiveRecord::Base
 
   enum model: [:A, :C, :D, :E]
   def self.models_by_id
-    @@models_by_id ||= models.invert
+    @models_by_id ||= models.invert
   end
 
   has_many :items, dependent: :restrict_with_exception
@@ -41,6 +41,8 @@ class Seller < ActiveRecord::Base
   after_initialize :fill_activities
 
   before_save :delete_null_activities
+
+  after_create :send_welcome_mail
 
   def write_attribute *args
     @activity_counts = nil
@@ -131,20 +133,22 @@ class Seller < ActiveRecord::Base
   end
 
   def enough_help_planned
-    planned_help = activities.find_all {|act| act.task.bring? || act.task.help?}.map {|act| act.planned_count}.inject(0, :+)
-    needed_help =
-      case model
-      when "A"
-        0
-      when "C"
-        2
-      when "D"
-        0
-      when "E"
-        0
+    if model
+      planned_help = activities.find_all {|act| act.task.bring? || act.task.help?}.map {|act| act.planned_count}.inject(0, :+)
+      needed_help =
+        case model
+        when "A"
+          0
+        when "C"
+          2
+        when "D"
+          0
+        when "E"
+          0
+        end
+      if planned_help < needed_help
+        warnings << "Achtung: Noch nicht genug Hilfstermine ausgewählt"
       end
-    if planned_help < needed_help
-      warnings << "Achtung: Noch nicht genug Hilfstermine ausgewählt"
     end
   end
 
@@ -389,5 +393,35 @@ class Seller < ActiveRecord::Base
 
   def self.available_models
     models.keys.find_all {|model| available? model}
+  end
+
+  def self.model_descriptions
+    unless @model_descriptions
+      @model_descriptions = {}
+
+      descriptions =
+        { 'A' => [20, "keine Mithilfe"],
+          'C' => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und ein Kuchen"],
+          'D' => [10, "ca. 3 Std. Abbauhilfe"],
+          'E' => [0,  "Superhelfer am letzten Aufbautag"] }
+
+      models.map do |model, model_id|
+        description = descriptions[model]
+        raise unless description
+
+        rate_percentage, help_text = description
+        text = "#{model}, #{rate_percentage}% Kommission, #{help_text}"
+        @model_descriptions[model] = text
+      end
+    end
+    @model_descriptions
+  end
+
+  def model_description
+    Seller.model_descriptions[model]
+  end
+
+  def send_welcome_mail
+    SellerMailer.welcome(self).deliver_later
   end
 end

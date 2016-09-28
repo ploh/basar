@@ -1,0 +1,19 @@
+%p
+  herzlichen Glückwunsch, Sie sind dabei!
+
+%p
+  Ihre Verkäufernummer:
+  = @seller.code
+
+%p
+  Ihre Farbe:
+  = @seller.color && t(@seller.color)
+
+%p
+  Ihr Kommissionsmodell:
+  = @seller.model_description
+
+%p
+  Bitte wählen Sie Ihre Abgabe-/Hilfstermine:
+  %br
+  = link_to 'Termine wählen', edit_seller_url(@seller)

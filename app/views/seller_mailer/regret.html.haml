@@ -1,0 +1,21 @@
+%p
+  wir müssen Ihnen leider mitteilen, dass Sie bei der Auslosung leer ausgegangen sind.
+
+%p
+  Gerne können Sie sich beim nächsten Basar wieder bewerben.
+
+-# - if @user.weighting >= 0 && Seller.available?
+-#   %p
+-#     Sie können aber noch dabei sein, wenn Sie ein anderes Modell wählen.
+
+-#   %p
+-#     Folgende Modelle sind noch verfügbar:
+-#     %br
+-#     %ul
+-#     - Seller.available_models.each do |model|
+-#       %li= Seller.model_descriptions[model]
+
+-#   %p
+-#     Hier können Sie sich direkt anmelden:
+-#     %br
+-#     = link_to 'Anmelden', sellers_apply_url

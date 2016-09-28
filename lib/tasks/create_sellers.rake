@@ -56,8 +56,12 @@ task create_sellers: [:environment, :verbose] do
       Rails.logger.info sprintf "Sellers for model %s: %3d", Seller.models_by_id[model_id], count
     end
 
-    if ENV["DRY_RUN"]
-      raise "dry run"
+    Rails.logger.info "Sending out regret mails..."
+
+    remaining_users.each do |user|
+      if user.wish_a
+        SellerMailer.regret(user).deliver_later
+      end
     end
   end
 end

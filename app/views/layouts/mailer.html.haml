@@ -1,0 +1,19 @@
+%hmtl
+  %body{style: 'font-family: verdana, arial, helvetica, sans-serif'}
+    %p<
+      Hallo
+      = @user.name
+      ,
+
+    = yield
+
+    %p
+      Mit freundlichen Grüßen
+      %br
+      Anna Lohmann und Nadine Lange
+
+    - if @terms
+      %p{style: 'margin-top: 3ex'}
+        PS: Die von Ihnen akzeptierten AGB:
+      %div{style: 'max-width: 50em'}
+        = render 'pages/terms_content'
