@@ -376,10 +376,13 @@ class Seller < ActiveRecord::Base
 
   # @@@ not correct if changing models: total_count should be ignored, reserved_min has to respect old model
   def check_model
-    if  (!current_user || !current_user.admin?) &&
-        (new_record? || model_changed?)
+    if new_record? || model_changed?
       unless Seller.available? model
-        errors.add :model, "#{model} nicht mehr verfügbar"
+        if current_user && current_user.admin?
+          warnings << "Modell #{model} bereits über dem Limit"
+        else
+          errors.add :model, "#{model} nicht mehr verfügbar"
+        end
       end
     end
   end
