@@ -2,7 +2,7 @@ class Seller < ActiveRecord::Base
   TOTAL_LIMIT = 100
   MODEL_LIMITS = {'A' => [nil, 20],
                   'C' => [nil, nil],
-                  'D' => [25, 25],
+                  'D' => [30, 30],
                   'E' => [10, nil]}
   MODEL_WEIGHTS = {'A' => 0,
                    'C' => 0,
