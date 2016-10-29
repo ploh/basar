@@ -246,25 +246,26 @@ class Seller < ActiveRecord::Base
   end
 
   def computed_rate
-    if activities.any? {|act| act.task.must_d && act.actual_count > 0.99}
+    actual_work = activities_counts[0]
+    if actual_work > 3.99
+      0.0
+    elsif actual_work > 1.99
+      0.1
+    elsif activities.any? {|act| act.task.must_d && act.actual_count > 0.99}
       0.1
     else
-      actual_work = activities_counts[0]
-      if actual_work > 1.99
-        0.1
-      else
-        0.2
-      end
+      0.2
     end
   end
 
   def final_rate
-    # @@@ check model d erfüllt
-    unless (rate == 0.1 && computed_rate > 0.1) ||
-           (rate < 0.2 && computed_rate == 0.2)
-      computed_rate
+    if  each_task_with_activity.any? do |task, activity|
+          mandatory?(task) && activity.actual_count < 0.99
+        end ||
+        computed_rate > rate
+      0.4
     else
-      0.40
+      computed_rate
     end
   end
 
