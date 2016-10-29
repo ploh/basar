@@ -260,7 +260,7 @@ class Seller < ActiveRecord::Base
 
   def final_rate
     if  each_task_with_activity.any? do |task, activity|
-          mandatory?(task) && activity.actual_count < 0.99
+          task.must_d && mandatory?(task) && activity.actual_count < 0.99
         end ||
         computed_rate > rate
       0.4
