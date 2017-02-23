@@ -401,8 +401,8 @@ class Seller < ActiveRecord::Base
       @model_descriptions = {}
 
       descriptions =
-        { 'A' => [20, "keine Mithilfe"],
-          'C' => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und ein Kuchen"],
+        { 'A' => [20, "2 Std. Aufbauhilfe ODER herzhafte Essenspende"],
+          'C' => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und Essenspende / Kuchen"],
           'D' => [10, "ca. 3 Std. Abbauhilfe"],
           'E' => [0,  "Superhelfer am letzten Aufbautag"] }
 

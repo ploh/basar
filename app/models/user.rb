@@ -121,11 +121,11 @@ class User < ActiveRecord::Base
     end
 
     if seller_applied && (cake || help)
-      errors[:base] << "Verkäufernummer beantragen und Vorkaufsrecht für Kuchen/Hilfe nicht gleichzeitig möglich"
+      errors[:base] << "Verkäufernummer beantragen und Vorkaufsrecht für Essen/Hilfe nicht gleichzeitig möglich"
     end
 
     if cake && help
-      errors[:base] << "Vorkaufsrecht für Kuchen und Hilfe nicht gleichzeitig möglich"
+      errors[:base] << "Vorkaufsrecht für Essen und Hilfe nicht gleichzeitig möglich"
     end
   end
 end

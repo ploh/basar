@@ -1,5 +1,11 @@
 %h1 Hinweise zum Verkauf
 
+%p{style: 'margin-bottom: 1ex'}
+  %em
+    Neuerung ab Frühjahr 2016:
+  %strong
+    Für neue Verkäufer sind maximal 200 Artikel erlaubt!
+
 #accordion
   %h2 Anmeldung
 
@@ -31,19 +37,29 @@
     Es stehen folgende Kommissionsmodelle zur Wahl:
     %dl
       %dt
-        %strong Modell reine Abgabe
+        %strong Modell wenig helfen
       %dd
-        Wir behalten 20% Kommission ein. Keine weiteren Verpflichtungen für Sie. Es gibt
+        Wir behalten 20% Kommission ein.
+        Sie
+        = link_to 'helfen', pages_selling_help_path
+        2 Std. beim Aufbau
+        %strong oder
+        spenden einen
+        = link_to 'herzhaften Kuchen / Fingerfood', pages_presell_cake_path
+        (Abgabe 1.4. ab 09:15 Uhr).
+        %br
+        Es gibt
         %em nur 20 Verkäufernummern
         für dieses Modell.
       %dt
-        %strong Modell Helfen
+        %strong Modell viel helfen
       %dd
-        Wir behalten 10% Kommission ein. Sie
+        Wir behalten 10% Kommission ein.
+        Sie
         = link_to 'helfen', pages_selling_help_path
         2 Std. beim Aufbau und spenden einen
-        = link_to 'Kuchen', pages_presell_cake_path
-        (Abgabe 29.10. ab 09:15 Uhr)
+        = link_to 'Kuchen / Fingerfood', pages_presell_cake_path
+        (Abgabe 1.4. ab 09:15 Uhr)
         %strong oder
         Sie helfen 2x zwei Stunden
         %strong oder
@@ -53,19 +69,19 @@
       %dd
         Wir behalten
         %em keine Kommission
-        ein. Dafür kommen Sie am Freitag den 28.10. um 14 Uhr zum Aufbau und bleiben bis zum bitteren Ende.
+        ein. Dafür kommen Sie am Freitag den 31.3. um 14 Uhr zum Aufbau und bleiben bis zum bitteren Ende.
       %dt
         %strong Modell Abbau
       %dd
-        Wer beim Abbau hilft (29.10. ab 13:00 Uhr bis fertig), muss nur 10% Kommission abgeben
+        Wer beim Abbau hilft (1.4. ab 12:30 Uhr bis fertig), muss nur 10% Kommission abgeben.
 
     %p
-      Damit die Verrechnung der Kommission korrekt erfolgen kann, ist es wichtig, dass Sie Ihre Helferzeiten und ggf. Kuchenspende unter Angabe Ihrer Verkäufernummer registrieren. Ansonsten zahlen Sie automatisch 40% Kommission, s.
+      Damit die Verrechnung der Kommission korrekt erfolgen kann, ist es wichtig, dass Sie Ihre Helferzeiten und ggf. Essenspende unter Angabe Ihrer Verkäufernummer registrieren. Ansonsten zahlen Sie automatisch 40% Kommission, s.
       = link_to 'AGB', pages_terms_path
 
     %p
       %strong
-        WICHTIG! Verkäufer mit Modell Helfen, Superhelfer und Abbau genießen ein Vorkaufsrecht.
+        WICHTIG! Verkäufer genießen ein Vorkaufsrecht.
 
     %p
       Bei der Anmeldung können Sie bis zu drei Modellwünsche angeben. Die Plätze pro Modell sind begrenzt.
@@ -77,19 +93,19 @@
     %table
       %tr
         %td Mittwoch,
-        %td 26.10.
+        %td 29.3.
         %td 16-18 Uhr
       %tr
         %td Donnerstag,
-        %td 27.10.
+        %td 30.3.
         %td 9:30-11:30 Uhr
       %tr
         %td
         %td
         %td 15:30-17:30 Uhr
       %tr
-        %td Freitag (nur für Helfer),&nbsp;
-        %td 28.10.&nbsp;&nbsp;
+        %td Freitag (nur für Helfer an diesem Tag),&nbsp;
+        %td 31.3.&nbsp;&nbsp;
         %td 14-15 Uhr
 
     %em Bitte bringen Sie etwas Zeit zur Abgabe mit!
@@ -98,7 +114,7 @@
   %h2 Abholung
 
   .collapsible
-    Am Samstag, den 29.10. 17:00 - 18:00 Uhr holen Sie bitte Ihre nicht verkauften Artikel sowie Ihren Erlös wieder bei uns ab. Falls Sie zu diesem Termin verhindert sein sollten, bevollmächtigen Sie bitte per E-Mail einen Ersatzabholer.
+    Am Samstag, den 1.4. 17:00 - 18:00 Uhr holen Sie bitte Ihre nicht verkauften Artikel sowie Ihren Erlös wieder bei uns ab. Falls Sie zu diesem Termin verhindert sein sollten, bevollmächtigen Sie bitte per E-Mail einen Ersatzabholer.
 
 
   %h2 Kennzeichnung der Artikel
@@ -145,6 +161,9 @@
 
   .collapsible
     %ul
+      %li
+        %strong
+          Wer zum ersten Mal bei uns verkauft, darf maximal 200 Teile zum Verkauf abgeben!
       %li
         Bitte alle Kisten gut lesbar und haltbar mit Namen
         %em und
