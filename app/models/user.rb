@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
   end
 
   def old_seller_code
-    Seller.seller_code old_initials, old_number
+    old_number && Seller.seller_code(old_initials, old_number)
   end
 
   def seller_color

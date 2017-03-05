@@ -1,0 +1,28 @@
+%p
+  vielen Dank fürs Beantragen eines Verkäuferplatzes!
+
+%p
+  Sie haben folgende Wünsche angegeben:
+
+- if @user.wish_a
+  %p
+    1. Wunsch:
+    = Seller.models.find {|_k, v| v == @user.wish_a}[0]
+
+- if @user.wish_b
+  %p
+    2. Wunsch:
+    = Seller.models.find {|_k, v| v == @user.wish_b}[0]
+
+- if @user.wish_c
+  %p
+    3. Wunsch:
+    = Seller.models.find {|_k, v| v == @user.wish_c}[0]
+
+- if @user.old_seller_code
+  %p
+    %em
+      %strong Falls
+      Sie ausgelost werden, behalten Sie Ihre alte Verkäufernummer:
+      %br
+      = @user.old_seller_code

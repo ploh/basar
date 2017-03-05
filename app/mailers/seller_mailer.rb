@@ -1,4 +1,11 @@
 class SellerMailer < ApplicationMailer
+  def apply user
+    @user = user
+    @terms = true
+    recipient = %("#{@user.name}" <#{@user.email}>)
+    mail to: recipient, subject: "Verkäuferplatz beantragt"
+  end
+
   def welcome seller
     @seller = seller
     @user = seller.user
