@@ -1,5 +1,5 @@
 - if Setting.drawn_applicants
-  %h2 Verkäufernummer erstellen
+  %h2 Verkäuferplatz registrieren
   = form_for(@user, url: sellers_apply_path, html: {method: :put}) do |f|
     - if @user.errors.any?
       #error_explanation
@@ -26,9 +26,9 @@
         gelesen und akzeptiere sie
 
     .actions
-      = f.submit 'Beantragen'
+      = f.submit 'Registrieren'
 - else
-  %h2 Verkäufernummer beantragen
+  %h2 Verkäuferplatz beantragen
   = form_for(@user, url: sellers_apply_path, html: {method: :put}) do |f|
     - if @user.errors.any?
       #error_explanation

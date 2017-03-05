@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
     end
 
     if seller_applied && (cake || help)
-      errors[:base] << "Verkäufernummer beantragen und Vorkaufsrecht für Essen/Hilfe nicht gleichzeitig möglich"
+      errors[:base] << "Verkäuferplatz beantragen und Vorkaufsrecht für Essen/Hilfe nicht gleichzeitig möglich"
     end
 
     if cake && help
