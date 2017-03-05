@@ -14,4 +14,6 @@
     %li{style: "margin-top: 1ex"}
       = f.submit t('devise.sessions.new.sign_in', :default => "Sign in")
 
-    %li=  link_to t(".sign_up"), new_user_registration_path
+    %li= link_to t(".sign_up"), new_user_registration_path
+
+    %li{style: "margin-top: 1ex"}= link_to t(".forgot_your_password"), new_user_password_path
