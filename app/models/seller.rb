@@ -98,8 +98,8 @@ class Seller < ActiveRecord::Base
   end
 
   def check_only_d_helps # actually it is: no A deliver
-    if model == 'A' && activities.any? {|act| act.me && act.task.deliver? && act.task.only_d}
-      errors[:base] << "Dieser Abgabetermin ist für Verkäufer mit Modell A nicht erlaubt"
+    if model == 'A' && activities.any? {|act| act.me && act.task.only_d}
+      errors[:base] << "Dieser Abgabe-/Hilfstermin/Kuchen ist für Verkäufer mit Modell A nicht erlaubt"
     end
   end
 
