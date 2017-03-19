@@ -138,7 +138,7 @@ class Seller < ActiveRecord::Base
       needed_help =
         case model
         when "A"
-          0
+          1
         when "C"
           2
         when "D"
@@ -253,8 +253,10 @@ class Seller < ActiveRecord::Base
       0.1
     elsif activities.any? {|act| act.task.must_d && act.actual_count > 0.99}
       0.1
-    else
+    elsif actual_work > 0.99
       0.2
+    else
+      0.3
     end
   end
 
