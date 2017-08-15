@@ -17,5 +17,16 @@ task archive: [:environment, :verbose] do
         raise "No user for seller: #{seller}"
       end
     end
+
+    User.all.each do |user|
+      user.wish_a = nil
+      user.wish_b = nil
+      user.wish_c = nil
+      user.cake = nil
+      user.help = nil
+      user.save!
+    end
+
+    Setting.destroy :drawn_applicants if Setting.drawn_applicants
   end
 end
