@@ -405,7 +405,7 @@ class Seller < ActiveRecord::Base
       descriptions =
         { 'A' => [20, "2 Std. Aufbauhilfe ODER herzhafte Essenspende"],
           'C' => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und Essenspende / Kuchen"],
-          'D' => [10, "Abbauhilfe"],
+          'D' => [5, "Abbauhilfe"],
           'E' => [0,  "Superhelfer am letzten Aufbautag"] }
 
       models.map do |model, model_id|
