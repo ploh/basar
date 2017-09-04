@@ -1,5 +1,5 @@
 class Seller < ActiveRecord::Base
-  TOTAL_LIMIT = 115
+  TOTAL_LIMIT = 100
   MODEL_LIMITS = {'A' => [nil, 20],
                   'C' => [nil, nil],
                   'D' => [30, 30],
