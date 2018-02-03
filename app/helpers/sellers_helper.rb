@@ -13,6 +13,16 @@ module SellersHelper
     end
   end
 
+  def list_csv sellers
+    CSV.generate(col_sep: ";") do |csv|
+      sellers.each do |seller|
+        csv << [ seller.code,
+                 seller.name,
+                 seller.model ]
+      end
+    end
+  end
+
   def inconsistency_class seller
     if seller.computed_rate > seller.rate
       'less_activities'

@@ -1,5 +1,8 @@
 %h1 Listing sellers
 
+= link_to 'Download Seller List', sellers_path(format: 'csv')
+%br
+
 = link_to 'New Seller', new_seller_path
 
 - model_counts = Seller.group(:model).count

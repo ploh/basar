@@ -6,6 +6,10 @@ class SellersController < ApplicationController
   # GET /sellers
   def index
     @sellers = Seller.list
+    respond_to do |format|
+      format.html
+      format.csv { render text: view_context.list_csv( @sellers ) }
+    end
   end
 
   def revenue
