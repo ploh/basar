@@ -39,6 +39,20 @@ class SellersController < ApplicationController
     end
   end
 
+  # GET /sellers/cakes
+  def cakes
+    @sellers = Seller.list.select do |seller|
+      seller.each_task_with_activity.any? do |task, activity|
+        activity && activity.planned_count > 0 && task.bring?
+      end
+    end
+    @users = User.where(cake: true).sort_by {|user| user.last_name.downcase}
+    respond_to do |format|
+      format.html
+      format.csv { render text: view_context.cake_csv( @sellers, @users ) }
+    end
+  end
+
   # GET /sellers/help
   def help_form
     @user = current_user

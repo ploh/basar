@@ -29,6 +29,7 @@ Basar::Application.routes.draw do
   put 'sellers/apply' => 'sellers#apply'
   get 'sellers/cake' => 'sellers#cake_form'
   put 'sellers/cake' => 'sellers#cake'
+  get 'sellers/cakes' => 'sellers#cakes'
   get 'sellers/help' => 'sellers#help_form'
   put 'sellers/help' => 'sellers#help'
 

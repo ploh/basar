@@ -23,6 +23,21 @@ module SellersHelper
     end
   end
 
+  def cake_csv sellers, users
+    CSV.generate(col_sep: ";") do |csv|
+      sellers.each do |seller|
+        csv << [ seller.code,
+                 seller.name,
+                 seller.model ]
+      end
+      users.each do |user|
+        csv << [ '',
+                 user.name,
+                 '' ]
+      end
+    end
+  end
+
   def inconsistency_class seller
     if seller.computed_rate > seller.rate
       'less_activities'
