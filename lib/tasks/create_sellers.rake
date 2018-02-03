@@ -63,5 +63,8 @@ task create_sellers: [:environment, :verbose] do
         SellerMailer.regret(user).deliver_later
       end
     end
+
+    Setting.drawn_applicants = true
+    Rails.logger.info "Have set drawn_applicants flag"
   end
 end

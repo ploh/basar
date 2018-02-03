@@ -25,8 +25,12 @@ task archive: [:environment, :verbose] do
       user.cake = nil
       user.help = nil
       user.save!
+      Rails.logger.info "Updated #{user}!"
     end
 
-    Setting.destroy :drawn_applicants if Setting.drawn_applicants
+    if Setting.drawn_applicants
+      Setting.destroy :drawn_applicants
+      Rails.logger.info "Removed drawn_applicants flag!"
+    end
   end
 end
