@@ -6,6 +6,7 @@ Basar::Application.routes.draw do
   get 'pages/selling/help' => 'pages#selling_help'
   get 'pages/faq' => 'pages#faq'
   get 'pages/presell' => 'pages#presell'
+  get 'pages/presell/grannies' => 'pages#presell_grannies'
   get 'pages/presell/cake' => 'pages#presell_cake'
   get 'pages/presell/help' => 'pages#presell_help'
 
