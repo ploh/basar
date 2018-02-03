@@ -57,7 +57,7 @@
                   = a.check_box :me # actual
               %td
                 - notes = []
-                - notes << "nicht bei Verkaufsmodell A" if activity.task.only_d
+                - notes << "nur für Helfer zu dieser Zeit" if activity.task.only_d
                 - notes << "limitiert auf #{activity.task.limit} Personen" if activity.task.limit && activity.task.limit > 0 && activity.task.limit < 99
                 = notes.join(", ")
 
