@@ -36,7 +36,15 @@
         - if can? :read, Transaction
           %li.topic= link_to t(".transactions.title"), transactions_path
           %li.indented= link_to "(#{t ".transactions.all"})", all_transactions_path
-          %li{style: "margin-top: 2ex"}= t(".transactions.client") + ": #@client_key"
+          %li{style: "margin-top: 2ex; margin-bottom: 2ex"}= t(".transactions.client") + ": #@client_key"
+
+        %li.smaller
+          Nächster Termin:
+          %br
+          10.03.2018
+          %br
+          10:00 - 12:00
+
       #menu_footer
         %ul
           %li= link_to t('.terms'), pages_terms_path
