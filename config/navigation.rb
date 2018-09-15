@@ -15,7 +15,6 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
     primary.item :presell, t('layouts.application.presell'), pages_presell_path do |presell|
-      presell.item :grannies, 'Groß-/Babyeltern', pages_presell_grannies_path
       presell.item :cake, 'Essen', pages_presell_cake_path do |presell_cake|
         unless current_user && current_user.seller
           presell_cake.item :register, 'Anmelden', sellers_cake_path
