@@ -12,7 +12,8 @@ class SellerMailer < ApplicationMailer
     @terms = true
     raise unless @user
     recipient = %("#{@user.name}" <#{@user.email}>)
-    attachments['Basar_2018_03_Flyer.pdf'] = File.read('public/info/Basar_2018_03_Flyer.pdf')
+    # todo1810 flyer einchecken
+    # attachments['Basar_2018_10_Flyer.pdf'] = File.read('public/info/Basar_2018_10_Flyer.pdf')
     mail to: recipient, subject: "Sie sind dabei, Verkäufer #{seller.code}"
   end
 
