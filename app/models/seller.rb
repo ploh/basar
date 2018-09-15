@@ -174,7 +174,7 @@ class Seller < ActiveRecord::Base
     when 'C'
       0.1
     when 'D'
-      0.0
+      0.05
     when 'E'
       0.0
     end
@@ -250,7 +250,7 @@ class Seller < ActiveRecord::Base
     if actual_work > 3.99
       0.0
     elsif activities.any? {|act| act.task.must_d && act.actual_count > 0.99}
-      0.0
+      0.05
     elsif actual_work > 1.99
       0.1
     elsif actual_work > 0.99
@@ -405,7 +405,7 @@ class Seller < ActiveRecord::Base
       descriptions =
         { 'A' => [20, "2 Std. Aufbauhilfe ODER herzhafte Essenspende"],
           'C' => [10, "4 Std. Aufbauhilfe ODER 2 Std. Aufbauhilfe und Essenspende / Kuchen"],
-          'D' => [0, "Abbauhilfe"],
+          'D' => [5, "Abbauhilfe"],
           'E' => [0,  "Superhelfer am letzten Aufbautag"] }
 
       models.map do |model, model_id|
