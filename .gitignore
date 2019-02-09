@@ -27,3 +27,5 @@
 /public/assets/application-*.css*
 /public/assets/application-*.js*
 /public/assets/manifest-*.json
+
+*.pem
