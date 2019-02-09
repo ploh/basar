@@ -1,0 +1,6 @@
+.git
+/log
+
+.build
+
+nohup.out
