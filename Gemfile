@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
-ruby '2.3.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 4.2.0'
 gem 'rails-i18n'
+gem 'rake', '10.4.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails'
@@ -35,7 +35,7 @@ group :doc do
 end
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt-ruby'
+gem 'bcrypt'
 
 # Use unicorn as the app server
 # gem 'unicorn'
@@ -74,7 +74,7 @@ group :development, :test do
   gem 'simplecov'
 #   gem 'minitest', '>= 5.0.0'
   gem 'selenium-webdriver'
-  gem 'capybara-webkit'
+  # gem 'capybara-webkit'
   gem 'poltergeist'
 end
 
@@ -91,7 +91,7 @@ end
 group :test do
   gem 'cucumber-rails', require: false
   gem 'cucumber-rails-training-wheels'
-  gem 'ZenTest'
+  # gem 'ZenTest'
 end
 
 group :cucumber do
