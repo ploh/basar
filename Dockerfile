@@ -1,4 +1,4 @@
-FROM ruby:2.3-stretch
+FROM ruby:slim
 
 ##### Initialize
 RUN ln -sf bash /bin/sh
