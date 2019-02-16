@@ -5,8 +5,8 @@ RUN ln -sf bash /bin/sh
 
 ##### Install system libraries
 RUN apt-get -qy update
-ARG BUILD_DEB_PKGS='gcc g++ libc6-dev make libsqlite3-dev'
-ARG RUNTIME_DEB_PKGS='git sqlite3'
+ARG BUILD_DEB_PKGS='gcc g++ libc6-dev make libsqlite3-dev build-essential'
+ARG RUNTIME_DEB_PKGS='git sqlite3 libpq-dev'
 RUN apt-get -qy install --no-install-recommends $BUILD_DEB_PKGS $RUNTIME_DEB_PKGS
 
 ##### Installl python packages

@@ -58,7 +58,7 @@ gem 'simple-navigation'
 
 gem 'yaml_db'
 
-gem 'sqlite3'
+# gem 'sqlite3'
 
 gem 'rails-settings-cached'
 
@@ -101,6 +101,6 @@ gem 'rails-settings-cached'
 # heroku deployment
 # group :production do
 #  gem 'unicorn'
-#  gem 'pg'
+gem 'pg'
 #  gem 'rails_12factor'
 # end
