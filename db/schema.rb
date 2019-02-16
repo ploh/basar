@@ -117,5 +117,4 @@ ActiveRecord::Schema.define(version: 2016_09_27_094000) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  add_foreign_key "sellers", "users"
 end
