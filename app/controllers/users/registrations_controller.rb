@@ -40,11 +40,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up) << [:email, :password, :password_confirmation, :first_name, :last_name]
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :first_name, :last_name])
   end
 
   def configure_account_update_params
-    devise_parameter_sanitizer.for(:account_update) << [:email, :password, :password_confirmation, :current_password]
+    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :first_name, :last_name])
   end
 
   def update_resource(resource, params)
