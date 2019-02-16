@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-hotkeys
-//= require jquery-ui/accordion
 //= require turbolinks
 //= require jquery.turbolinks
 //= require paloma
