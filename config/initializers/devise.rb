@@ -150,7 +150,7 @@ Devise.setup do |config|
   config.timeout_in = 3.hours
 
   # If true, expires auth token on session timeout.
-  config.expire_auth_token_on_timeout = false
+  # config.expire_auth_token_on_timeout = false
 
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
