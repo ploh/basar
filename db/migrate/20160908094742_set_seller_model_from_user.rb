@@ -1,4 +1,4 @@
-class SetSellerModelFromUser < ActiveRecord::Migration
+class SetSellerModelFromUser < ActiveRecord::Migration[4.2]
   def up
     Seller.transaction do
       Seller.all.each do |seller|

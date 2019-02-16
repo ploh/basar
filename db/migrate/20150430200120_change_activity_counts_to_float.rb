@@ -1,4 +1,4 @@
-class ChangeActivityCountsToFloat < ActiveRecord::Migration
+class ChangeActivityCountsToFloat < ActiveRecord::Migration[4.2]
   def up
     change_column :activities, :actual_count, :float
     change_column :activities, :planned_count, :float

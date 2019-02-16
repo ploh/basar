@@ -1,4 +1,4 @@
-class UserUpdateSeller < ActiveRecord::Migration
+class UserUpdateSeller < ActiveRecord::Migration[4.2]
   def up
     User.transaction do
       User.all.each do |user|

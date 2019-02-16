@@ -1,4 +1,4 @@
-class AddDefaultToActivitiesCounts < ActiveRecord::Migration
+class AddDefaultToActivitiesCounts < ActiveRecord::Migration[4.2]
   def change
     change_column_default :activities, :actual_count, 0
     change_column_default :activities, :planned_count, 0

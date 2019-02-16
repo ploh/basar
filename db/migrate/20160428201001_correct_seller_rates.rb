@@ -1,4 +1,4 @@
-class CorrectSellerRates < ActiveRecord::Migration
+class CorrectSellerRates < ActiveRecord::Migration[4.2]
   def up
     Seller.transaction do
       Seller.list.each do |seller|

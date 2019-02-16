@@ -1,4 +1,4 @@
-class RenameWishesOnUser < ActiveRecord::Migration
+class RenameWishesOnUser < ActiveRecord::Migration[4.2]
   def change
     rename_column :users, :wishA, :wish_a
     rename_column :users, :wishB, :wish_b

@@ -1,4 +1,4 @@
-class CreateSellersTasksJoinTable < ActiveRecord::Migration
+class CreateSellersTasksJoinTable < ActiveRecord::Migration[4.2]
   def change
     create_join_table :sellers, :tasks do |t|
       # t.index [:seller_id, :task_id]
