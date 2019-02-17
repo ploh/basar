@@ -36,8 +36,6 @@ module Basar
         %(#{html_tag}<div class="validation_error">#{error_message}</div>).html_safe
       end
     end
-
-    config.action_mailer.delivery_method = :sendmail
   end
 end
 
