@@ -28,9 +28,9 @@ task archive: [:environment, :verbose] do
       Rails.logger.info "Updated #{user}!"
     end
 
-    if Setting[:drawn_applicants]
-      Setting.destroy :drawn_applicants
-      Rails.logger.info "Removed drawn_applicants flag!"
-    end
+    # if Setting[:drawn_applicants]
+    #   Setting.destroy :drawn_applicants
+    Rails.logger.error "IMPORTANT!!! Now remove drawn_applicants flag!"
+    # end
   end
 end
