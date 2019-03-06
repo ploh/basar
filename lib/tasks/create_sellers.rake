@@ -52,8 +52,8 @@ task create_sellers: [:environment, :verbose] do
       end
     end
 
-    Seller.group(:model).count.each do |model_id, count|
-      Rails.logger.info sprintf "Sellers for model %s: %3d", Seller.models_by_id[model_id], count
+    Seller.group(:model).count.each do |model, count|
+      Rails.logger.info sprintf "Sellers for model %s: %3d", model, count
     end
 
     Rails.logger.info "Sending out regret mails..."

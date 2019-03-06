@@ -8,11 +8,11 @@
 
 = link_to 'New Seller', new_seller_path
 
-- model_counts = Seller.group(:model).count
+- model_counts = Seller.group(:model).count.to_h
 - model_counts.default = 0
 %ul
-  - Seller.models.each do |model, model_id|
-    %li= "Modell #{model}: #{model_counts[model_id]} Verkäufer"
+  - Seller.models.each do |model, _model_id|
+    %li= "Modell #{model}: #{model_counts[model]} Verkäufer"
   %li= "Gesamt: #{model_counts.values.inject(:+)} Verkäufer"
 
 %table#sellers.element_list

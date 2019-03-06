@@ -357,7 +357,7 @@ class Seller < ActiveRecord::Base
 
   def self.available? model = nil
     if model
-      counts = Seller.group(:model).count.map {|model_id, count| [models_by_id[model_id], count]}.to_h
+      counts = Seller.group(:model).count.to_h
       counts.default = 0
 
       total_count = counts.values.inject(0, :+)
