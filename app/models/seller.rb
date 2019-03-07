@@ -40,7 +40,7 @@ class Seller < ActiveRecord::Base
 
   after_initialize :fill_activities
 
-  before_save :delete_null_activities
+  # before_save :delete_null_activities
 
   after_create :send_welcome_mail
 
