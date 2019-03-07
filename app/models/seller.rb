@@ -350,7 +350,7 @@ class Seller < ActiveRecord::Base
   end
 
   def self.generate_number
-    [ User.all.order('old_number desc').limit(1).first.try(:old_number) || 0,
+    [ User.where.not(old_number: nil).order('old_number desc').limit(1).first.try(:old_number) || 0,
       Seller.all.order('number desc').limit(1).first.try(:number) || 0 ].
     max + 1
   end
