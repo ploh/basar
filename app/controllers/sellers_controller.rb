@@ -8,7 +8,7 @@ class SellersController < ApplicationController
     @sellers = Seller.list
     respond_to do |format|
       format.html
-      format.csv { render text: view_context.list_csv( @sellers ) }
+      format.csv { render plain: view_context.list_csv( @sellers ) }
     end
   end
 
@@ -17,7 +17,7 @@ class SellersController < ApplicationController
     @sellers = Seller.list true, true
     respond_to do |format|
       format.html
-      format.csv { render text: view_context.revenues_csv( @sellers ) }
+      format.csv { render plain: view_context.revenues_csv( @sellers ) }
     end
   end
 
@@ -49,7 +49,7 @@ class SellersController < ApplicationController
     @users = User.where(cake: true).sort_by {|user| user.last_name.downcase}
     respond_to do |format|
       format.html
-      format.csv { render text: view_context.cake_csv( @sellers, @users ) }
+      format.csv { render plain: view_context.cake_csv( @sellers, @users ) }
     end
   end
 
