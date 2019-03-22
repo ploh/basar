@@ -39,3 +39,6 @@ jQuery ->
 @activate_login_form = ->
   $("#login_form").removeClass 'hidden'
   $("#login_placeholder").addClass 'hidden'
+
+$(document).ready ->
+  Paloma.start()
