@@ -104,3 +104,8 @@ gem 'rails-settings-cached'
 gem 'pg'
 #  gem 'rails_12factor'
 # end
+
+
+group :production do
+  gem 'puma'
+end

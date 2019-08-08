@@ -109,6 +109,8 @@ GEM
     orm_adapter (0.5.0)
     paloma (5.1.0)
     pg (1.1.4)
+    puma (4.0.1)
+      nio4r (~> 2.0)
     rack (2.0.6)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -206,6 +208,7 @@ DEPENDENCIES
   jquery-ui-rails
   paloma
   pg
+  puma
   rails
   rails-i18n
   rails-settings-cached
