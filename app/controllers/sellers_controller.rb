@@ -114,7 +114,7 @@ class SellersController < ApplicationController
         end
       else
         if @user.save
-          SellerMailer.apply(@user).deliver_later
+          SellerMailer.apply(@user).deliver_now
         else
           success = false
         end

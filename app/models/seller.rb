@@ -425,6 +425,6 @@ class Seller < ActiveRecord::Base
   end
 
   def send_welcome_mail
-    SellerMailer.welcome(self).deliver_later
+    SellerMailer.welcome(self).deliver_now
   end
 end

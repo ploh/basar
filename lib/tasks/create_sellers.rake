@@ -60,7 +60,7 @@ task create_sellers: [:environment, :verbose] do
 
     remaining_users.each do |user|
       if user.wish_a
-        SellerMailer.regret(user).deliver_later
+        SellerMailer.regret(user).deliver_now
       end
     end
 
