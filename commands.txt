@@ -1,0 +1,19 @@
+# Login to production server
+ssh -i kids-basar.pem ec2-user@ec2-46-137-8-156.eu-west-1.compute.amazonaws.com
+
+
+# On the production server
+cd /var/app/current
+RAILS_ENV=production sudo -E -u webapp /opt/rubies/ruby-2.6.3/bin/bundle exec /opt/rubies/ruby-2.6.3/bin/rake db:data:dump
+
+# On local
+scp -i kids-basar.pem ec2-user@ec2-46-137-8-156.eu-west-1.compute.amazonaws.com:/var/app/current/db/data.yml ~/Dropbox/peter/basar_documents/2019_09/data_2019xxxx_223500.yml
+
+
+# On the server
+RAILS_ENV=production sudo -E -u webapp /opt/rubies/ruby-2.6.3/bin/bundle exec /opt/rubies/ruby-2.6.3/bin/rails console
+
+
+# On the server
+cd /var/app/current
+RAILS_ENV=production sudo -E -u webapp /opt/rubies/ruby-2.6.3/bin/bundle exec /opt/rubies/ruby-2.6.3/bin/rake archive

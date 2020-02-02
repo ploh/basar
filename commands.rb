@@ -7,3 +7,9 @@ puts Seller.all.sort_by {|s| -s.total_revenue}.first(50).map {|s| sprintf "%6s  
 # Delete all transactions and sellers - good after loading a backup in the application phase
 Transaction.all.each {|t| t.destroy}
 Seller.all.each {|s| s.destroy}
+
+# List all global settings
+Setting.all
+
+# Reset drawn_applicants flag
+Setting.destroy :drawn_applicants
