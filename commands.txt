@@ -1,3 +1,7 @@
+# NOTE!!!!!!!
+Look also in scripts/ dir
+# !!!!!!!!!
+
 # Login to production server
 ssh -i kids-basar.pem ec2-user@ec2-46-137-8-156.eu-west-1.compute.amazonaws.com
 
